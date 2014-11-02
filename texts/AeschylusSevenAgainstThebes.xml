@@ -1,0 +1,1776 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI.2>
+<teiHeader type="text" status="new">
+<fileDesc>
+<titleStmt>
+<title type="work" n="Seven">Seven Against Thebes</title>
+<title type="sub">Machine readable text</title>
+<author n="Aesch.">Aeschylus</author>
+<editor role="editor" n="Smyth">Herbert Weir Smyth, Ph.D.</editor>
+<sponsor>Perseus Project, Tufts University</sponsor>
+		<principal>Gregory Crane</principal>
+		<respStmt>
+		<resp>Prepared under the supervision of</resp>
+		<name>Lisa Cerrato</name>
+		<name>William Merrill</name>
+		<name>Elli Mylonas</name>
+		<name>David Smith</name>
+		</respStmt>
+<funder n="org:AnnCPB">The Annenberg CPB/Project</funder>
+</titleStmt>
+<extent>About 70Kb</extent>
+<publicationStmt>
+		<publisher>Trustees of Tufts University</publisher>
+		<pubPlace>Medford, MA</pubPlace>
+		<authority>Perseus Project</authority>
+		<availability status="free">
+    <p>This text may be freely distributed, subject to the following
+    restrictions:</p>
+    <list>
+	<item>You credit Perseus, as follows, whenever you use the document:
+	    <quote>Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at http://www.perseus.tufts.edu/hopper/.</quote>
+	</item>
+	<item>You leave this availability statement intact.</item>
+	<item>You use it for non-commercial purposes only.</item>
+	<item>You offer Perseus any modifications you make.</item>
+    </list>
+</availability>
+</publicationStmt>
+<sourceDesc default="NO">
+<biblStruct default="NO">
+<monogr>
+<author>Aeschylus</author>
+<title>Aeschylus, with an English translation by Herbert Weir Smyth, Ph. D. in two volumes. 1.Seven Against Thebes</title>
+<imprint>
+<pubPlace>Cambridge</pubPlace>
+<publisher>Cambridge, Mass., Harvard University Press; London, William Heinemann, Ltd.</publisher>
+<date>1926</date>
+</imprint>
+</monogr>
+</biblStruct>
+</sourceDesc>
+</fileDesc>
+
+<encodingDesc>
+<refsDecl doctype="TEI.2">
+<step refunit="line" from="DESCENDANT (1 L N%1)" to="DITTO" />
+</refsDecl>
+<refsDecl doctype="TEI.2">
+<state unit="card" />
+</refsDecl>
+</encodingDesc>
+
+<profileDesc>
+<langUsage default="NO">
+<language id="greek">Greek</language>
+</langUsage>
+</profileDesc>
+<revisionDesc>
+<change><date>1988</date>
+<respStmt><name>EM, Scott Ettinger and Roger Travis</name><resp>tagging</resp></respStmt>
+<item>Text scanned at U. Chicago in 1988. Basic SGML tagging by EM, Scott Ettinger and Roger Travis.</item>
+</change>
+<change><date>9/19/90</date>
+<respStmt><name>EM</name><resp>ed.</resp></respStmt>
+<item>Final check of cardbreaks, tags, and linenumbers.</item>
+</change>
+<change><date>8/91</date>
+<respStmt><name>EM</name><resp>ed.</resp></respStmt>
+<item>Revise DTDs and recheck texts.</item>
+</change>
+<change><date>9/91</date>
+<respStmt><name>Lauren Burka</name><resp>ed.</resp></respStmt>
+<item>Compare with TLG text for missing words or other scanner omissions.</item>
+</change>
+<change><date>10/98</date>
+<respStmt><name>Bill Merrill</name><resp>ed.</resp></respStmt>
+<item>Fixed card breaks at 149, 158 and added line numbers 158b, 832b, 833b.</item>
+</change>
+<change><date>23-Dec-99</date>
+<respStmt><name>Anne Mahoney</name><resp>Markup</resp></respStmt>
+<item>
+$Log: aesch.seven_gk.xml,v $
+Revision 1.7  2013-09-13 11:21:27  balmas01
+reverting texts back to pre_cts_reorg tagged version
+
+Revision 1.5  2011-09-07 12:30:31  rsingh04
+adding rend attribute to lb tags which are numbered
+
+Revision 1.4  2011-01-13 03:38:22  gcrane
+more refinements making these files SDL compatible
+
+Revision 1.3  2010-12-25 19:15:19  gcrane
+now using LB milestones rather than L tags
+
+Revision 1.2  2010-12-24 12:39:25  gcrane
+ADD tags replace lt/gt entities
+DEL tags replace lsqb/rsqb entities
+GAP tags replace "..."
+
+Revision 1.1  2010-12-24 11:56:44  gcrane
+base SDL file
+
+Revision 1.1  2009/10/09 19:49:18  rsingh04
+more reorganizing of texts module by collection
+
+Revision 1.1  2009/10/07 20:59:53  rsingh04
+began reorganizing texts module by collection.  created separate work directory in texts module to keep hopper files separate from in progress files
+
+Revision 1.3  2005/08/01 15:44:56  packel
+really removed item tags
+
+Revision 1.2  2005/08/01 15:32:41  packel
+removed stray item tags
+
+Revision 1.1  2005/07/25 14:27:26  packel
+Converted to XML
+
+Revision 1.9  2004/04/21 20:28:10  mimno
+added card 1s
+
+Revision 1.8  2003/07/01 22:14:26  yorkc
+Updated texts to TEI P4 and Perseus P4 extensions; minor cleanup (esp. character encodings and typos.)
+
+Revision 1.7  2000/03/06 20:05:31  amahoney
+fix headers for TOC
+
+Revision 1.6  2000/03/04 20:33:49  dasmith
+Added separate funder entity to TEI header.
+
+Revision 1.5  2000/02/17 17:46:03  amahoney
+use n on sp for speeches interrupted by cardbreaks;  put cards at ends of
+such speeches after the close tag;  put sp and speaker tags on the divs
+of the choruses, which were not marked at all (but div2 closes sp, so
+we lost the speaker info)
+
+Revision 1.4  1999/12/23 18:19:40  amahoney
+convert to P3
+
+</item></change>
+</revisionDesc>
+</teiHeader>
+
+<text><body>
+<div1 type="episode" org="uniform" sample="complete">
+<milestone ed="p" n="1" unit="card" />
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />*ka/dmou poli=tai, xrh\ le/gein ta\ kai/ria
+<lb />o(/stis fula/ssei pra=gos e)n pru/mnh| po/lews
+<lb />oi)/aka nwmw=n, ble/fara mh\ koimw=n u(/pnw|.
+<lb />ei) me\n ga\r eu)= pra/caimen, ai)ti/a qeou=:
+<lb rend="displayNum" n="5" />ei) d' au)=q', o(\ mh\ ge/noito, sumfora\ tu/xoi,
+<lb />*)eteokle/hs  a)\n ei(=s polu\s kata\ pto/lin
+<lb />u(mnoi=q' u(p' a)stw=n froimi/ois polurro/qois
+<lb />oi)mw/gmasi/n q', w(=n *zeu\s a)lechth/rios
+<lb />e)pw/numos ge/noito *kadmei/wn po/lei.
+<lb rend="displayNum" n="10" /><milestone ed="P" unit="para" />u(ma=s  de\ xrh\ nu=n, kai\ to\n e)llei/pont' e)/ti
+<lb />h(/bhs a)kmai/as kai\ to\n e)/chbon xro/nw|,
+<lb />blasthmo\n  a)ldai/nonta sw/matos polu/n,
+<lb />w(/ran t'  e)/xonq'  e(/kaston  w(/ste  sumprepe/s,
+<lb />po/lei t' a)rh/gein kai\ qew=n e)gxwri/wn
+<lb rend="displayNum" n="15" />bwmoi=si, tima\s mh\ 'caleifqh=nai/ pote:
+<lb />te/knois te, *gh=| te mhtri/, filta/th| trofw=|:
+<lb />h( ga\r ne/ous e(/rpontas eu)menei= pe/dw|,
+<lb />a(/panta pandokou=sa paidei/as o)/tlon,
+<lb />e)qre/yat' oi)khth=ras  a)spidhfo/rous
+<lb rend="displayNum" n="20" />pistou\s o(/pws ge/noisqe pro\s xre/os to/de.
+<lb />kai\ nu=n me\n e)s to/d' h)=mar eu)= r(e/pei qeo/s:
+<lb />xro/non ga\r h)/dh to/nde purghroume/nois
+<lb />kalw=s ta\ plei/w po/lemos e)k qew=n kurei=.
+<lb />nu=n d' w(s o( ma/ntis fhsi/n, oi)wnw=n both/r,
+<lb rend="displayNum" n="25" />e)n w)si\ nwmw=n kai\ fresi/n,  puro\s di/xa,
+<lb />xrhsthri/ous o)/rniqas a)yeudei= te/xnh|:
+<lb />ou(=tos toiw=nde despo/ths manteuma/twn
+<lb />le/gei megi/sthn prosbolh\n *)axaii/da
+<lb />nukthgorei=sqai ka)pibouleu/sein  po/lei.
+<lb rend="displayNum" n="30" />a)ll' e)/s t' e)pa/lceis kai\ pu/las purgwma/twn
+<lb />o(rma=sqe pa/ntes, sou=sqe su\n panteuxi/a|,
+<lb />plhrou=te qwrakei=a, ka)pi\ se/lmasin
+<lb />pu/rgwn sta/qhte, kai\ pulw=n e)p' e)co/dois
+<lb />mi/mnontes eu)= qarsei=te,  mhd' e)phlu/dwn
+<lb rend="displayNum" n="35" />tarbei=t' a)/gan o(/milon: eu)= telei= qeo/s.
+<lb /><milestone ed="P" unit="para" />skopou\s de\ ka)gw\ kai\ katopth=ras  stratou=
+<lb />e)/pemya, tou\s pe/poiqa mh\ mata=n o(dw=|:
+<lb />kai\ tw=nd' a)kou/sas ou)/ ti mh\ lhfqw= do/lw|.
+<milestone ed="p" n="39" unit="card" />
+</p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />*)eteo/klees, fe/riste *kadmei/wn a)/nac,
+<lb rend="displayNum" n="40" />h(/kw safh= ta)kei=qen e)k stratou= fe/rwn,
+<lb />au)to\s kato/pths d' ei)/m' e)gw\ tw=n pragma/twn:
+<lb />a)/ndres ga\r e(pta/, qou/rioi loxage/tai,
+<lb />taurosfagou=ntes e)s mela/ndeton sa/kos
+<lb />kai\ qigga/nontes xersi\ taurei/ou fo/nou,
+<lb rend="displayNum" n="45" />*)/arh t',  *)enuw/, kai\ filai/maton *fo/bon
+<lb />w(rkwmo/thsan h)\ po/lei kataskafa\s
+<lb />qe/ntes lapa/cein a)/stu *kadmei/wn bi/a|,
+<lb />h)\ gh=n qano/ntes th/nde fura/sein fo/nw|:
+<lb />mnhmei=a/ q' au(tw=n  toi=s tekou=sin e)s do/mous
+<lb rend="displayNum" n="50" />pro\s a(/rm' *)adra/stou xersi\n e)/stefon, da/kru
+<lb />lei/bontes: oi)=ktos d' ou)/tis h)=n dia\ sto/ma.
+<lb />sidhro/frwn ga\r qumo\s a)ndrei/a| fle/gwn
+<lb />e)/pnei, leo/ntwn w(s *)/arh  dedorko/twn.
+<lb />kai\ tw=nde pu/stis  ou)k o)/knw| xroni/zetai:
+<lb rend="displayNum" n="55" />klhroume/nous d' e)/leipon, w(s pa/lw| laxw\n
+<lb />e(/kastos au)tw=n pro\s pu/las a)/goi lo/xon.
+<lb />pro\s tau=t' a)ri/stous a)/ndras e)kkri/tous po/lews
+<lb />pulw=n e)p' e)co/doisi ta/geusai ta/xos:
+<lb />e)ggu\s ga\r h)/dh pa/noplos *)argei/wn strato\s
+<lb rend="displayNum" n="60" />xwrei=, koni/ei, pedi/a d' a)rghsth\s a)fro\s
+<lb />xrai/nei stalagmoi=s i(ppikw=n e)k pleumo/nwn.
+<lb />su\ d' w(/ste nao\s kedno\s oi)akostro/fos
+<lb />fra/cai po/lisma, pri\n kataigi/sai pnoa\s
+<lb />*)/arews: boa=| ga\r ku=ma xersai=on stratou=:
+<lb rend="displayNum" n="65" />kai\ tw=nde kairo\n o(/stis w)/kistos labe/:
+<lb />ka)gw\ ta\ loipa\ pisto\n h(merosko/pon
+<lb />o)fqalmo\n e(/cw, kai\ safhnei/a| lo/gou
+<lb />ei)dw\s ta\ tw=n qu/raqen a)blabh\s e)/sh|.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />w)= *zeu= te kai\ *gh= kai\ polissou=xoi qeoi/,
+<lb rend="displayNum" n="70" />*)ara/ t' *)erinu\s patro\s h( megasqenh/s,
+<lb />mh/ moi po/lin ge prumno/qen panw/leqron
+<lb />e)kqamni/shte dh|a/lwton, *(ella/dos
+<lb />fqo/ggon xe/ousan, kai\ do/mous e)festi/ous:
+<lb />e)leuqe/ran de\ gh=n te kai\ *ka/dmou po/lin
+<lb rend="displayNum" n="75" />zugoi=si douli/oisi  mh/pote sxeqei=n:
+<lb />ge/nesqe d' a)lkh/: cuna\ d' e)lpi/zw le/gein:
+<lb />po/lis ga\r eu)= pra/ssousa dai/monas ti/ei.
+<milestone ed="p" n="78" unit="card" />
+</p></sp>
+<div2 type="lyric" org="uniform" sample="complete">
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />qre/omai fobera\ mega/l' a)/xh:
+<lb />meqei=tai strato/s: strato/pedon lipw\n
+<lb rend="displayNum" n="80" />r(ei= polu\s o(/de lew\s pro/dromos i(ppo/tas:
+<lb />ai)qeri/a ko/nis me pei/qei fanei=s',
+<lb />a)/naudos safh\s e)/tumos a)/ggelos.
+<lb />e)/ti de\ <add>ga=s</add> e)ma=s  pedi/' o(plo/ktup'  w)-
+<lb />ti\ xri/mptei boa/n:  pota=tai, bre/mei d'
+<lb rend="displayNum" n="85" />a)maxe/tou di/kan u(/datos o)rotu/pou.
+<lb />i)w\ i)w\
+<lb />i)w\ qeoi\ qeai/ t' o)ro/menon kako\n
+<lb />boa=| teixe/wn u(/per a)leu/sate.
+<lb />o( leu/kaspis o)/rnutai lao\s eu)-
+<lb rend="displayNum" n="90" />treph\s e)pi\ po/lin diw/kwn <del status="unremarkable">po/da</del>.
+<lb />ti/s a)/ra r(u/setai, ti/s a)/r' e)parke/sei
+<lb />qew=n h)\ qea=n;
+<lb />po/tera dh=t' e)gw\ <add>pa/tria</add>  potipe/sw
+<lb rend="displayNum" n="95" />bre/th daimo/nwn;
+<lb />i)w\ ma/kares eu)/edroi,
+<lb />a)kma/zei brete/wn e)/xesqai: ti/ me/l-
+<lb />lomen a)ga/stonoi;
+<lb rend="displayNum" n="100" />a)kou/et' h)\ ou)k a)kou/et' a)spi/dwn ktu/pon;
+<lb />pe/plwn kai\ stefe/wn  po/t' ei) mh\ nu=n a)m-
+<lb />fi\ lita/n'  e(/comen;
+<lb />ktu/pon de/dorka: pa/tagos ou)x e(no\s doro/s.
+<lb />ti/ r(e/ceis; prodw/seis, palai/xqwn
+<lb rend="displayNum" n="105" />*)/arhs, ta\n tea/n;
+<lb />i)w\  xrusoph/lhc dai=mon e)/pid' e)/pi-
+<lb />de po/lin a(/n pot' eu)filh/tan e)/qou.
+<milestone ed="p" n="109" unit="card" />
+</p></sp></div2>
+</div1>
+<div1 type="choral" org="uniform" sample="complete">
+<div2 type="strophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />qeoi\ polia/oxoi pa/ntes i)/te xqono\s:
+<lb rend="displayNum" n="110" />i)/dete parqe/nwn
+<lb />i(ke/sion lo/xon doulosu/nas u(/per.
+<lb />ku=ma <del status="unremarkable">ga\r</del>  peri\ pto/lin doxmolo/fwn a)ndrw=n
+<lb rend="displayNum" n="115" />kaxla/zei pnoai=s *)/areos o)ro/menon.
+<lb />a)ll', w)= *zeu= † pa/ter pantele/s,
+<lb />pa/ntws a)/rhcon dai/+wn a(/lwsin.
+<lb rend="displayNum" n="120" />*)arge/ioi de\ po/lisma *ka/dmou
+<lb />kuklou=ntai: fo/bos d' a)rh/|wn  o(/plwn
+<lb /><del status="unremarkable">donei=</del>,  dia\ de/ toi genu/wn i(ppi/wn
+<lb />kinu/rontai fo/non xalinoi/.
+<lb />e(pta\ d' a)ga/nores  pre/pontes stratou=
+<lb rend="displayNum" n="125" />dorussoi=s  sagai=s pu/lais e(bdo/mais
+<lb /><gap desc="*" />
+<lb rend="displayNum" n="127" />prosi/stantai pa/lw| laxo/ntes.
+<milestone ed="p" n="128" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />su/ t', w)= *diogene\s filo/maxon kra/tos,
+<lb />r(usi/polis  genou=,
+<lb rend="displayNum" n="130" />*palla/s, o(/ q' i(/ppios pontome/dwn a)/nac
+<lb />i)xqubo/lw| *poseida/wn  maxana=|,
+<lb />e)pi/lusin fo/bwn,  e)pi/lusin di/dou.
+<lb rend="displayNum" n="135" />su/ t', *)/arhs, feu=, feu=, po/lin e)pw/numon
+<lb />*ka/dmou  fu/lacon kh/desai/ t' e)nargw=s.
+<lb rend="displayNum" n="140" />kai\ *ku/pris, a(/t' ei)=  ge/nous proma/twr,
+<lb />a)/leuson: se/qen ga\r  e)c ai(/matos
+<lb />gego/namen: litai=si/  se qeoklu/tois
+<lb />a)utou=sai  pelazo/mesqa.
+<lb rend="displayNum" n="145" />kai\ su/, *lu/kei' a)/nac, *lu/keios genou=
+<lb />stratw=| dai/+w| sto/nwn a)nti/tas.
+<lb />su/ t', w)=  *latoge/nei-
+<lb />a kou/ra, to/con eu)tuka/zou  <del status="unremarkable">*)/artemi fi/la</del>.
+<milestone ed="p" n="149" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />e)\ e)\ e)\ e)/,
+<lb rend="displayNum" n="150" />o)/tobon a(rma/twn a)mfi\ po/lin klu/w:
+<lb />w)= po/tni' *(/hra.
+<lb />e)/lakon a)co/nwn briqome/nwn xno/ai.
+<lb />*)/artemi fi/la, e)\ e)\ e)\ e)/,
+<lb rend="displayNum" n="155" />doriti/naktos ai)qh\r d'  e)pimai/netai.
+<lb />ti/ po/lis a)/mmi pa/sxei, ti/ genh/setai;
+<lb />poi= d' e)/ti te/los e)pa/gei qeo/s;
+<milestone ed="p" n="158" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />e)\ e)\ e)\ e)/,
+<lb rend="displayNum" n="158b" />a)krobo/lwn d' e)pa/lcewn liqa\s e)/rxetai:
+<lb />w)= fi/l' *)/apollon:
+<lb rend="displayNum" n="160" />ko/nabos e)n pu/lais xalkode/twn sake/wn,
+<lb />pai= *dio/s, o(/qen
+<lb />polemo/kranton a(gno\n te/los e)n ma/xa|.
+<lb />su/ te, ma/kair'  a)/nass' *)/ogka, pro\ po/lews
+<lb rend="displayNum" n="165" />e(pta/pulon e(/dos e)pirru/ou.
+<milestone ed="p" n="166" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />i)w\ panarkei=s  qeoi/,
+<lb />i)w\ te/leioi te/leiai/ te ga=s
+<lb />ta=sde  purgofu/lakes,
+<lb />po/lin dori/ponon mh\ prodw=q'
+<lb rend="displayNum" n="170" />e(terofw/nw| stratw=|.
+<lb />klu/ete parqe/nwn klu/ete pandi/kws
+<lb />xeiroto/nous lita/s.
+<milestone ed="p" n="174" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />i)w\ fi/loi dai/mones,
+<lb rend="displayNum" n="175" />luth/rioi/  <add>t'</add>  a)mfiba/ntes po/lin,
+<lb />dei/caq' w(s filopo/leis,
+<lb />me/lesqe/ q'  i(erw=n dhmi/wn,
+<lb />melo/menoi d' a)rh/cate:
+<lb />filoqu/twn de/ toi po/leos  o)rgi/wn
+<lb rend="displayNum" n="180" />mnh/stores e)ste/ moi.
+<milestone ed="p" n="181" unit="card" /></p></sp></div2>
+</div1>
+<div1 type="episode" org="uniform" sample="complete">
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />u(ma=s e)rwtw=, qre/mmat' ou)k a)nasxeta/,
+<lb />h)= tau=t' a)/rista kai\ po/lei swth/ria,
+<lb />stratw=| te qa/rsos tw=|de purghroume/nw|,
+<lb rend="displayNum" n="185" />bre/th pesou/sas pro\s polissou/xwn qew=n
+<lb />au)/ein, laka/zein, swfro/nwn mish/mata;
+<lb />mh/t' e)n kakoi=si mh/t' e)n eu)estoi= fi/lh|
+<lb />cu/noikos ei)/hn tw=| gunaikei/w| ge/nei.
+<lb />kratou=sa me\n ga\r ou)x o(milhto\n qra/sos,
+<lb rend="displayNum" n="190" />dei/sasa d' oi)/kw| kai\ po/lei ple/on kako/n.
+<lb />kai\ nu=n poli/tais ta/sde diadro/mous fuga\s
+<lb />qei=sai dierroqh/sat' a)/yuxon ka/khn:
+<lb />ta\ tw=n qu/raqen d' w(s a)/rist' o)fe/lletai,
+<lb />au)toi\ d' u(p' au)tw=n  e)/ndoqen porqou/meqa.
+<lb rend="displayNum" n="195" />toiau=ta/ ta)\n gunaici\ sunnai/wn e)/xois.
+<lb />kei) mh/ tis a)rxh=s th=s e)mh=s a)kou/setai,
+<lb />a)nh\r gunh/ te xw)/ ti tw=n metai/xmion,
+<lb />yh=fos kat' au)tw=n o)leqri/a bouleu/setai,
+<lb />leusth=ra dh/mou d' ou)/ ti mh\ fu/gh| mo/ron.
+<lb rend="displayNum" n="200" />me/lei ga\r a)ndri/, mh\ gunh\ bouleue/tw,
+<lb />ta)/cwqen: e)/ndon d' ou)=sa mh\ bla/bhn ti/qei.
+<lb />h)/kousas h)\ ou)k h)/kousas, h)\ kwfh=| le/gw;
+<milestone ed="p" n="203" unit="card" />
+</p></sp>
+</div1>
+<div1 type="choral" org="uniform" sample="complete">
+<div2 type="strophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />w)= fi/lon *oi)di/pou te/kos, e)/deis' a)kou/-
+<lb />sasa to\n a(rmato/ktupon o)/tobon o)/tobon,
+<lb rend="displayNum" n="205" />o(/te  te su/rigges e)/klagcan e(li/troxoi,
+<lb />i(ppikw=n t' a)pu/an  phdali/wn dia\ sto/ma
+<lb />purigeneta=n xalinw=n.</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />ti/ ou)=n; o( nau/ths a)=ra mh\ 's prw=|ran fugw\n
+<lb />pru/mnhqen hu(=re  mhxanh\n swthri/as,
+<lb rend="displayNum" n="210" />new\s kamou/shs ponti/w| pro\s ku/mati ;
+<milestone ed="p" n="211" unit="card" />
+</p></sp></div2>
+<div2 type="antistrophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />a)ll' e)pi\ daimo/nwn pro/dromos h)=lqon a)r-
+<lb />xai=a bre/th, qeoi=si pi/sunos,  nifa/dos
+<lb />o(/t' o)loa=s neifome/nas  bro/mos e)n pu/lais:
+<lb />dh\ to/t' h)/rqhn fo/bw| pro\s maka/rwn lita/s, po/lews
+<lb rend="displayNum" n="215" />i(/n' u(pere/xoien a)lka/n.</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />pu/rgon ste/gein eu)/xesqe pole/mion do/ru.
+<lb />ou)kou=n  ta/d' e)/stai pro\s qew=n: a)ll' ou)=n qeou\s
+<lb />tou\s th=s a(lou/shs po/leos  e)klei/pein lo/gos.
+<milestone ed="p" n="219" unit="card" />
+</p></sp></div2>
+<div2 type="strophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />mh/pot' e)mo\n kat' ai)w=na li/poi  qew=n
+<lb rend="displayNum" n="220" />a(/de pana/guris, mhd' e)pi/doimi ta/nd'
+<lb />a)studromoume/nan po/lin kai\ stra/teum'
+<lb />a(pto/menon puri\ dai/+w|.</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />mh/ moi qeou\s kalou=sa bouleu/ou kakw=s:
+<lb />peiqarxi/a ga/r e)sti th=s eu)praci/as
+<lb rend="displayNum" n="225" />mh/thr, gunh\ swth=ros: w(=d' e)/xei lo/gos.
+<milestone ed="p" n="226" unit="card" />
+</p></sp></div2>
+<div2 type="antistrophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />e)/sti: qeou=  d' e)/t' i)sxu\s kaquperte/ra:
+<lb />polla/ki d' e)n kakoi=si to\n  a)ma/xanon
+<lb />ka)k xalepa=s du/as u(/perq' o)mma/twn
+<lb />krhmnamena=n  nefela=n  o)rqoi=.</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb rend="displayNum" n="230" />a)ndrw=n ta/d' e)sti/, sfa/gia kai\ xrhsth/ria
+<lb />qeoi=sin e(/rdein polemi/wn peirwme/nous :
+<lb />so\n d' au)= to\ siga=n kai\ me/nein ei)/sw do/mwn.
+<milestone ed="p" n="233" unit="card" />
+</p></sp></div2>
+<div2 type="strophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />dia\ qew=n po/lin nemo/meq'  a)da/maton,
+<lb />dusmene/wn d' o)/xlon pu/rgos a)poste/gei.
+<lb rend="displayNum" n="235" />ti/s  ta/de ne/mesis stugei=;</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />ou)/toi fqonw= soi daimo/nwn tima=n ge/nos:
+<lb />a)ll' w(s poli/tas mh\ kakospla/gxnous tiqh=|s,
+<lb />eu)/khlos i)/sqi mhd' a)/gan u(perfobou=.
+<milestone ed="p" n="239" unit="card" />
+</p></sp></div2>
+<div2 type="antistrophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />poti/faton  klu/ousa pa/tagon a)na/miga
+<lb rend="displayNum" n="240" />tarbosu/nw| fo/bw| ta/nd' e)s a)kro/ptolin,
+<lb />ti/mion e(/dos, i(ko/man.</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />mh/ nun, e)a\n qnh/|skontas h)\ tetrwme/nous
+<lb />pu/qhsqe, kwkutoi=sin a(rpali/zete.
+<lb />tou/tw| ga\r *)/arhs bo/sketai, fo/nw| brotw=n.
+<milestone ed="p" n="245" unit="card" />
+</p></sp></div2>
+</div1>
+<div1 type="episode" org="uniform" sample="complete">
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="245" />kai\ mh\n a)kou/w g' i(ppikw=n fruagma/twn.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />mh/ nun  a)kou/ous' e)mfanw=s a)/kou' a)/gan.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />ste/nei po/lisma gh=qen, w(s kukloume/nwn.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />ou)kou=n e)/m' a)rkei= tw=nde bouleu/ein pe/ri.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />de/doik', a)ragmo\s d' e)n pu/lais o)fe/lletai.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb rend="displayNum" n="250" />ou) si=ga mhde\n tw=nd' e)rei=s kata\ pto/lin;
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />w)= cunte/leia, mh\ prodw=|s purgw/mata.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />ou)k e)s fqo/ron  sigw=s' a)nasxh/sh| ta/de;
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />qeoi\ poli=tai, mh/ me doulei/as tuxei=n.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />au)th\ su\ douloi=s ka)me\ kai\ pa=san po/lin.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="255" />w)= pagkrate\s *zeu=, tre/yon ei)s e)xqrou\s be/los.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />w)= *zeu=, gunaikw=n oi(=on w)/pasas ge/nos.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />moxqhro/n, w(/sper a)/ndras w(=n a(lw=| po/lis.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />palinstomei=s au)= qigga/nous' a)galma/twn;
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />a)yuxi/a| ga\r glw=ssan a(rpa/zei fo/bos.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb rend="displayNum" n="260" />ai)toume/nw| moi kou=fon ei) doi/hs te/los.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />le/gois a)\n w(s ta/xista, kai\ ta/x' ei)/somai.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />si/ghson, w)= ta/laina, mh\ fi/lous fo/bei.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />sigw=: su\n a)/llois pei/somai to\ mo/rsimon.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />tou=t' a)nt' e)kei/nwn tou)/pos ai(rou=mai se/qen.
+<lb rend="displayNum" n="265" />kai\ pro/s ge tou/tois, e)kto\s ou)=s' a)galma/twn,
+<lb />eu)/xou ta\ krei/ssw, cumma/xous ei)=nai qeou/s:
+<lb />ka)mw=n a)kou/sas' eu)gma/twn, e)/peita su\
+<lb />o)lolugmo\n i(ero\n eu)menh= paiw/nison,
+<lb />*(ellhniko\n no/misma qusta/dos boh=s,
+<lb rend="displayNum" n="270" />qa/rsos fi/lois, lu/ousa pole/mion fo/bon.
+<lb /><milestone ed="P" unit="para" />e)gw\ de\ xw/ras toi=s polissou/xois qeoi=s,
+<lb />pediono/mois te ka)gora=s e)pisko/pois,
+<lb />*di/rkhs te phgai=s, u(/dati/ t'  *)ismhnou= le/gw
+<lb />eu)= cuntuxo/ntwn kai\ po/lews seswme/nhs,
+<lb rend="displayNum" n="275" />mh/loisin ai(ma/ssontas e(sti/as qew=n,
+<lb /><del status="unremarkable">tauroktonou=ntas qeoi=sin, w(=d' e)peu/xomai</del>
+<lb />qu/sein  tropai=a, dai/+wn  d' e)sqh/mata,
+<lb />ste/yw la/fura  douri/plhxq'  a(gnoi=s do/mois.
+<lb /><del status="unremarkable">ste/yw pro\ naw=n, polemi/wn d' e)sqh/mata.†</del>
+<lb rend="displayNum" n="280" /><milestone ed="P" unit="para" />toiau=t' e)peu/xou mh\ filosto/nws qeoi=s,
+<lb />mhd' e)n matai/ois ka)gri/ois poifu/gmasin:
+<lb />ou) ga/r ti ma=llon mh\ fu/gh|s to\ mo/rsimon.
+<lb />e)gw\ de/ g'  a)/ndras e(\c e)moi\ su\n e(bdo/mw|
+<lb />a)nthre/tas e)xqroi=si to\n me/gan tro/pon
+<lb rend="displayNum" n="285" />ei)s e(ptateixei=s e)co/dous ta/cw molw/n,
+<lb />pri\n a)gge/lous sperxnou/s te kai\ taxurro/qous
+<lb />lo/gous i(ke/sqai kai\ fle/gein xrei/as u(/po.
+<milestone ed="p" n="288" unit="card" />
+</p></sp>
+</div1>
+<div1 type="choral" org="uniform" sample="complete">
+<div2 type="strophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />me/lei, fo/bw| d' ou)x u(pnw/ssei ke/ar:
+<lb />gei/tones de\ kardi/as
+<lb rend="displayNum" n="290" />me/rimnai zwpurou=si ta/rbos
+<lb />to\n a)mfiteixh= lew/n,
+<lb />dra/kontas  w(/s tis te/knwn
+<lb />u(perde/doiken lexai/wn  duseuna/toras
+<lb />pa/ntromos  peleia/s.
+<lb rend="displayNum" n="295" />toi\ me\n ga\r poti\ pu/rgous
+<lb />pandamei\ panomilei\
+<lb />stei/xousin.  ti/ ge/nwmai;
+<lb />toi\ d' e)p' a)mfibo/loisin
+<lb />i)a/ptousi poli/tais
+<lb rend="displayNum" n="300" />xerma/d' o)krio/essan.
+<lb />panti\ tro/pw|, *diogenei=s
+<lb />qeoi/, po/lin kai\ strato\n
+<lb />*kadmogenh= r(u/esqe.
+<milestone ed="p" n="304" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />poi=on d' a)mei/yesqe  gai/as pe/don
+<lb rend="displayNum" n="305" />ta=sd' a)/reion, e)xqroi=s
+<lb />a)fe/ntes ta\n baqu/xqon' ai)=an,
+<lb />u(/dwr te *dirkai=on, eu)-
+<lb />trafe/staton  pwma/twn
+<lb />o(/swn i(/hsin *posei-
+<lb rend="displayNum" n="310" />da=n o( gaia/oxos
+<lb />*thqu/os te pai=des.
+<lb />pro\s ta/d', w)= poliou=xoi
+<lb />qeoi/, toi=si me\n e)/cw
+<lb />pu/rgwn a)ndrole/teiran
+<lb rend="displayNum" n="315" />kh=ra, r(i/yoplon  a)/tan,
+<lb />e)mbalo/ntes a)/roisqe
+<lb />ku=dos toi=sde poli/tais.
+<lb />kai\ po/lews r(u/tores  <add>e)/st'</add>
+<lb />eu)/edroi/ te sta/qht'
+<lb rend="displayNum" n="320" />o)cugo/ois litai=sin.
+<milestone ed="p" n="321" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />oi)ktro\n ga\r po/lin w(=d' w)gugi/an
+<lb />*)ai/da| proi+a/yai, doro\s a)/gran
+<lb />douli/an  yafara=| spodw=|
+<lb />u(p' a)ndro\s *)axaiou= qeo/qen
+<lb rend="displayNum" n="325" />perqome/nan a)ti/mws,
+<lb />ta\s de\ kexeirwme/nas  a)/gesqai,
+<lb />e)\ e)/, ne/as te kai\ palaia\s
+<lb />i(pphdo\n ploka/mwn, perir-
+<lb />rhgnume/nwn fare/wn.  boa=|
+<lb rend="displayNum" n="330" />d' e)kkenoume/na po/lis,
+<lb />lai/+dos o)llume/nas micoqro/ou:
+<lb />barei/as toi tu/xas protarbw=.
+<milestone ed="p" n="333" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />klauto\n d' a)rtitro/pois  w)modro/pois
+<lb />nomi/mwn propa/roiqen diamei=yai
+<lb rend="displayNum" n="335" />dwma/twn stugera\n o(do/n:
+<lb />ti/; to\n fqi/menon ga\r prole/gw
+<lb />be/ltera tw=nde pra/ssein:
+<lb />polla\ ga/r, eu)=te pto/lis  damasqh=|,
+<lb />e)\ e)/, dustuxh= te pra/ssei.
+<lb rend="displayNum" n="340" />a)/llos d' a)/llon a)/gei, foneu/-
+<lb />ei, ta\ de\ purforei=: kapnw=|
+<lb /><del status="unremarkable">de\</del>  xrai/netai po/lism' a(/pan:
+<lb />maino/menos d' e)pipnei= laoda/mas
+<lb />miai/nwn eu)se/beian *)/arhs.
+<milestone ed="p" n="345" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="345" />korkorugai\  d' a)n' a)/stu, proti\ <del status="unremarkable">pto/lin</del>
+<lb />d' o(rka/na
+<lb />purgw=tis: pro\s a)ndro\s d' a)nh\r
+<lb /><add>a)mfi\</add>  dori\ kli/netai:
+<lb />blaxai\ d' ai(mato/essai
+<lb />tw=n e)pimastidi/wn
+<lb rend="displayNum" n="350" />a)rtitrefei=s bre/montai.
+<lb />a(rpagai\ de\ diadroma=n  o(mai/mones:
+<lb />cumbolei= fe/rwn fe/ronti,
+<lb />kai\ keno\s keno\n kalei=,
+<lb />cu/nnomon qe/lwn e)/xein,
+<lb rend="displayNum" n="355" />ou)/te mei=on ou)/t' i)/son lelimme/noi.
+<lb />ta)k  tw=nd' ei)ka/sai lo/gos pa/ra.
+<milestone ed="p" n="357" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />pantodapo\s de\ karpo\s xama/dis pesw\n
+<lb />a)lgu/nei kurh/sas: pikro\n d'
+<lb />o)/mma qalamhpo/lwn:
+<lb rend="displayNum" n="360" />polla\ d' a)krito/furtos
+<lb />ga=s do/sis ou)tidanoi=s
+<lb />e)n r(oqi/ois  forei=tai.
+<lb />dmwi/des de\ kainoph/mones ne/ai:
+<lb />tla/mon'  eu)na\n ai)xma/lwton
+<lb rend="displayNum" n="365" />a)ndro\s eu)tuxou=ntos w(\s
+<lb />dusmenou=s u(perte/rou
+<lb />e)lpi/s e)sti nu/kteron te/los molei=n,
+<lb />pagklau/twn a)lge/wn e)pi/rroqon.
+<milestone ed="p" n="369" unit="card" /></p></sp></div2>
+</div1>
+<div1 type="episode" org="uniform" sample="complete">
+<sp>
+<speaker>*(hmixo/rion *a</speaker><p>
+<lb />o(/ toi kato/pths, w(s e)moi\ dokei=, stratou=
+<lb rend="displayNum" n="370" />peuqw/ tin' h(mi=n, w)= fi/lai, ne/an fe/rei,
+<lb />spoudh=| diw/kwn pompi/mous xno/as podw=n.
+</p></sp>
+<sp>
+<speaker>*(hmixo/rion *b</speaker><p>
+<lb />kai\ mh\n a)/nac o(/d' au)to\s *oi)di/pou to/kos
+<lb />ei)s  a)rti/kollon a)gge/lou lo/gon maqei=n:
+<lb />spoudh\ de\ kai\ tou=d' ou)k a)parti/zei po/da.
+</p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb rend="displayNum" n="375" />le/goim' a)\n ei)dw\s eu)= ta\ tw=n e)nanti/wn,
+<lb />w(/s t'  e)n pu/lais e(/kastos ei)/lhxen pa/lon.
+<lb />*tudeu\s me\n h)/dh pro\s pu/laisi *proiti/sin
+<lb />bre/mei, po/ron d' *)ismhno\n ou)k e)a=| pera=n
+<lb />o( ma/ntis: ou) ga\r sfa/gia gi/gnetai  kala/.
+<lb rend="displayNum" n="380" />*tudeu\s de\ margw=n kai\ ma/xhs lelimme/nos
+<lb />meshmbrinai=s klaggai=sin w(s dra/kwn boa=|:
+<lb />qei/nei  d' o)nei/dei ma/ntin *oi)klei/dhn  sofo/n,
+<lb />sai/nein mo/ron te kai\ ma/xhn a)yuxi/a|.
+<lb />toiau=t' a)utw=n trei=s kataski/ous lo/fous
+<lb rend="displayNum" n="385" />sei/ei, kra/nous xai/twm', u(p' a)spi/dos d' e)/sw
+<lb />xalkh/latoi kla/zousi kw/dwnes fo/bon:
+<lb />e)/xei d' u(pe/rfron sh=m' e)p' a)spi/dos to/de,
+<lb />fle/gonq' u(p' a)/strois ou)rano\n tetugme/non:
+<lb />lampra\ de\ panse/lhnos e)n me/sw| sa/kei,
+<lb rend="displayNum" n="390" />pre/sbiston a)/strwn,  nukto\s o)fqalmo/s, pre/pei.
+<lb />toiau=t' a)lu/wn tai=s u(perko/mpois sagai=s
+<lb />boa=| par' o)/xqais potami/ais, ma/xhs e)rw=n,
+<lb />i(/ppos xalinw=n w(\s katasqmai/nwn me/nei,
+<lb />o(/stis boh\n sa/lpiggos o(rmai/nei me/nwn.
+<lb rend="displayNum" n="395" />ti/n' a)ntita/ceis tw=|de;  ti/s *proi/tou pulw=n
+<lb />klh/|qrwn luqe/ntwn prostatei=n fere/gguos;
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />ko/smon me\n a)ndro\s ou)/tin' a)\n tre/saim' e)gw/,
+<lb />ou)d' e(lkopoia\ gi/gnetai  ta\ sh/mata:
+<lb />lo/foi de\ kw/dwn t' ou) da/knous' a)/neu doro/s.
+<lb rend="displayNum" n="400" />kai\ nu/kta tau/thn h(\n le/geis e)p' a)spi/dos
+<lb />a)/stroisi marmai/rousan ou)ranou= kurei=n,
+<lb />ta/x' a)\n ge/noito ma/ntis h( a)noi/a tini/.
+<lb />ei) ga\r qano/nti nu\c e)p' o)fqalmoi=s pe/soi,
+<lb />tw=| toi fe/ronti sh=m' u(pe/rkompon to/de
+<lb rend="displayNum" n="405" />ge/noit' a)\n o)rqw=s e)ndi/kws t' e)pw/numon,
+<lb />kau)to\s kaq' au(tou= th/nd' u(/brin manteu/setai.
+<lb />e)gw\ de\ *tudei= kedno\n *)astakou= to/kon
+<lb />tw=nd'  a)ntita/cw prosta/thn pulwma/twn,
+<lb />ma/l' eu)genh= te kai\ to\n *ai)sxu/nhs qro/non
+<lb rend="displayNum" n="410" />timw=nta kai\ stugou=nq' u(pe/rfronas lo/gous.
+<lb />ai)sxrw=n ga\r a)rgo/s, mh\ kako\s d' ei)=nai filei=.
+<lb />spartw=n d' a)p' a)ndrw=n, w(=n *)/arhs e)fei/sato,
+<lb />r(i/zwm' a)nei=tai, ka/rta d' e)/st' e)gxw/rios,
+<lb />*mela/nippos: e)/rgon d' e)n ku/bois *)/arhs krinei=:
+<lb rend="displayNum" n="415" />*di/kh d' o(mai/mwn  ka/rta nin proste/lletai
+<lb />ei)/rgein tekou/sh| mhtri\ pole/mion do/ru.
+<milestone ed="p" n="417" unit="card" />
+</p></sp>
+</div1>
+<div1 type="choral" org="uniform" sample="complete">
+<div2 type="strophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />to\n a(mo/n  nun  a)nti/palon eu)tuxei=n
+<lb />qeoi\ doi=en, w(s dikai/ws po/lews
+<lb />pro/maxos  o)/rnutai: tre/mw d' ai(math-
+<lb rend="displayNum" n="420" />fo/rous mo/rous u(pe\r fi/lwn
+<lb />o)lome/nwn i)de/sqai.
+<milestone ed="p" n="422" unit="card" /></p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />tou/tw| me\n ou(/tws eu)tuxei=n doi=en qeoi/:
+<lb />*kapaneu\s d' e)p' *)hle/ktraisin ei)/lhxen pu/lais,
+<lb />gi/gas o(/d' a)/llos tou= pa/ros lelegme/nou
+<lb rend="displayNum" n="425" />mei/zwn, o( ko/mpos d' ou) kat' a)/nqrwpon fronei=,
+<lb />pu/rgois d' a)peilei= dei/n', a(\ mh\ krai/noi tu/xh:
+<lb />qeou= te ga\r qe/lontos e)kpe/rsein po/lin
+<lb />kai\ mh\ qe/lonto/s fhsin, ou)de\ th\n *dio\s
+<lb />e)/rin pe/doi  skh/yasan e)mpodw\n sxeqei=n.
+<lb rend="displayNum" n="430" />ta\s d' a)strapa/s te kai\ kerauni/ous bola\s
+<lb />meshmbrinoi=si qa/lpesin prosh/|kasen:
+<lb />e)/xei de\ sh=ma gumno\n a)/ndra purfo/ron,
+<lb />fle/gei de\ lampa\s dia\ xerw=n w(plisme/nh:
+<lb />xrusoi=s de\ fwnei= gra/mmasin <q direct="unspecified">prh/sw po/lin.</q>
+<lb rend="displayNum" n="435" />toiw=|de fwti\ pe/mpe—ti/s custh/setai,
+<lb />ti/s a)/ndra kompa/zonta  mh\ tre/sas menei=;
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />kai\ tw=|de ke/rdei ke/rdos a)/llo ti/ktetai.
+<lb />tw=n toi matai/wn a)ndra/sin fronhma/twn
+<lb />h( glw=ss'  a)lhqh\s gi/gnetai  kath/goros:
+<lb rend="displayNum" n="440" />*kapaneu\s d' a)peilei=, dra=n pareskeuasme/nos,
+<lb />qeou\s a)ti/zwn, ka)pogumna/zwn sto/ma
+<lb />xara=| matai/a| qnhto\s w)\n ei)s ou)rano\n
+<lb />pe/mpei gegwna\  *zhni\ kumai/nont' e)/ph:
+<lb />pe/poiqa d' au)tw=| cu\n di/kh| to\n purfo/ron
+<lb rend="displayNum" n="445" />h(/cein kerauno/n, ou)de\n e)ch|kasme/non
+<lb />meshmbrinoi=si qa/lpesin toi=s h(li/ou.
+<lb />a)nh\r d' e)p' au)tw=|, kei) sto/margo/s e)st' a)/gan,
+<lb />ai)/qwn te/taktai lh=ma, *polufo/ntou bi/a,
+<lb />fere/gguon frou/rhma, prostathri/as
+<lb rend="displayNum" n="450" />*)arte/midos eu)noi/aisi su/n t' a)/llois qeoi=s.
+<lb />le/g' a)/llon a)/llais e)n pu/lais ei)lhxo/ta.
+<milestone ed="p" n="452" unit="card" />
+</p></sp></div2>
+<div2 type="antistrophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />o)/loiq' o(\s po/lei mega/l' e)peu/xetai,
+<lb />keraunou= de/ nin  be/los e)pisxe/qoi,
+<lb />pri\n e)mo\n e)sqorei=n do/mon, pwlikw=n
+<lb rend="displayNum" n="455" />q'  e(dwli/wn u(perko/pw|
+<lb />dori/ pot' e)klapa/cai.
+<milestone ed="p" n="457" unit="card" /></p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />kai\ mh\n to\n e)nteu=qen laxo/nta pro\s pu/lais
+<lb />le/cw: tri/tw| ga\r *)eteo/klw| tri/tos pa/los
+<lb />e)c u(pti/ou 'ph/dhsen eu)xa/lkou kra/nous,
+<lb rend="displayNum" n="460" />pu/laisi *nhi/sth|si  prosbalei=n lo/xon.
+<lb />i(/ppous d' e)n a)mpukth=rsin e)mbrimwme/nas
+<lb />dinei=, qelou/sas pro\s pu/lais peptwke/nai.
+<lb />fimoi\ de\ suri/zousi ba/rbaron tro/pon,
+<lb />mukthroko/mpois pneu/masin plhrou/menoi.
+<lb rend="displayNum" n="465" />e)sxhma/tistai  d' a)spi\s ou) smikro\n  tro/pon:
+<lb />a)nh\r <del status="unremarkable">d':</del>  o(pli/ths kli/makos prosamba/seis
+<lb />stei/xei pro\s e)xqrw=n pu/rgon, e)kpe/rsai qe/lwn.
+<lb />boa=| de\ xou)=tos gramma/twn e)n cullabai=s,
+<lb />w(s ou)d' a)\n *)/arhs sf' e)kba/loi purgwma/twn.
+<lb rend="displayNum" n="470" />kai\ tw=|de fwti\ pe/mpe to\n fere/gguon
+<lb />po/lews a)pei/rgein th=sde dou/lion  zugo/n.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />pe/mpoim' a)\n h)/dh to/nde, su\n tu/xh| de/ tw|:
+<lb />kai\ dh\ pe/pemptai  ko/mpon e)n xeroi=n e)/xwn,
+<lb />*megareu/s, *kre/ontos spe/rma tou= spartw=n
+<lb />ge/nous,
+<lb rend="displayNum" n="475" />o(\s ou)/ti ma/rgwn i(ppikw=n fruagma/twn
+<lb />bro/mon fobhqei\s e)k pulw=n xwrh/setai,
+<lb />a)ll' h)\ qanw\n trofei=a plhrw/sei xqoni/,
+<lb />h)\ kai\ du/'  a)/ndre kai\ po/lism' e)p' a)spi/dos
+<lb />e(lw\n lafu/rois dw=ma kosmh/sei patro/s.
+<lb rend="displayNum" n="480" />ko/mpaz' e)p' a)/llw|, mhde/ moi fqo/nei le/gwn.
+<milestone ed="p" n="481" unit="card" />
+</p></sp></div2>
+<div2 type="strophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />e)peu/xomai tw=|de  me\n eu)tuxei=n, i)w\
+<lb />pro/max' e)mw=n do/mwn, toi=si de\ dustuxei=n.
+<lb />w(s d' u(pe/rauxa ba/zousin  e)pi\ pto/lei
+<lb />mainome/na| freni/, tw/s nin
+<lb rend="displayNum" n="485" />*zeu\s neme/twr e)pi/doi kotai/nwn.
+<milestone ed="p" n="486" unit="card" /></p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />te/tartos a)/llos, gei/tonas pu/las e)/xwn
+<lb />*)/ogkas *)aqa/nas, cu\n boh=| pari/statai,
+<lb />*(ippome/dontos sxh=ma kai\ me/gas tu/pos:
+<lb />a(/lw de\ pollh/n, a)spi/dos ku/klon le/gw,
+<lb rend="displayNum" n="490" />e)/frica dinh/santos: ou)k a)/llws e)rw=.
+<lb />o( shmatourgo\s d' ou)/ tis eu)telh\s a)/r' h)=n
+<lb />o(/stis to/d' e)/rgon w)/pasen pro\s a)spi/di,
+<lb />*tufw=n' i(e/nta pu/rpnoon dia\ sto/ma
+<lb />lignu\n me/lainan, ai)o/lhn puro\s ka/sin:
+<lb rend="displayNum" n="495" />o)/fewn de\ plekta/naisi peri/dromon ku/tos
+<lb />proshda/fistai koiloga/storos ku/klou.
+<lb />au)to\s d' e)phla/lacen, e)/nqeos d' *)/arei
+<lb />bakxa=| pro\s a)lkh\n *quia\s  w(\s fo/bon ble/pwn.
+<lb />toiou=de fwto\s pei=ran eu)= fulakte/on:
+<lb rend="displayNum" n="500" />*fo/bos ga\r h)/dh pro\s pu/lais kompa/zetai.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />prw=ton me\n *)/ogka *palla/s, h(/t' a)gxi/ptolis,
+<lb />pu/laisi gei/twn, a)ndro\s e)xqai/rous' u(/brin,
+<lb />ei)/rcei neossw=n w(\s dra/konta du/sximon:
+<lb />*(upe/rbios de/, kedno\s *oi)/nopos to/kos,
+<lb rend="displayNum" n="505" />a)nh\r kat' a)/ndra tou=ton h(|re/qh, qe/lwn
+<lb />e)cistorh=sai moi=ran e)n xrei/a| tu/xhs,
+<lb />ou)/t' ei)=dos ou)/te qumo\n ou)d' o(/plwn sxe/sin
+<lb />mwmhto/s, *(ermh=s d' eu)lo/gws cunh/gagen.
+<lb />e)xqro\s ga\r a(nh\r  a)ndri\ tw=| custh/setai,
+<lb rend="displayNum" n="510" />cunoi/seton de\ polemi/ous e)p' a)spi/dwn
+<lb />qeou/s: o( me\n ga\r pu/rpnoon *tufw=n' e)/xei,
+<lb />*(uperbi/w| de\ *zeu\s path\r e)p' a)spi/dos
+<lb />stadai=os h(=stai, dia\ xero\s be/los fle/gwn:
+<lb />kou)/pw tis ei)=de *zh=na/ pou nikw/menon.
+<lb rend="displayNum" n="515" />toia/de me/ntoi prosfi/leia daimo/nwn:
+<lb />pro\s tw=n kratou/ntwn d' e)sme/n, oi( d' h(sswme/nwn,
+<lb />ei) *zeu/s ge *tufw= karterw/teros ma/xh|:
+<lb rend="displayNum" n="519" />ei)ko\s de\  pra/cein  a)/ndras w(=d' a)ntista/tas,
+<lb rend="displayNum" n="518" />*(uperbi/w| te pro\s lo/gon tou= sh/matos
+<lb rend="displayNum" n="520" />swth\r ge/noit' a)\n *zeu\s e)p' a)spi/dos tuxw/n.
+<milestone ed="p" n="521" unit="card" />
+</p></sp></div2>
+<div2 type="antistrophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />pe/poiqa <add>dh\</add>  to\n *dio\s a)nti/tupon e)/xont'
+<lb />a)/filon e)n sa/kei tou= xqoni/ou de/mas
+<lb />dai/monos,  e)xqro\n ei)/kasma brotoi=s  te kai\
+<lb />darobi/oisi qeoi=sin,
+<lb rend="displayNum" n="525" />pro/sqe pula=n kefala\n i)a/yein.
+<milestone ed="p" n="526" unit="card" /></p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />ou(/tws ge/noito.  to\n de\ pe/mpton au)= le/gw,
+<lb />pe/mptaisi prostaxqe/nta *borrai/ais  pu/lais,
+<lb />tu/mbon kat' au)to\n *diogenou=s *)amfi/onos:
+<lb />o)/mnusi d' ai)xmh\n h(\n e)/xei ma=llon qeou=
+<lb rend="displayNum" n="530" />se/bein pepoiqw\s o)mma/twn q' u(pe/rteron,
+<lb />h)= mh\n lapa/cein a)/stu *kadmei/wn bi/a|
+<lb />*dio/s: to/d' au)da=| mhtro\s  e)c o)resko/ou
+<lb />bla/sthma kalli/prw|ron, a)ndro/pais a)nh/r:
+<lb />stei/xei d' i)/oulos a)/rti dia\ parhi/dwn,
+<lb rend="displayNum" n="535" />w(/ras fuou/shs, tarfu\s a)nte/llousa qri/c.
+<lb />o( d' w)mo/n, ou)/ti parqe/nwn e)pw/numon,
+<lb />fro/nhma, gorgo\n d' o)/mm' e)/xwn, prosi/statai.
+<lb />ou) mh\n a)ko/mpasto/s g' e)fi/statai pu/lais:
+<lb />to\ ga\r po/lews o)/neidos e)n xalkhla/tw|
+<lb rend="displayNum" n="540" />sa/kei, kuklwtw=| sw/matos problh/mati,
+<lb />*sfi/gg' w)mo/siton prosmemhxanhme/nhn
+<lb />go/mfois e)nw/ma, lampro\n e)/kkrouston de/mas,
+<lb />fe/rei d' u(f' au(th=| fw=ta *kadmei/wn e(/na,
+<lb />w(s plei=st' e)p' a)ndri\ tw=|d' i)a/ptesqai be/lh.
+<lb rend="displayNum" n="545" />e)lqw\n d' e)/oiken ou) kaphleu/sein ma/xhn,
+<lb />makra=s keleu/qou d' ou) kataisxunei=n  po/ron,
+<lb />*parqenopai=os *)arka/s: o( de\ toio/sd' a)nh\r
+<lb />me/toikos, *)/argei d' e)kti/nwn kala\s trofa/s,
+<lb />pu/rgois a)peilei= toi=sd' a(\ mh\ krai/noi qeo/s.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb rend="displayNum" n="550" />ei) ga\r tu/xoien w(=n fronou=si pro\s qew=n,
+<lb />au)toi=s e)kei/nois a)nosi/ois kompa/smasin:
+<lb />h)= ta)\n panw/leis pagka/kws t' o)loi/ato.
+<lb />e)/stin de\ kai\ tw=|d', o(\n le/geis to\n *)arka/da,
+<lb />a)nh\r a)/kompos, xei\r d' o(ra=|  to\ dra/simon,
+<lb rend="displayNum" n="555" />*)/aktwr a)delfo\s tou= pa/ros lelegme/nou:
+<lb />o(\s ou)k e)a/sei glw=ssan e)rgma/twn a)/ter
+<lb />e)/sw pulw=n r(e/ousan a)ldai/nein kaka/,
+<lb />ou)d' ei)samei=yai qhro\s e)xqi/stou da/kous
+<lb />ei)kw\ fe/ronta polemi/as e)p' a)spi/dos:
+<lb rend="displayNum" n="560" />h(\ 'cwqen  ei)/sw tw=| fe/ronti me/myetai,
+<lb />puknou= krothsmou= tugxa/nous' u(po\ pto/lin.
+<lb />qew=n qelo/ntwn ta)\n  a)lhqeu/saim' e)gw/.
+<milestone ed="p" n="563" unit="card" />
+</p></sp></div2>
+<div2 type="strophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />i(knei=tai lo/gos dia\ sthqe/wn,
+<lb />trixo\s d' o)rqi/as plo/kamos i(/statai,
+<lb rend="displayNum" n="565" />mega/la megalhgo/rwn kluou/sa|
+<lb />a)nosi/wn a)ndrw=n.  ei)/qe ga\r
+<lb />qeoi\  tou=d' o)le/seian e)n ga=|.
+<milestone ed="p" n="568" unit="card" /></p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />e(/kton le/goim' a)\n a)/ndra swfrone/staton,
+<lb />a)lkh/n t' a)/riston ma/ntin, *)amfia/rew bi/an:
+<lb rend="displayNum" n="570" />*(omolwi/sin de\ pro\s pu/lais tetagme/nos
+<lb />kakoi=si ba/zei polla\ *tude/ws bi/an:
+<lb />to\n a)ndrofo/nthn, to\n po/lews tara/ktora,
+<lb />me/giston *)/argei tw=n kakw=n dida/skalon,
+<lb />*)erinu/os klhth=ra, pro/spolon fo/nou,
+<lb rend="displayNum" n="575" />kakw=n t' *)adra/stw| tw=nde bouleuth/rion.
+<lb />kai\ to\n so\n au)=qis prosqrow=n  o(mo/sporon,
+<lb />e)cuptia/zwn o)/mma,  *polunei/kous bi/an,
+<lb />di/s t' e)n teleuth=| tou)/nom' e)ndatou/menos,
+<lb />kalei=.  le/gei de\ tou=t' e)/pos dia\ sto/ma:
+<lb rend="displayNum" n="580" /><q direct="unspecified">h)= toi=on e)/rgon kai\ qeoi=si prosfile/s,
+<lb />kalo/n t' a)kou=sai kai\ le/gein mequste/rois,
+<lb />po/lin patrw/|an kai\ qeou\s tou\s e)ggenei=s
+<lb />porqei=n, stra/teum' e)pakto\n e)mbeblhko/ta;
+<lb />mhtro/s te phgh\n ti/s katasbe/sei di/kh;
+<lb rend="displayNum" n="585" />patri/s te  gai=a sh=s u(po\ spoudh=s dori\
+<lb />a(lou=sa pw=s soi cu/mmaxos genh/setai;
+<lb />e)/gwge me\n dh\ th/nde pianw= xqo/na,
+<lb />ma/ntis kekeuqw\s polemi/as u(po\ xqono/s.
+<lb />maxw/meq', ou)k a)/timon e)lpi/zw mo/ron.</q>
+<lb rend="displayNum" n="590" />toiau=q' o( ma/ntis a)spi/d' eu)kh/lws e)/xwn
+<lb />pa/gxalkon hu)/da: sh=ma d' ou)k e)ph=n ku/klw|.
+<lb />ou) ga\r dokei=n a)/ristos, a)ll' ei)=nai qe/lei,
+<lb />baqei=an a)/loka dia\ freno\s karpou/menos,
+<lb />e)c h(=s ta\ kedna\ blasta/nei bouleu/mata.
+<lb rend="displayNum" n="595" />tou/tw| sofou/s te ka)gaqou\s a)nthre/tas
+<lb />pe/mpein e)painw=.  deino\s o(\s qeou\s se/bei.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />feu= tou= cunalla/ssontos o)/rniqos brotoi=s
+<lb />di/kaion a)/ndra toi=si dussebeste/rois.
+<lb />e)n panti\ pra/gei d' e)/sq' o(mili/as kakh=s
+<lb rend="displayNum" n="600" />ka/kion ou)de/n, karpo\s ou) komiste/os:
+<lb />a)/ths a)/roura qa/naton e)kkarpi/zetai.
+<lb />h)\ ga\r cuneisba\s ploi=on eu)sebh\s a)nh\r
+<lb />nau/taisi qermoi=s kai\ panourgi/a| tini\
+<lb />o)/lwlen a)ndrw=n su\n qeoptu/stw| ge/nei,
+<lb rend="displayNum" n="605" />h)\ cu\n poli/tais a)ndra/sin di/kaios w)\n
+<lb />e)xqroce/nois te kai\ qew=n a)mnh/mosin,
+<lb />tau)tou= kurh/sas e)kdi/kws a)greu/matos,
+<lb />plhgei\s qeou= ma/stigi pagkoi/nw| 'da/mh.
+<lb /><milestone ed="P" unit="para" />ou(/tws d' o( ma/ntis, ui(o\n *oi)kle/ous  le/gw,
+<lb rend="displayNum" n="610" />sw/frwn di/kaios a)gaqo\s eu)sebh\s a)nh/r,
+<lb />me/gas profh/ths, a)nosi/oisi summigei\s
+<lb />qrasusto/moisin a)ndra/sin bi/a| frenw=n,
+<lb />tei/nousi pomph\n th\n makra\n pa/lin molei=n,
+<lb />*dio\s qe/lontos cugkaqelkusqh/setai.
+<lb rend="displayNum" n="615" /><milestone ed="P" unit="para" />dokw= me\n ou)=n sfe mhde\ prosbalei=n pu/lais
+<lb />ou)x w(s a)/qumos ou)de\ lh/matos ka/kh=|,
+<lb />a)ll' oi)=den w(/s sfe xrh\ teleuth=sai ma/xh|,
+<lb />ei) karpo\s e)/stai qesfa/toisi *loci/ou:
+<lb />filei= de\ siga=n h)\ le/gein ta\ kai/ria.
+<lb rend="displayNum" n="620" />o(/mws d' e)p' au)tw=| fw=ta, *lasqe/nous bi/an,
+<lb />e)xqro/cenon pulwro\n a)ntita/comen,
+<lb />ge/ronta to\n nou=n, sa/rka d' h(bw=san fu/ei,
+<lb />podw=kes o)/mma, xei=ra d' ou) bradu/netai
+<lb />par' a)spi/dos gumnwqe\n a(rpa/sai do/ru.
+<lb rend="displayNum" n="625" />qeou= de\ dw=ro/n e)stin eu)tuxei=n brotou/s.
+<milestone ed="p" n="626" unit="card" />
+</p></sp></div2>
+<div2 type="antistrophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />klu/ontes qeoi\ dikai/as lita\s
+<lb />a(mete/ras  telei=q', w(s po/lis eu)tuxh=|,
+<lb />dori/pona ka/k' e)ktre/pontes <add>e)s</add> ga=s
+<lb />e)pimo/lous:  pu/rgwn d' e)/ktoqen
+<lb rend="displayNum" n="630" />balw\n *zeu/s sfe ka/noi keraunw=|.
+<milestone ed="p" n="631" unit="card" /></p></sp></div2>
+</div1>
+<div1 type="episode" org="uniform" sample="complete">
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />to\n e(/bdomon dh\ to/nd' e)f' e(bdo/mais pu/lais
+<lb />le/cw, to\n au)tou= sou= kasi/gnhton, po/lei
+<lb />oi(/as  a)ra=tai kai\ kateu/xetai tu/xas:
+<lb />pu/rgois e)pemba\s ka)pikhruxqei\s xqoni/,
+<lb rend="displayNum" n="635" />a(lw/simon paia=n' e)peciakxa/sas,
+<lb />soi\ cumfe/resqai kai\ ktanw\n qanei=n pe/las,
+<lb />h)\ zw=nt' a)timasth=ra tw\s  a)ndrhla/thn
+<lb />fugh=| to\n au)to\n to/nde tei/sasqai  tro/pon.
+<lb />toiau=t' a)utei= kai\ qeou\s geneqli/ous
+<lb rend="displayNum" n="640" />kalei= patrw/|as gh=s e)popth=ras litw=n
+<lb />tw=n w(=n gene/sqai pa/gxu *polunei/kous bi/a.
+<lb />e)/xei de\ kainophge\s eu)/kuklon sa/kos
+<lb />diplou=n te sh=ma prosmemhxanhme/non.
+<lb />xrush/laton ga\r a)/ndra teuxhsth\n i)dei=n
+<lb rend="displayNum" n="645" />a)/gei gunh/ tis swfro/nws h(goume/nh.
+<lb />*di/kh d' a)/r' ei)=nai/ fhsin, w(s ta\ gra/mmata
+<lb />le/gei  <q direct="unspecified">kata/cw d' a)/ndra to/nde kai\ po/lin
+<lb />e(/cei patrw/|wn dwma/twn t' e)pistrofa/s.</q>
+<lb /><milestone ed="P" unit="para" />toiau=t' e)kei/nwn e)sti\ ta)ceurh/mata.
+<lb rend="displayNum" n="650" /><del status="unremarkable">su\ d' au)to\s h)/dh gnw=qi ti/na pe/mpein dokei=:</del>
+<lb />w(s ou)/pot' a)ndri\ tw=|de khrukeuma/twn
+<lb />me/myh|, su\ d' au)to\s gnw=qi nauklhrei=n po/lin.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />w)= qeomane/s te kai\ qew=n me/ga stu/gos,
+<lb rend="displayNum" n="655" />w)= panda/kruton a(mo\n *oi)di/pou ge/nos:
+<lb />w)/moi, patro\s dh\ nu=n a)rai\ telesfo/roi.
+<lb />a)ll' ou)/te klai/ein ou)/t' o)du/resqai pre/pei,
+<lb />mh\ kai\ teknwqh=| dusforw/teros go/os.
+<lb />e)pwnu/mw| de\ ka/rta, *polunei/kei  le/gw,
+<lb />ta/x' ei)so/mesqa tou)pi/shm' o(/poi telei=,
+<lb rend="displayNum" n="660" />ei)/ nin kata/cei xruso/teukta gra/mmata
+<lb />e)p' a)spi/dos flu/onta su\n  foi/tw| frenw=n.
+<lb />ei) d' h( *dio\s pai=s parqe/nos *di/kh parh=n
+<lb />e)/rgois e)kei/nou kai\ fresi/n, ta/x' a)\n to/d' h)=n:
+<lb />a)ll' ou)/te nin fugo/nta mhtro/qen sko/ton,
+<lb rend="displayNum" n="665" />ou)/t' e)n trofai=sin, ou)/t' e)fhbh/santa/ pw,
+<lb />ou)/t' e)n genei/ou cullogh=| trixw/matos,
+<lb />*di/kh prosei=de  kai\ kathciw/sato:
+<lb />ou)d'  e)n patrw/|as mh\n xqono\s kakouxi/a|
+<lb />oi)=mai/ nin au)tw=| nu=n parastatei=n pe/las.
+<lb rend="displayNum" n="670" />h)= dh=t'  a)\n ei)/h pandi/kws yeudw/numos
+<lb />*di/kh, cunou=sa fwti\ panto/lmw| fre/nas.
+<lb />tou/tois pepoiqw\s ei)=mi kai\ custh/somai
+<lb />au)to/s: ti/s a)/llos ma=llon e)ndikw/teros;
+<lb />a)/rxonti/ t' a)/rxwn kai\ kasignh/tw| ka/sis,
+<lb rend="displayNum" n="675" />e)xqro\s su\n e)xqrw=| sth/somai. fe/r' w(s ta/xos
+<lb />knhmi=das, ai)xmh=s kai\ pe/trwn  problh/mata.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />mh/, fi/ltat' a)ndrw=n, *oi)di/pou te/kos, ge/nh|
+<lb />o)rgh\n o(moi=os tw=| ka/kist' au)dwme/nw|:
+<lb />a)ll' a)/ndras *)argei/oisi *kadmei/ous a(/lis
+<lb rend="displayNum" n="680" />e)s xei=ras  e)lqei=n: ai(=ma ga\r kaqa/rsion.
+<lb />a)ndroi=n d' o(mai/moin qa/natos w(=d' au)tokto/nos,
+<lb />ou)k e)/sti gh=ras tou=de tou= mia/smatos.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />ei)/per kako\n fe/roi tis, ai)sxu/nhs a)/ter
+<lb />e)/stw: mo/non ga\r ke/rdos e)n teqnhko/si:
+<lb rend="displayNum" n="685" />kakw=n de\ ka)|sxrw=n ou)/tin' eu)klei/an e)rei=s.
+<milestone ed="p" n="686" unit="card" />
+</p></sp>
+</div1>
+<div1 type="choral" org="uniform" sample="complete">
+<div2 type="strophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />ti/ me/monas,  te/knon; mh/ ti/ se  qumoplh-
+<lb />qh\s dori/margos  a)/ta fere/tw: kakou= d'
+<lb />e)/kbal'  e)/rwtos a)rxa/n.</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />e)pei\ to\ pra=gma ka/rt' e)pispe/rxei qeo/s,
+<lb rend="displayNum" n="690" />i)/tw kat' ou)=ron ku=ma *kwkutou= laxo\n
+<lb />*foi/bw| stughqe\n pa=n to\ *lai/+ou ge/nos.
+<milestone ed="p" n="692" unit="card" />
+</p></sp></div2>
+<div2 type="antistrophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />w)modakh/s s' a)/gan i(/meros e)cotru/-
+<lb />nei pikro/karpon a)ndroktasi/an  telei=n
+<lb />ai(/matos ou) qemistou=.</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb rend="displayNum" n="695" />fi/lou ga\r e)xqra/  moi patro\s ta/lain'  a)ra\
+<lb />chroi=s a)klau/tois o)/mmasin prosiza/nei,
+<lb />le/gousa ke/rdos pro/teron u(ste/rou mo/rou.
+<milestone ed="p" n="698" unit="card" />
+</p></sp></div2>
+<div2 type="strophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />a)lla\ su\ mh\ 'potru/nou: kako\s ou) keklh/-
+<lb />sh| bi/on eu)= kurh/sas: mela/naigis <del status="unremarkable">d':</del> ou)k
+<lb rend="displayNum" n="700" />ei)=si do/mwn  *)erinu/s, o(/tan e)k xerw=n
+<lb />qeoi\ qusi/an de/xwntai;</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />qeoi=s me\n h)/dh pws parhmelh/meqa,
+<lb />xa/ris d' a)f' h(mw=n o)lome/nwn qauma/zetai:
+<lb />ti/ ou)=n e)/t' a)\n sai/noimen o)le/qrion mo/ron;
+<milestone ed="p" n="705" unit="card" />
+</p></sp></div2>
+<div2 type="antistrophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="705" />nu=n o(/te soi pare/staken: e)pei\ dai/mwn
+<lb />lh/matos e)n tropai/a| xroni/a|  metal-
+<lb />lakto\s i)/sws a)\n e)/lqoi qelemwte/rw|
+<lb />pneu/mati:  nu=n d' e)/ti zei=.</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />e)ce/zesen  ga\r *oi)di/pou kateu/gmata:
+<lb rend="displayNum" n="710" />a)/gan d' a)lhqei=s e)nupni/wn fantasma/twn
+<lb />o)/yeis, patrw/|wn xrhma/twn dath/rioi.
+<milestone ed="p" n="712" unit="card" />
+</p></sp></div2>
+</div1>
+<div1 type="episode" org="uniform" sample="complete">
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />piqou=  gunaici/, kai/per ou) ste/rgwn o(/mws.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />le/goit' a)\n w(=n a)/nh tis:  ou)de\ xrh\ makra/n.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />mh\ 'lqh|s o(dou\s su\ ta/sd' e)f' e(bdo/mais pu/lais.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb rend="displayNum" n="715" />teqhgme/non toi/ m' ou)k a)pamblunei=s lo/gw|.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />ni/khn ge me/ntoi kai\ kakh\n tima=| qeo/s.
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />ou)k a)/ndr' o(pli/thn tou=to xrh\ ste/rgein e)/pos.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />a)ll' au)ta/delfon ai(=ma dre/yasqai qe/leis;
+</p></sp>
+<sp>
+<speaker>*)eteoklh/s</speaker><p>
+<lb />qew=n dido/ntwn ou)k a)\n e)kfu/gois kaka/.
+<milestone ed="p" n="720" unit="card" />
+</p></sp>
+</div1>
+<div1 type="choral" org="uniform" sample="complete">
+<div2 type="strophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="720" />pe/frika ta\n w)lesi/oikon
+<lb />qeo/n, ou) qeoi=s o(moi/an,
+<lb />panalaqh=  kako/mantin
+<lb />patro\s eu)ktai/an *)erinu\n
+<lb />tele/sai ta\s periqu/mous
+<lb rend="displayNum" n="725" />kata/ras *oi)dipo/da blayi/fronos:
+<lb />paidole/twr d' e)/ris a(/d'  o)tru/nei.
+<milestone ed="p" n="727" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />ce/nos de\ klh/rous  e)pinwma=|,
+<lb />*xa/lubos *skuqa=n  a)/poikos,
+<lb />ktea/nwn xrhmatodai/tas
+<lb rend="displayNum" n="730" />pikro/s, w)mo/frwn si/daros,
+<lb />xqo/na nai/ein diaph/las,
+<lb />o(po/san kai\ fqime/noisin kate/xein,
+<lb />tw=n mega/lwn pedi/wn a)moi/rous.
+<milestone ed="p" n="734" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />e)pei\ d' a)\n  au)tokto/nws
+<lb rend="displayNum" n="735" />au)toda/iktoi qa/nwsi,
+<lb />kai\ gai/+a  ko/nis pi/h|
+<lb />melampage\s ai(=ma foi/nion,
+<lb />ti/s a)\n kaqarmou\s  po/roi,
+<lb />ti/s a)/n sfe lou/seien; w)=
+<lb rend="displayNum" n="740" />po/noi do/mwn ne/oi palai-
+<lb />oi=si summigei=s kakoi=s.
+<milestone ed="p" n="742" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />palaigenh= ga\r le/gw
+<lb />parbasi/an  w)ku/poinon:
+<lb />ai)w=na d' e)s tri/ton me/nei:
+<lb rend="displayNum" n="745" />*)apo/llwnos eu)=te *la/ios
+<lb />bi/a|,  tri\s ei)po/ntos e)n
+<lb />mesomfa/lois *puqikoi=s
+<lb />xrhsthri/ois qna/|skonta  ge/n-
+<lb />nas a)/ter sw/|zein po/lin,
+<milestone ed="p" n="750" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="750" />krathqei\s d' e)k fi/lwn a)boulia=n
+<lb />e)gei/nato  me\n mo/ron au(tw=|,
+<lb />patrokto/non *oi)dipo/dan,
+<lb />o(/ste matro\s a(gna\n
+<lb />spei/ras a)/rouran, i(/n' e)tra/fh,
+<lb rend="displayNum" n="755" />r(i/zan ai(mato/essan
+<lb />e)/tla:   para/noia  suna=ge
+<lb />numfi/ous frenw/leis.
+<milestone ed="p" n="758" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />kakw=n d' w(/sper qa/lassa ku=m' a)/gei:
+<lb />to\ me\n pi/tnon, a)/llo d' a)ei/rei
+<lb rend="displayNum" n="760" />tri/xalon, o(\ kai\ peri\ pru/m-
+<lb />nan po/lews kaxla/zei.
+<lb />metacu\ d' a)lka\ di' o)li/gou
+<lb />tei/nei, pu/rgos e)n eu)/rei.
+<lb />de/doika de\ su\n  basileu=si
+<lb rend="displayNum" n="765" />mh\ po/lis damasqh=|.
+<milestone ed="p" n="766" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="4" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />teleia=n  ga\r palaifa/twn a)ra=n
+<lb />barei=ai katallagai/: ta\ d' o)loa\
+<lb />pelo/men'  ou) pare/rxetai.
+<lb />pro/prumna d' e)kbola\n  fe/rei
+<lb rend="displayNum" n="770" />a)ndrw=n a)lfhsta=n
+<lb />o)/lbos a)/gan paxunqei/s.
+<milestone ed="p" n="772" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="4" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />ti/n' a)ndrw=n ga\r toso/nd' e)qau/masan
+<lb />qeoi\ kai\ cune/stioi po/leos o(
+<lb />polu/bato/s  t' a)gw\n  brotw=n,
+<lb rend="displayNum" n="775" />o(/son to/t' *oi)di/poun ti/on,
+<lb />ta\n a(rpaca/ndran
+<lb />kh=r' a)felo/nta xw/ras;
+<milestone ed="p" n="778" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="5" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />e)pei\ d' a)rti/frwn
+<lb />e)ge/neto me/leos a)qli/wn
+<lb rend="displayNum" n="780" />ga/mwn, e)p' a)/lgei dusforw=n
+<lb />mainome/na| kradi/a|
+<lb />di/duma ka/k' e)te/lesen:
+<lb />patrofo/nw| xeri\ tw=n
+<lb />†kreissote/knwn  o)mma/twn  e)pla/gxqh:
+<milestone ed="p" n="785" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="5" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="785" />te/knois d' a)gri/as
+<lb />e)fh=ken e)piko/tous trofa=s,
+<lb />ai)ai=, pikroglw/ssous a)ra/s,
+<lb />kai/ sfe sidarono/mw|
+<lb />dia\ xeri/  pote laxei=n
+<lb rend="displayNum" n="790" />kth/mata: nu=n de\ tre/w
+<lb />mh\ tele/sh| kamyi/pous *)erinu/s.
+<milestone ed="p" n="792" unit="card" /></p></sp></div2>
+</div1>
+<div1 type="episode" org="uniform" sample="complete">
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />qarsei=te, pai=des mhte/rwn teqramme/nai.
+<lb />po/lis pe/feugen h(/de dou/lion  zugo/n:
+<lb />pe/ptwken  a)ndrw=n o)bri/mwn kompa/smata:
+<lb rend="displayNum" n="795" />po/lis d' e)n eu)di/a| te kai\ kludwni/ou
+<lb />pollai=si plhgai=s a)/ntlon ou)k e)de/cato.
+<lb />ste/gei de\ pu/rgos, kai\ pu/las fereggu/ois
+<lb />e)fraca/mesqa  monoma/xoisi prosta/tais:
+<lb />kalw=s  e)/xei ta\ plei=st', e)n e(\c pulw/masi:
+<lb rend="displayNum" n="800" />ta\s d' e(bdo/mas o( semno\s e(bdomage/ths
+<lb />a)/nac *)apo/llwn ei(/let', *oi)di/pou ge/nei
+<lb />krai/nwn palaia\s *lai/+ou dusbouli/as.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />ti/ d' e)/sti pra=gma neo/koton po/lei ple/on;
+</p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />po/lis se/swstai: basile/es  d' o(mo/sporoi—
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="805" />ti/nes;  ti/ d' ei)=pas;  parafronw= fo/bw| lo/gou.
+</p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />fronou=sa nu=n a)/kouson: *oi)di/pou to/koi —
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />oi)\ 'gw\  ta/laina, ma/ntis ei)mi\ tw=n kakw=n.
+</p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb />ou)d' a)mfile/ktws mh\n katespodhme/noi—
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />e)kei=qi kei=sqon ; bare/a d' ou)=n o(/mws fra/son.
+</p></sp>
+<sp>
+<speaker>*)/aggelos</speaker><p>
+<lb rend="displayNum" n="810" />a(/ndres  teqna=sin e)k xerw=n  au)tokto/nwn.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />ou(/tws a)delfai=s xersi\n h)nai/ronq' a(/ma ;
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />ou(/tws o( dai/mwn koino\s h)=n a)mfoi=n a)/gan.
+<lb />au)to\s d' a)naloi= dh=ta du/spotmon ge/nos.
+<lb />toiau=ta xai/rein kai\ dakru/esqai pa/ra:
+<lb rend="displayNum" n="815" />po/lin me\n eu)= pra/ssousan, oi( d' e)pista/tai,
+<lb />dissw\ strathgw/, die/laxon sfurhla/tw|
+<lb />*sku/qh| sidh/rw| kthma/twn pamphsi/an.
+<lb />e(/cousi d' h(\n la/bwsin e)n tafh=| xqono/s,
+<lb />patro\s kat' eu)xa\s duspo/tmws  forou/menoi.
+<lb rend="displayNum" n="820" /><del status="unremarkable">po/lis se/swstai:  basile/oin   d' o(mospo/roin</del>
+<lb /><del status="unremarkable">pe/pwken ai(=ma/  gai='  u(p' a)llh/lwn fo/nw|.</del>
+<milestone ed="p" n="822" unit="card" />
+</p></sp>
+</div1>
+<div1 type="choral" org="uniform" sample="complete">
+<div2 type="anapests" org="uniform" sample="complete">
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />w)= mega/le *zeu= kai\ poliou=xoi
+<lb />dai/mones, oi(\ dh\ *ka/dmou pu/rgous
+<lb />tou/sde r(u/esqe,
+<lb rend="displayNum" n="825" />po/teron xai/rw ka)pololu/cw
+<lb />po/lews a)sinei= †swth=ri  . .,
+<lb />h)\ tou\s mogerou\s kai\ dusdai/monas
+<lb rend="displayNum" n="830" />a)te/knous klau/sw polema/rxous;
+<lb />oi(\ dh=t' o)rqw=s kat' e)pwnumi/an
+<lb />kai\ poluneikei=s
+<lb rend="displayNum" n="832b" />w)/lont' a)sebei=  dianoi/a|.
+<milestone ed="p" n="833" unit="card" />
+</p></sp></div2>
+<div2 type="strophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />w)= me/laina kai\ telei/a
+<lb rend="displayNum" n="833b" />ge/neos *oi)di/pou t' a)ra/,
+<lb />kako/n me kardi/an  ti peripi/tnei kru/os.
+<lb rend="displayNum" n="835" />e)/teuca tu/mbw| me/los
+<lb />*quia\s ai(matostagei=s
+<lb />nekrou\s klu/ousa dusmo/rws
+<lb />qano/ntas: h)= du/sornis a(/-
+<lb />de cunauli/a doro/s.
+<milestone ed="p" n="840" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="840" />e)ce/pracen, ou)d' a)pei=pen
+<lb />patro/qen eu)ktai/a fa/tis:
+<lb />boulai\ d' a)/pistoi *lai/+ou dih/rkesan.
+<lb />me/rimna d' a)mfi\ pto/lin:
+<lb />qe/sfat' ou)k a)mblu/netai.
+<lb rend="displayNum" n="845" />i)w\ polu/stonoi, to/d'  h)r-
+<lb />ga/sasq'  a)/piston: h)=lqe d' ai)-
+<lb />akta\ ph/mat' ou) lo/gw|.
+<milestone ed="p" n="848" unit="card" /></p></sp></div2>
+<div2 type="anapests" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />ta/d' au)to/dhla, prou=ptos  a)gge/lou lo/gos:
+<lb />diplai= me/rimnai,  †diduma/nora
+<lb rend="displayNum" n="850" />ka/k' au)tofo/na, di/moira te/-
+<lb />leia ta/de  pa/qh. ti/ fw=;
+<lb />ti/ d' a)/llo g' h)\ po/noi po/nwn
+<lb />do/mwn e)fe/stioi;
+<lb />a)lla\ go/wn,  w)= fi/lai, kat' ou)=ron
+<lb rend="displayNum" n="855" />e)re/sset' a)mfi\ krati\ po/mpimon xeroi=n
+<lb />pi/tulon, o(\s ai)e\n di' *)axe/ront' a)mei/betai
+<lb />ta\n a)/stolon  mela/gkrokon <del status="unremarkable">nau/stolon</del>  qewri/da,
+<lb />ta\n a)stibh= *)apo/llwni, ta\n a)na/lion
+<lb rend="displayNum" n="860" />pa/ndokon ei)s a)fanh= te xe/rson.
+<lb />a)lla\ ga\r h(/kous' ai(/d' e)pi\ pra=gos
+<lb />pikro\n *)antigo/nh t' h)d' *)ismh/nh,
+<lb />qrh=non a)delfoi=n: ou)k a)mfibo/lws
+<lb />oi)=mai/ sf' e)ratw=n e)k baquko/lpwn
+<lb rend="displayNum" n="865" />sthqe/wn h(/sein a)/lgos e)pa/cion.
+<lb />h(ma=s de\ di/kh pro/teron fh/mhs
+<lb />to\n duske/lado/n q' u(/mnon *)erinu/os
+<lb />i)axei=n *)ai/da t'
+<lb rend="displayNum" n="870" />e)xqro\n  paia=n' e)pime/lpein.
+<lb />i)w/, dusadelfo/tatai pasw=n o(po/sai
+<lb />stro/fon e)sqh=sin periba/llontai,
+<lb />klai/w, ste/nomai, kai\ do/los ou)dei\s
+<lb />mh\ 'k freno\s o)rqw=s me ligai/nein.
+<milestone ed="p" n="875" unit="card" />
+</p></sp></div2>
+<div2 type="strophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="875" />i)w\ i)w\ du/sfrones,
+<lb />fi/lwn a)/pistoi kai\ kakw=n a)tru/mones,
+<lb />do/mous patrw/|ous  e(lo/n-
+<lb />tes me/leoi su\n ai)xma=|.
+<lb />me/leoi dh=q' oi(\ mele/ous qana/tous
+<lb rend="displayNum" n="880" />eu(/ronto do/mwn e)pi\ lu/mh|.
+<milestone ed="p" n="881" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />i)w\ i)w\ dwma/twn
+<lb />e)reiyi/toixoi  kai\ pikra\s monarxi/as
+<lb />i)do/ntes, h)/dh dih/l-
+<lb rend="displayNum" n="885" />laxqe su\n sida/rw|.
+<lb />ka/rta d' a)lhqh= patro\s *oi)dipo/da
+<lb />po/tni' *)erinu\s e)pe/kranen.
+<milestone ed="p" n="888" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />di' eu)wnu/mwn tetumme/noi,
+<lb />tetumme/noi dh=q',
+<lb rend="displayNum" n="890" />o(mospla/gxnwn te pleurwma/twn
+<lb /><gap desc="*" />
+<lb rend="displayNum" n="892" />ai)ai= daimo/nioi,
+<lb />ai)ai= d' a)ntifo/nwn
+<lb />qana/twn a)rai/.
+<lb rend="displayNum" n="895" />diantai/an le/geis <del status="unremarkable">plaga\n</del>  do/moisi kai\
+<lb />sw/masin peplagme/nous, <del status="unremarkable">e)nne/pw</del>
+<lb />a)nauda/tw| me/nei
+<lb />a)rai/w| t' e)k patro\s
+<lb /><add>ou)</add>  dixo/froni po/tmw|.
+<milestone ed="p" n="900" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="2" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="900" />dih/kei de\ kai\ po/lin sto/nos,
+<lb />ste/nousi pu/rgoi,
+<lb />ste/nei pe/don fi/landron: me/nei
+<lb />kte/ana d'  e)pigo/nois,
+<lb />di' w(=n ai)nomo/rois,
+<lb rend="displayNum" n="905" />di' w(=n nei=kos e)/ba
+<lb /><del status="unremarkable">kai\</del>  qana/tou te/los.
+<lb />e)moira/santo d' o)cuka/rdioi
+<lb />kth/maq', w(/st' i)/son laxei=n.
+<lb />diallakth=ri d' ou)k
+<lb />a)memfei/a  fi/lois,
+<lb rend="displayNum" n="910" />ou)d' e)pi/xaris  *)/arhs.
+<milestone ed="p" n="911" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />sidaro/plaktoi  me\n w(=d' e)/xousin,
+<lb />sidaro/plaktoi  de\ tou\s me/nousi,
+<lb />ta/x' a)/n tis ei)/poi, ti/nes;
+<lb />ta/fwn patrw/|wn laxai/.
+<lb rend="displayNum" n="915" />o(/d' a(mw=n  ma/l' a)xe/tas  tou\s
+<lb />prope/mpei dai+kth\r go/os au)-
+<lb />to/stonos, au)toph/mwn,
+<lb />dai+o/frwn  <del status="unremarkable">d':</del>,  ou) filogaqh/s, e)tu/mws
+<lb />dakruxe/wn e)k  freno/s, a(\
+<lb rend="displayNum" n="920" />klaiome/nas mou minu/qei
+<lb />toi=nde duoi=n  a)na/ktoin.
+<milestone ed="p" n="922" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="3" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />pa/resti d' ei)pei=n e)p' a)qli/oisin
+<lb />w(s e)rca/thn polla\ me\n poli/tas,
+<lb />ce/nwn te pa/ntwn sti/xas
+<lb rend="displayNum" n="925" />polufqo/rous e)n dai/+.
+<lb />dusdai/mwn sfin a(  tekou=sa
+<lb />pro\ pasa=n  gunaikw=n o(po/sai
+<lb />teknogo/noi ke/klhntai.
+<lb />pai=da to\n au(ta=s  po/sin au(ta=| qeme/na
+<lb rend="displayNum" n="930" />tou/sd' e)/tex', oi( d' w(=d' e)teleu/-
+<lb />tasan u(p' a)llalofo/nois
+<lb />xersi\n o(mospo/roisin.
+<milestone ed="p" n="933" unit="card" /></p></sp></div2>
+<div2 type="strophe" n="4" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb />o(mo/sporoi dh=ta kai\ panw/leqroi,
+<lb />diatomai=s ou) fi/lois,
+<lb rend="displayNum" n="935" />e)/ridi mainome/na|,
+<lb />nei/keos e)n teleuta=|.
+<lb />pe/pautai d' e)/xqos, e)n de\ gai/a|
+<lb />zo/a fonoru/tw|
+<lb />me/meiktai:  ka/rta d' ei)/s' o(/maimoi.
+<lb rend="displayNum" n="940" />pikro\s luth\r neike/wn o( po/ntios
+<lb />cei=nos e)k puro\s suqei\s
+<lb />qakto\s  si/daros: pikro\s de\ xrhma/twn
+<lb />kako\s dathta\s *)/arhs a)ra\n  patrw/|-
+<lb />an  tiqei\s a)laqh=.
+<milestone ed="p" n="945" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="4" org="uniform" sample="complete">
+<sp><speaker>*xoro/s</speaker><p>
+<lb rend="displayNum" n="945" />e)/xousi moi=ran laxo/ntes oi(  me/leoi
+<lb />diodo/twn  a)xqe/wn:
+<lb />u(po\ de\ sw/mati ga=s
+<lb />plou=tos a)/bussos e)/stai.
+<lb />i)w\ polloi=s e)panqi/santes
+<lb rend="displayNum" n="950" />po/noisi genea/n:
+<lb />teleutai=ai d'  e)phla/lacan
+<lb />*)arai\ to\n o)cu\n no/mon, tetramme/nou
+<lb />pantro/pw| fuga=| ge/nous.
+<lb />e(/stake d'  *)/atas tropai=on e)n pu/lais,
+<lb rend="displayNum" n="955" />e)n ai(=s e)qei/nonto, kai\ duoi=n krath/-
+<lb />sas e)/lhce dai/mwn.
+<milestone ed="p" n="957" unit="card" /></p></sp></div2>
+</div1>
+<div1 type="episode" org="uniform" sample="complete">
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb />paisqei\s e)/paisas.
+</p></sp>
+<sp>
+<speaker>*)ismh/nh</speaker><p>
+su\ d' e)/qanes  kataktanw/n.
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb />dori\ d' e)/kanes—
+</p></sp>
+<sp>
+<speaker>*)ismh/nh</speaker><p>
+<lb />dori\ d' e)/qanes—
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb rend="displayNum" n="960" />meleopo/nos.
+</p></sp>
+<sp>
+<speaker>*)ismh/nh</speaker><p>
+<lb />meleopaqh/s.
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb />i)/tw go/os.
+</p></sp>
+<sp>
+<speaker>*)ismh/nh</speaker><p>
+<lb />i)/tw da/kru.
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb />pro/keisai —
+</p></sp>
+<sp>
+<speaker>*)ismh/nh</speaker><p>
+<lb rend="displayNum" n="965" />katakta/s.
+<milestone ed="p" n="966" unit="card" />
+</p></sp>
+</div1>
+<div1 type="choral" org="uniform" sample="complete">
+<div2 type="strophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />h)e/.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />h)e/.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />mai/netai go/oisi frh/n.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />e)nto\s de\ kardi/a ste/nei.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />i)w\ i)w\ pa/ndurte  su/.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb rend="displayNum" n="970" />su\ d' au)=te kai\ pana/qlie.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />pro\s fi/lou <del status="unremarkable">g':</del> e)/fqiso.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />kai\ fi/lon e)/ktanes.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />dipla= le/gein—</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />dipla= d' o(ra=n—</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb rend="displayNum" n="975" />a)/xqea tw=nde  ta/d' e)ggu/qen.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />pe/las a)delfe/' a)delfew=n.</p></sp>
+<sp><speaker>*xoro/s</speaker><p>
+<lb />i)w\ *moi=ra barudo/teira mogera/,
+<lb />po/tnia/ t' *oi)di/pou skia/,
+<lb />me/lain'  *)erinu/s, h)= megasqenh/s tis ei)=.
+<milestone ed="p" n="980" unit="card" /></p></sp></div2>
+<div2 type="antistrophe" n="1" org="uniform" sample="complete">
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb rend="displayNum" n="980" />h)e/.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />h)e/.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />dusqe/ata ph/mata —</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />e)/deicen  e)k fuga=s e)moi/.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />ou)d' i(/keq' w(s kate/ktanen.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />swqei\s de\ pneu=m' a)pw/lesen.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb rend="displayNum" n="985" />w)/lese  dh=t' <add>a)/gan</add>.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />kai\ to\n  e)no/sfisen.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />ta/lan ge/nos.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />ta/lan pa/qos.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />du/stona kh/de' o(mai/mona.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb rend="displayNum" n="990" />†di/ugra tripa/ltwn phma/twn.</p></sp>
+<sp><speaker>*xoro/s</speaker><p>
+<lb />i)w\  *moi=ra barudo/teira mogera/,
+<lb />po/tnia/ t' *oi)di/pou skia/,
+<lb />me/lain' *)erinu/s, h)= megasqenh/s tis ei)=.
+<milestone ed="p" n="994" unit="card" /></p></sp></div2>
+<div2 type="epode" org="uniform" sample="complete">
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />su\ toi/ nin  oi)=sqa diaperw=n—</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb rend="displayNum" n="995" />su\ d' ou)de\n u(/steros maqw/n—</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />e)pei\ kath=lqes e)s po/lin,</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />doro/s ge tw=|d' a)nthre/tas.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />o)loa\ le/gein.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />o)loa\ d' o(ra=n.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb rend="displayNum" n="1000" />i)w\  po/nos—</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />i)w\ kaka/—</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />dw/masi kai\ xqoni/.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />pro\ pa/ntwn d' e)moi/.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />kai\ to\ pro/sw g' e)moi/.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb rend="displayNum" n="1005" />i)w\ i)w\ dusto/nwn   kakw=n, a)/nac.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />i)w\ pa/ntwn polustonw/tatoi.</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />i)w\ i)w\  daimonw=ntes a)/ta|.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb />i)w\ i)w/,  pou= sfe qh/somen xqono/s;</p></sp>
+<sp><speaker>*)ismh/nh</speaker><p>
+<lb />i)w/, o(/pou <add>'sti</add> timiw/taton.</p></sp>
+<sp><speaker>*)antigo/nh</speaker><p>
+<lb rend="displayNum" n="1010" />i)w\ i)w/, ph=ma patri\ pa/reunon.
+<milestone ed="p" n="1011" unit="card" /></p></sp></div2>
+</div1>
+<div1 type="episode" org="uniform" sample="complete">
+<sp>
+<speaker>*kh=ruc</speaker><p>
+<lb />dokou=nta kai\ do/cant' a)pagge/llein me xrh\
+<lb />dh/mou probou/lois th=sde *kadmei/as po/lews:
+<lb />*)eteokle/a me\n to/nd' e)p' eu)noi/a|  xqono\s
+<lb />qa/ptein e)/doce gh=s fi/lais kataskafai=s:
+<lb rend="displayNum" n="1015" />stugw=n ga\r e)xqrou\s qa/naton ei(/let' e)n po/lei
+<lb />i(erw=n patrw/|wn d'  o(/sios w)\n momfh=s a)/ter
+<lb />te/qnhken ou(=per toi=s ne/ois qnh/|skein  kalo/n.
+<lb />ou(/tw me\n a)mfi\ tou=d' e)pe/staltai le/gein:
+<lb />tou/tou d' a)delfo\n to/nde *polunei/kous nekro\n
+<lb rend="displayNum" n="1020" />e)/cw balei=n a)/qapton, a(rpagh\n kusi/n,
+<lb />w(s o)/nt' a)nastath=ra *kadmei/wn xqono/s,
+<lb />ei) mh\ qew=n tis e)mpodw\n e)/sth dori\
+<lb />tw=| tou=d':.  a)/gos de\ kai\ qanw\n kekth/setai
+<lb />qew=n patrw/|wn, ou(\s a)tima/sas o(/de
+<lb rend="displayNum" n="1025" />stra/teum' e)pakto\n e)mbalw\n h(/|rei po/lin.
+<lb />ou(/tw pethnw=n to/nd' u(p' oi)wnw=n dokei=
+<lb />tafe/nt' a)ti/mws tou)piti/mion labei=n,
+<lb />kai\ mh/q' o(martei=n tumboxo/a xeirw/mata
+<lb />mh/t' o)cumo/lpois prosse/bein oi)mw/gmasin,
+<lb rend="displayNum" n="1030" />a)/timon ei)=nai  d' e)kfora=s fi/lwn u(/po.
+<lb />toiau=t' e)/doce  tw=|de *kadmei/wn te/lei.
+<milestone ed="p" n="1032" unit="card" />
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb />e)gw\ de\ *kadmei/wn ge prosta/tais le/gw:
+<lb />h)\n mh/ tis a)/llos to/nde sunqa/ptein qe/lh|,
+<lb />e)gw/ sfe qa/yw ka)na\ ki/ndunon balw=
+<lb rend="displayNum" n="1035" />qa/yas' a)delfo\n to\n e)mo/n, ou)d' ai)sxu/nomai
+<lb />e)/xous' a)/piston th/nd' a)narxi/an po/lei.
+<lb />deino\n to\ koino\n spla/gxnon, ou(= pefu/kamen,
+<lb />mhtro\s talai/nhs ka)po\ dusth/nou patro/s.
+<lb />toiga\r qe/lous' a)/konti koinw/nei kakw=n
+<lb rend="displayNum" n="1040" />yuxh/, qano/nti zw=sa suggo/nw| freni/.
+<lb />tou/tou  de\ sa/rkas ou)de\ koiloga/stores
+<lb />lu/koi spa/sontai:  mh\ dokhsa/tw tini/.
+<lb />ta/fon ga\r au)tw=| kai\ kataskafa\s e)gw/,
+<lb />gunh/ per ou)=sa, tw=|de mhxanh/somai,
+<lb rend="displayNum" n="1045" />ko/lpw| fe/rousa bussi/nou peplw/matos.
+<lb />kau)th\ kalu/yw, mhde/ tw| do/ch| pa/lin:
+<lb />qa/rsei, pare/stai mhxanh\ drasth/rios.
+<milestone ed="p" n="1048" unit="card" />
+</p></sp>
+<sp>
+<speaker>*kh=ruc</speaker><p>
+<lb />au)dw= po/lin se mh\ bia/zesqai ta/de.
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb />au)dw= se\  mh\ perissa\ khru/ssein e)moi/.
+</p></sp>
+<sp>
+<speaker>*kh=ruc</speaker><p>
+<lb rend="displayNum" n="1050" />traxu/s ge me/ntoi  dh=mos e)kfugw\n kaka/.
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb />tra/xun': a)/qaptos d' ou(=tos ou) genh/setai.
+</p></sp>
+<sp>
+<speaker>*kh=ruc</speaker><p>
+<lb />a)ll' o(\n po/lis stugei=, su\ timh/seis ta/fw|,;
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb />h)/dh ta\ tou=de  diateti/mhtai qeoi=s.
+</p></sp>
+<sp>
+<speaker>*kh=ruc</speaker><p>
+<lb />ou)/, pri/n ge xw/ran th/nde kindu/nw| balei=n.
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb rend="displayNum" n="1055" />paqw\n kakw=s kakoi=sin a)nthmei/beto.
+</p></sp>
+<sp>
+<speaker>*kh=ruc</speaker><p>
+<lb />a)ll' ei)s a(/pantas a)nq' e(no\s to/d' e)/rgon h)=n.
+</p></sp>
+<sp>
+<speaker>*)antigo/nh</speaker><p>
+<lb />e)/ris perai/nei mu=qon u(sta/th qew=n.
+<lb />e)gw\ de\ qa/yw to/nde: mh\ makrhgo/rei.
+</p></sp>
+<sp>
+<speaker>*kh=ruc</speaker><p>
+<lb />a)ll' au)to/boulos i)/sq', a)penne/pw d' e)gw/.
+</p></sp>
+<div2 type="anapests" org="uniform" sample="complete">
+<sp>
+<speaker>*xoro/s</speaker><p>
+feu= feu=.
+<lb rend="displayNum" n="1060" />w)= mega/lauxoi kai\ fqersigenei=s
+<lb />*kh=res *)erinu/es, ai(/t' *oi)dipo/da
+<lb />ge/nos w)le/sate prumno/qen ou(/tws,
+<lb />ti/ pa/qw; ti/ de\ drw= ; ti/ de\ mh/swmai;
+<lb />pw=s tolmh/sw mh/te se\ klai/ein
+<lb rend="displayNum" n="1065" />mh/te prope/mpein e)pi\ tu/mbon :
+<lb />a)lla\ fobou=mai ka)potre/pomai
+<lb />dei=ma politw=n.
+<lb />su/ ge mh\n pollw=n penqhth/rwn
+<lb />teu/cei: kei=nos d' o( ta/las a)/goos
+<lb rend="displayNum" n="1070" />mono/klauton e)/xwn qrh=non  a)delfh=s
+<lb />ei)=sin: ti/s a)\n ou)=n ta\ pi/qoito ;
+</p></sp>
+<sp>
+<speaker>*(hmixo/rion *a</speaker><p>
+<lb />dra/tw <add>ti</add>  po/lis kai\ mh\ dra/tw
+<lb />tou\s klai/ontas *polunei/kh.
+<lb />h(mei=s me\n i)/men kai\ sunqa/yomen
+<lb rend="displayNum" n="1075" />ai(/de propompoi/.  kai\ ga\r genea=|
+<lb />koino\n to/d' a)/xos, kai\ po/lis a)/llws
+<lb />a)/llot' e)painei= ta\ di/kaia.
+</p></sp>
+<sp>
+<speaker>*(hmixo/rion *b</speaker><p>
+<lb />h(mei=s d' a(/ma tw=|d', w(/sper te po/lis
+<lb />kai\ to\ di/kaion cunepainei=.
+<lb rend="displayNum" n="1080" />meta\ ga\r ma/karas kai\ *dio\s i)sxu\n
+<lb />o(/de *kadmei/wn h)/ruce po/lin
+<lb />mh\ 'natraph=nai mhd' a)llodapw=|
+<lb />ku/mati fwtw=n
+<lb />kataklusqh=nai ta\ ma/lista.
+</p></sp></div2>
+</div1></body></text>
+</TEI.2>
