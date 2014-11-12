@@ -1,10 +1,10 @@
 X Download texts in XML
-in progress Parse them into something useful
-James finds a nice data structure for frequency table
-Sarah splits into train, dev, test set
-James writes code to make frequency tables for each author
-Sarah go through texts and look at authorship.
-Sarah writes code for Naive Bayes using James' frequency tables
+X James writes code to make frequency tables for each author
+X Sarah go through texts and look at authorship.
+Multinomial Naive Bayes
+SVM
+knn
+classification trees
 
 Frequency table for words - use some kind of stemmer / lemmatizer
 Naive Bayes with frequency table
