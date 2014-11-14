@@ -6,15 +6,16 @@ function final_project
 	factory = XPathFactory.newInstance;
 	xpath = factory.newXPath;
 
-	input_files = dir('texts/*.xml'); % Reads only .xml files in the 'texts' directory
+	input_files = dir('texts/Euripides_A*.xml'); % Reads only .xml files in the 'texts' directory
 
 	work_freq_map = containers.Map();
 	word_set = {};
 	authors_list = {};
 
-	for file = input_files(1)%input_files'
+	for file = input_files'%input_files(1)
 		authors_list = [authors_list, strtok(file.name,'_')];
 		file_path = strcat('texts/', file.name);
+		disp('Processing ' file.name);
 		xDoc = xmlread(file_path);
 		xmlwrite(xDoc);
 
@@ -31,7 +32,7 @@ function final_project
 			end
 			line = regexp(lines{i}, ' ', 'split');
 			if ((length(line) == 1) && (line{1}(1) == '*')) % If there's only one word in the line.
-				continue; % Ignore it
+				continue;
 			else
 				for j = 1:length(line) % For every word in the line
 					if isempty(line{j})
@@ -47,16 +48,17 @@ function final_project
 			end
 		end
 		work_freq_map(file.name) = word_freq_map;
+		disp(['Finished assembling freq map for ' file.name]);
 
 	end
+	disp('Finished assembling all word frequency maps.');
 
 	word_set = unique(word_set);
-	length(word_set)
+	disp(['There are ' num2str(length(word_set)) ' total words in this data!']);
 
-	big_X = zeros(length(keys(work_freq_map)),length(word_set));
+	X = zeros(length(keys(work_freq_map)),length(word_set));
 
 	works = keys(work_freq_map);
-
 	for i = 1:length(works)
 		current_work  = work_freq_map(works{i});
 		words_in_work = keys(current_work);
@@ -68,13 +70,40 @@ function final_project
 					break;
 				end
 			end
-			big_X(i,index) = current_work(words_in_work{j});
+			X(i,index) = current_work(words_in_work{j});
+		end
+	end
+	disp('Finished populating X');
 
+	Y = authors_list;
+	all_test_y = []; all_y_hat = [];
+
+	for i = 1:length(Y)
+
+		[train, test] = crossvalind('LeaveMOut', length(Y), 1);
+
+		train_x = X(train,:);
+		train_y = Y(train,:);
+
+		test_x  = X(test,:);
+		test_y  = Y(test,:);
+
+		model = fitcnb(train_x,train_y);
+
+		y_hat = predict(model,test_x);
+
+		all_test_y = [all_test_y, test_y];
+		all_y_hat  = [all_y_hat, y_hat];
+
+	end
+	disp('Finished training & predicting.')
+
+	mistakes = 0;
+	for i = 1:length(all_test_y)
+		if all_test_y(i) ~= all_y_hat(i)
+			mistakes = mistakes + 1;
 		end
 	end
 
-	X = big_X;
-	token_list = word_set;
-	labels = authors_list;
-
+	test_error = mistakes / length(all_test_y)
 end
