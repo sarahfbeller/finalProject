@@ -136,7 +136,6 @@ convert to P3
 
 <text lang="greek">
 <body>
-<div2 type="antistrophe" n="3" org="uniform" sample="complete">
 <sp><speaker>*xoro/s</speaker><p>
 <lb rend="displayNum" n="190" />mega/la qeo/s: a)ll' i)/qi,
 <lb />kai\ par' e)mou= xrh=sai polu/-
@@ -163,9 +162,6 @@ convert to P3
 <lb rend="displayNum" n="210" />ou)rei/as a)n' e)ri/pnas.
 <lb />ma/thr d' e)n le/ktrois foni/ois
 <lb />a)/llw| su/ggamos oi)kei=.
-<milestone ed="p" n="213" unit="card" /></p></sp></div2>
-</div1>
-<div1 type="episode" org="uniform" sample="complete">
 <sp>
 <speaker>*xoro/s</speaker><p>
 <lb />pollw=n kakw=n *(/ellhsin ai)ti/an e)/xei
@@ -195,11 +191,5 @@ convert to P3
 <speaker>*)hle/ktra</speaker><p>
 <lb />a)/pelqe, mh\ yau=' w(=n se mh\ yau/ein xrew/n.
 </p></sp>
-<sp>
-<speaker>*xoro/s</speaker><p>
-<lb />xai/rete: xai/rein d' o(/stis du/natai
-<lb />kai\ cuntuxi/a| mh/ tini ka/mnei
-<lb />qnhtw=n, eu)dai/mona pra/ssei.
-</p></sp></div2>
-</div1></body>
+</body>
 </text></TEI.2>

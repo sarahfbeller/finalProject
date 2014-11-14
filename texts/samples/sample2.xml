@@ -136,10 +136,7 @@ convert to P3
 
 <text lang="greek">
 <body>
-<div1 type="episode" org="uniform" sample="complete">
-<milestone ed="p" n="1" unit="card" />
 <sp>
-<speaker>*)hle/ktra</speaker><p>
 <lb />w)= nu\c me/laina, xruse/wn a)/strwn trofe/,
 <lb rend="displayNum" n="55" />e)n h(=| to/d' a)/ggos tw=|d' e)fedreu=on ka/ra|
 <lb />fe/rousa phga\s potami/as mete/rxomai — 
@@ -152,13 +149,11 @@ convert to P3
 <lb />pa/rerg' *)ore/sthn ka)me\ poiei=tai do/mwn — 
 </p></sp>
 <sp>
-<speaker>*au)tourgo/s</speaker><p>
 <lb />ti/ ga\r ta/d', w)= du/sthn', e)mh\n moxqei=s xa/rin
 <lb rend="displayNum" n="65" />po/nous e)/xousa, pro/sqen eu)= teqramme/nh,
 <lb />kai\ tau=t' e)mou= le/gontos ou)k a)fi/stasai;
 </p></sp>
 <sp>
-<speaker>*)hle/ktra</speaker><p>
 <lb />e)gw/ s' i)/son qeoi=sin h(gou=mai fi/lon:
 <lb />e)n toi=s e)moi=s ga\r ou)k e)nu/brisas kakoi=s.
 <lb />mega/lh de\ qnhtoi=s moi=ra sumfora=s kakh=s
@@ -171,14 +166,12 @@ convert to P3
 <lb />qu/raqen h(du\ ta)/ndon eu(ri/skein kalw=s.
 </p></sp>
 <sp>
-<speaker>*au)tourgo/s</speaker><p>
 <lb />ei)/ toi dokei= soi, stei=xe: kai\ ga\r ou) pro/sw
 <lb />phgai\ mela/qrwn tw=nd'. e)gw\ d' a(/m' h(me/ra|
 <lb />bou=s ei)s a)rou/ras e)sbalw\n sperw= gu/as.
 <lb rend="displayNum" n="80" />a)rgo\s ga\r ou)dei\s qeou\s e)/xwn a)na\ sto/ma
 <lb />bi/on du/nait' a)\n culle/gein a)/neu po/nou.
 </p></sp>
-<milestone ed="p" n="82" unit="card" />
 <sp>
 <speaker>*)ore/sths</speaker><p>
 <lb />*pula/dh, se\ ga\r dh\ prw=ton a)nqrw/pwn e)gw\
@@ -201,7 +194,7 @@ convert to P3
 <lb />zeuxqei=san oi)kei=n ou)de\ parqe/non me/nein:
 <lb rend="displayNum" n="100" />w(s sugge/nwmai kai\ fo/nou cunerga/tin
 <lb />labw\n ta/ g' ei)/sw teixe/wn safw=s ma/qw.
-<lb /><milestone ed="P" unit="para" />nu=n ou)=n — e(/ws ga\r leuko\n o)/mm' a)nai/retai — 
+<lb />nu=n ou)=n — e(/ws ga\r leuko\n o)/mm' a)nai/retai — 
 <lb />e)/cw tri/bou tou=d' i)/xnos a)llacw/meqa.
 <lb />h)\ ga/r tis a)roth\r h)/ tis oi)ke/tis gunh\
 <lb rend="displayNum" n="105" />fanh/setai nw=|n, h(/ntin' i(storh/somen
@@ -211,14 +204,6 @@ convert to P3
 <lb />fe/rousan — e(zw/mesqa ka)kpuqw/meqa
 <lb rend="displayNum" n="110" />dou/lhs gunaiko/s, h)/n ti decw/mesq' e)/pos
 <lb />e)f' oi(=si, *pula/dh, th/nd' a)fi/gmeqa xqo/na.
-<milestone ed="p" n="112" unit="card" />
 </p></sp>
-</div1>
-<sp>
-<speaker>*xoro/s</speaker><p>
-<lb />xai/rete: xai/rein d' o(/stis du/natai
-<lb />kai\ cuntuxi/a| mh/ tini ka/mnei
-<lb />qnhtw=n, eu)dai/mona pra/ssei.
-</p></sp></div2>
-</div1></body>
+</body>
 </text></TEI.2>

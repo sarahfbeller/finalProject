@@ -136,10 +136,6 @@ convert to P3
 
 <text lang="greek">
 <body>
-<div1 type="episode" org="uniform" sample="complete">
-<milestone ed="p" n="1" unit="card" />
-<sp n="*au)tourgo/s">
-<speaker>*au)tourgo/s</speaker><p>
 <lb />w)= gh=s palaio\n a)/rgos, *)ina/xou r(oai/,
 <lb />o(/qen pot' a)/ras nausi\ xili/ais *)/arh
 <lb />e)s gh=n e)/pleuse *trw|a/d' *)agame/mnwn a)/nac.
@@ -164,7 +160,7 @@ convert to P3
 <lb />dei/sas de\ mh/ tw| pai=d' a)riste/wn te/koi
 <lb />*)agame/mnonos poina/tor', ei)=xen e)n do/mois
 <lb />*ai)/gisqos ou)d' h(/rmoze numfi/w| tini/.
-<lb rend="displayNum" n="25" /><milestone ed="P" unit="para" />e)pei\ de\ kai\ tou=t' h)=n fo/bou pollou= ple/wn,
+<lb rend="displayNum" n="25" />e)pei\ de\ kai\ tou=t' h)=n fo/bou pollou= ple/wn,
 <lb />mh/ tw| laqrai/ws te/kna gennai/w| te/koi,
 <lb />ktanei=n sfe bouleu/santos, w)mo/frwn o(/mws
 <lb />mh/thr nin e)ce/sw|sen *ai)gi/sqou xero/s.
@@ -189,17 +185,15 @@ convert to P3
 <lb />ste/nw de\ to\n lo/goisi khdeu/ont' e)moi\
 <lb />a)/qlion *)ore/sthn, ei)/ pot' ei)s *)/argos molw\n
 <lb />ga/mous a)delfh=s dustuxei=s e)so/yetai.
-<milestone ed="p" n="50" unit="card" />
-<lb rend="displayNum" n="50" /><milestone ed="P" unit="para" />o(/stis de/ m' ei)=nai/ fhsi mw=ron, ei) labw\n
+<lb rend="displayNum" n="50" />o(/stis de/ m' ei)=nai/ fhsi mw=ron, ei) labw\n
 <lb />ne/an e)s oi)/kous parqe/non mh\ qigga/nw,
 <lb />gnw/mhs ponhroi=s kano/sin a)nametrou/menos
 <lb />to\ sw=fron i)/stw kau)to\s au)= toiou=tos w)/n.
 </p></sp>
 <sp>
-<speaker>*xoro/s</speaker><p>
 <lb />xai/rete: xai/rein d' o(/stis du/natai
 <lb />kai\ cuntuxi/a| mh/ tini ka/mnei
 <lb />qnhtw=n, eu)dai/mona pra/ssei.
-</p></sp></div2>
-</div1></body>
+</p></sp>
+</body>
 </text></TEI.2>

@@ -136,9 +136,6 @@ convert to P3
 
 <text lang="greek">
 <body>
-<div1 type="episode" org="uniform" sample="complete">
-<milestone ed="p" n="1" unit="card" />
-<div2 type="strophe" n="1" org="uniform" sample="complete">
 <sp><speaker>*)hle/ktra</speaker><p>
 <lb />su/ntein' — w(/ra — podo\s o(rma/n: w)/,
 <lb />e)/mba, e)/mba kataklai/ousa:
@@ -153,13 +150,9 @@ convert to P3
 <lb />w)= pa/ter, su\ d' e)n *)ai/+da
 <lb />kei=sai, sa=s a)lo/xou sfagai=s
 <lb />*ai)gi/sqou t', *)aga/memnon.
-<milestone ed="p" n="125" unit="card" /></p></sp></div2>
-<div2 type="mesode" org="uniform" sample="complete">
 <sp><speaker>*)hle/ktra</speaker><p>
 <lb rend="displayNum" n="125" />i)/qi to\n au)to\n e)/geire go/on,
 <lb />a)/nage polu/dakrun a(dona/n.
-<milestone ed="p" n="127" unit="card" /></p></sp></div2>
-<div2 type="antistrophe" n="1" org="uniform" sample="complete"> 
 <sp><speaker>*)hle/ktra</speaker><p>
 <lb />su/ntein' — w(/ra — podo\s o(rma/n: w)/,
 <lb />e)/mba, e)/mba, kataklai/ousa:
@@ -174,8 +167,6 @@ convert to P3
 <lb />w)= *zeu= *zeu=, patri/ q' ai(ma/twn
 <lb />e)xqi/stwn e)pi/kouros, *)/ar-
 <lb />gei ke/lsas po/d' a)la/tan.
-<milestone ed="p" n="140" unit="card" /></p></sp></div2>
-<div2 type="strophe" n="2" org="uniform" sample="complete">
 <sp><speaker>*)hle/ktra</speaker><p>
 <lb rend="displayNum" n="140" />qe\s to/de teu=xos e)mh=s a)po\ krato\s e(-
 <lb />lou=s', i(/na patri\ go/ous nuxi/ous
@@ -188,8 +179,6 @@ convert to P3
 <lb />o)/nuxi temnome/na de/ran
 <lb />xe/ra te kra=t' e)pi\ kou/rimon
 <lb />tiqeme/na qana/tw| sw=|.
-<milestone ed="p" n="150" unit="card" /></p></sp></div2>
-<div2 type="mesode" org="uniform" sample="complete">
 <sp><speaker>*)hle/ktra</speaker><p>
 <lb rend="displayNum" n="150" />ai)= ai)=, dru/pte ka/ra:
 <lb />oi(=a de/ tis ku/knos a)xe/tas
@@ -198,12 +187,5 @@ convert to P3
 <lb />o)lo/menon doli/ois bro/xwn
 <lb rend="displayNum" n="155" />e(/rkesin, w(\s se\ to\n a)/qlion,
 <lb />pa/ter, e)gw\ kataklai/omai,
-<milestone ed="p" n="157" unit="card" /></p></sp></div2>
-<sp>
-<speaker>*xoro/s</speaker><p>
-<lb />xai/rete: xai/rein d' o(/stis du/natai
-<lb />kai\ cuntuxi/a| mh/ tini ka/mnei
-<lb />qnhtw=n, eu)dai/mona pra/ssei.
-</p></sp></div2>
-</div1></body>
+</body>
 </text></TEI.2>

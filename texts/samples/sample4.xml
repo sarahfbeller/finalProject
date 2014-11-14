@@ -136,9 +136,6 @@ convert to P3
 
 <text lang="greek">
 <body>
-<div1 type="episode" org="uniform" sample="complete">
-<milestone ed="p" n="1" unit="card" />
-<div2 type="antistrophe" n="2" org="uniform" sample="complete">
 <sp><speaker>*)hle/ktra</speaker><p>
 <lb />loutra\ panu/staq' u(drana/menon xroi\+
 <lb />koi/ta| e)n oi)ktrota/ta| qana/tou.
@@ -151,8 +148,6 @@ convert to P3
 <lb />ci/fesi d' a)mfito/mois lugra\n
 <lb rend="displayNum" n="165" />*ai)gi/sqou lw/ban qeme/na
 <lb />do/lion e)/sxen a)koi/tan.
-<milestone ed="p" n="167" unit="card" /></p></sp></div2>
-<div2 type="strophe" n="3" org="uniform" sample="complete">
 <sp><speaker>*xoro/s</speaker><p>
 <lb />*)agame/mnonos w)= ko/ra,
 <lb />h)/luqon, *)hle/ktra, poti\
@@ -179,12 +174,5 @@ convert to P3
 <lb />kou/ra| 'stai basilei/a|
 <lb />ta=| *troi/a| q', a(\ 'mou= pate/ros
 <lb />me/mnatai/ poq' a(lou=sa.
-<milestone ed="p" n="190" unit="card" /></p></sp></div2>
-<sp>
-<speaker>*xoro/s</speaker><p>
-<lb />xai/rete: xai/rein d' o(/stis du/natai
-<lb />kai\ cuntuxi/a| mh/ tini ka/mnei
-<lb />qnhtw=n, eu)dai/mona pra/ssei.
-</p></sp></div2>
-</div1></body>
+</body>
 </text></TEI.2>
