@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI.2>
+<teiHeader type="text" status="new">
+<fileDesc>
+<titleStmt>
+<title type="work" n="El.">Electra</title>
+<title type="sub">Machine readable text</title>
+<author n="Eur.">Euripides</author>
+<editor role="editor" n="Murray">Gilbert Murray</editor>
+<sponsor>Perseus Project, Tufts University</sponsor>
+		<principal>Gregory Crane</principal>
+		<respStmt>
+		<resp>Prepared under the supervision of</resp>
+		<name>Lisa Cerrato</name>
+		<name>William Merrill</name>
+		<name>Elli Mylonas</name>
+		<name>David Smith</name>
+		</respStmt>
+<funder n="org:AnnCPB">The Annenberg CPB/Project</funder>
+</titleStmt>
+<extent>About 100Kb</extent>
+<publicationStmt>
+		<publisher>Trustees of Tufts University</publisher>
+		<pubPlace>Medford, MA</pubPlace>
+		<authority>Perseus Project</authority>
+		<availability status="free">
+    <p>This text may be freely distributed, subject to the following
+    restrictions:</p>
+    <list>
+	<item>You credit Perseus, as follows, whenever you use the document:
+	    <quote>Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at http://www.perseus.tufts.edu/hopper/.</quote>
+	</item>
+	<item>You leave this availability statement intact.</item>
+	<item>You use it for non-commercial purposes only.</item>
+	<item>You offer Perseus any modifications you make.</item>
+    </list>
+</availability>
+</publicationStmt>
+<sourceDesc default="NO">
+<biblStruct default="NO">
+<monogr>
+<author>Euripides</author>
+<title>Euripidis Fabulae, vol 2.</title>
+ <editor role="editor">Gilbert Murray</editor>
+<imprint>
+<pubPlace>Oxford</pubPlace>
+<publisher>Clarendon Press, Oxford</publisher>
+<date>1913</date>
+</imprint>
+</monogr>
+</biblStruct>
+</sourceDesc>
+</fileDesc>
+
+<encodingDesc>
+<refsDecl doctype="TEI.2">
+<step refunit="line" from="DESCENDANT (1 L N%1)" to="DITTO" />
+</refsDecl>
+</encodingDesc>
+
+<profileDesc>
+<langUsage default="NO">
+<language id="greek">Greek</language>
+</langUsage>
+</profileDesc>
+<revisionDesc>
+<change><date>1988</date>
+<respStmt><name>Judith Nelson</name><resp>tagging</resp></respStmt>
+<item>Basic SGML tagging</item>
+</change>
+<change><date>8/92</date>
+<respStmt><name>Bill Merrill</name><resp>ed.</resp></respStmt>
+<item>Made Speakers lower case;tagged lacunae; cut L N="0006" L N="012"  from line 328, '†L N="32" from 870; removed some caps;</item>
+</change>
+<change><date>6/95</date>
+<respStmt><name>Lisa Cerrato</name><resp>ed.</resp></respStmt>
+<item>Added speaker tags where needed.</item>
+</change>
+<change><date>10/98</date>
+<respStmt><name>Bill Merrill</name><resp>ed.</resp></respStmt>
+<item>Fixed cardbreaks at 464, 998; added line 463b.</item>
+</change>
+<change><date>23-Dec-99</date>
+<respStmt><name>Anne Mahoney</name><resp>Markup</resp></respStmt>
+<item>
+$Log: eur.el_murray_gk.xml,v $
+Revision 1.7  2013-09-13 11:21:33  balmas01
+reverting texts back to pre_cts_reorg tagged version
+
+Revision 1.5  2012-02-14 18:12:30  ajones06
+Standardized and in a few cases added in header info.
+
+Revision 1.4  2011-09-07 13:57:46  rsingh04
+adding rend=displayNum to lb tags
+
+Revision 1.3  2011-03-30 17:16:22  gcrane
+small fixes
+
+Revision 1.2  2011-01-13 03:38:25  gcrane
+more refinements making these files SDL compatible
+
+Revision 1.1  2010-12-25 19:01:41  gcrane
+our existing files but with L tags converted to LB milestones --
+
+Revision 1.1  2009/11/23 18:46:35  rsingh04
+moved more xml files around based on copyright status
+
+Revision 1.2  2005/08/01 21:15:27  packel
+removed stray item tags
+
+Revision 1.1  2005/07/25 14:33:42  packel
+Converted to XML
+
+Revision 1.9  2004/04/21 20:27:27  mimno
+added card 1s
+
+Revision 1.8  2003/09/09 18:02:08  amahoney
+put spaces around em-dash entity so as not to confuse morphology stuff
+
+Revision 1.7  2003/07/01 22:16:09  yorkc
+Updated texts to TEI P4 and Perseus P4 extensions; minor cleanup (esp. character encodings and typos.)
+
+Revision 1.6  2000/03/04 20:34:32  dasmith
+Added separate funder entity to TEI header.
+
+Revision 1.5  2000/02/17 15:51:39  amahoney
+use n attribute on sp to carry over speaker names when long speeches are
+interrupted by card breaks -- and move card break past close tag of sp
+
+Revision 1.4  1999/12/23 20:06:51  amahoney
+convert to P3
+
+</item></change>
+</revisionDesc>
+</teiHeader>
+
+<text lang="greek">
+<body>
+<div1 type="episode" org="uniform" sample="complete">
+<milestone ed="p" n="1" unit="card" />
+<sp n="*au)tourgo/s">
+<speaker>*au)tourgo/s</speaker><p>
+<lb />w)= gh=s palaio\n a)/rgos, *)ina/xou r(oai/,
+<lb />o(/qen pot' a)/ras nausi\ xili/ais *)/arh
+<lb />e)s gh=n e)/pleuse *trw|a/d' *)agame/mnwn a)/nac.
+<lb />ktei/nas de\ to\n kratou=nt' e)n *)ilia/di xqoni\
+<lb rend="displayNum" n="5" />*pri/amon, e(lw/n te *darda/nou kleinh\n po/lin,
+<lb />a)fi/ket' e)s to/d' *)/argos, u(yhlw=n d' e)pi\
+<lb />naw=n e)/qhke sku=la plei=sta barba/rwn.
+<lb />ka)kei= me\n eu)tu/xhsen: e)n de\ dw/masi
+<lb />qnh/|skei gunaiko\s pro\s *klutaimh/stras do/lw|
+<lb rend="displayNum" n="10" />kai\ tou= *que/stou paido\s *ai)gi/sqou xeri/.
+<lb />xw(\ me\n palaia\ skh=ptra *tanta/lou lipw\n
+<lb />o)/lwlen, *ai)/gisqos de\ basileu/ei xqono/s,
+<lb />a)/loxon e)kei/nou *tundari/da ko/rhn e)/xwn.
+<lb />ou(\s d' e)n do/moisin e)/lif' o(/t' e)s *troi/an e)/plei,
+<lb rend="displayNum" n="15" />a)/rsena/ t' *)ore/sthn qh=lu/ t' *)hle/ktras qa/los,
+<lb />to\n me\n patro\s geraio\s e)kkle/ptei trofeu\s
+<lb />me/llont' *)ore/sthn xero\s u(p' *ai)gi/sqou qanei=n
+<lb />*strofi/w| t' e)/dwke *fwke/wn e)s gh=n tre/fein:
+<lb />h(\ d' e)n do/mois e)/meinen *)hle/ktra patro/s,
+<lb rend="displayNum" n="20" />tau/thn e)peidh\ qalero\s ei)=x' h(/bhs xro/nos,
+<lb />mnhsth=res h)/|toun *(ella/dos prw=toi xqono/s.
+<lb />dei/sas de\ mh/ tw| pai=d' a)riste/wn te/koi
+<lb />*)agame/mnonos poina/tor', ei)=xen e)n do/mois
+<lb />*ai)/gisqos ou)d' h(/rmoze numfi/w| tini/.
+<lb rend="displayNum" n="25" /><milestone ed="P" unit="para" />e)pei\ de\ kai\ tou=t' h)=n fo/bou pollou= ple/wn,
+<lb />mh/ tw| laqrai/ws te/kna gennai/w| te/koi,
+<lb />ktanei=n sfe bouleu/santos, w)mo/frwn o(/mws
+<lb />mh/thr nin e)ce/sw|sen *ai)gi/sqou xero/s.
+<lb />e)s me\n ga\r a)/ndra skh=yin ei)=x' o)lwlo/ta,
+<lb rend="displayNum" n="30" />pai/dwn d' e)/deise mh\ fqonhqei/h fo/nw|.
+<lb />e)k tw=nde dh\ toio/nd' e)mhxanh/sato
+<lb />*ai)/gisqos: o(\s me\n gh=s a)phlla/xqh fuga\s
+<lb />*)agame/mnonos pai=s, xruso\n ei)=f' o(\s a)\n kta/nh|,
+<lb />h(mi=n de\ dh\ di/dwsin *)hle/ktran e)/xein
+<lb rend="displayNum" n="35" />da/marta, pate/rwn me\n *mukhnai/wn a)/po
+<lb />gegw=sin — ou) dh\ tou=to/ g' e)cele/gxomai:
+<lb />lamproi\ ga\r e)s ge/nos ge, xrhma/twn de\ dh\
+<lb />pe/nhtes, e)/nqen hu(ge/nei' a)po/llutai — 
+<lb />w(s a)sqenei= dou\s a)sqenh= la/boi fo/bon.
+<lb rend="displayNum" n="40" />ei) ga/r nin e)/sxen a)ci/wm' e)/xwn a)nh/r,
+<lb />eu(/dont' a)\n e)ch/geire to\n *)agame/mnonos
+<lb />fo/non di/kh t' a)\n h)=lqen *ai)gi/sqw| to/te.
+<lb />h(\n ou)/poq' a(nh\r o(/de — su/noide/ moi *ku/pris — 
+<lb />h)/|sxunen eu)nh=|: parqe/nos d' e)/t' e)sti\ dh/.
+<lb rend="displayNum" n="45" />ai)sxu/nomai ga\r o)lbi/wn a)ndrw=n te/kna
+<lb />labw\n u(bri/zein, ou) kata/cios gegw/s.
+<lb />ste/nw de\ to\n lo/goisi khdeu/ont' e)moi\
+<lb />a)/qlion *)ore/sthn, ei)/ pot' ei)s *)/argos molw\n
+<lb />ga/mous a)delfh=s dustuxei=s e)so/yetai.
+<milestone ed="p" n="50" unit="card" />
+<lb rend="displayNum" n="50" /><milestone ed="P" unit="para" />o(/stis de/ m' ei)=nai/ fhsi mw=ron, ei) labw\n
+<lb />ne/an e)s oi)/kous parqe/non mh\ qigga/nw,
+<lb />gnw/mhs ponhroi=s kano/sin a)nametrou/menos
+<lb />to\ sw=fron i)/stw kau)to\s au)= toiou=tos w)/n.
+</p></sp>
+<sp>
+<speaker>*xoro/s</speaker><p>
+<lb />xai/rete: xai/rein d' o(/stis du/natai
+<lb />kai\ cuntuxi/a| mh/ tini ka/mnei
+<lb />qnhtw=n, eu)dai/mona pra/ssei.
+</p></sp></div2>
+</div1></body>
+</text></TEI.2>
