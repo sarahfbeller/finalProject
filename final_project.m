@@ -98,6 +98,7 @@ function final_project
 			model = NaiveBayes.fit(X([1:i-1,i+1:end],:),Y([1:i-1,i+1:end],:), 'Distribution', 'mn');
 		end
 		disp('Finished fitting');
+		X(i,:)
 		y_hat = model.predict(model,X(i,:));
 		all_y_hat  = [all_y_hat, y_hat];
 		disp('Finished predicting');
