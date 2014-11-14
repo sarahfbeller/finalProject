@@ -7,7 +7,7 @@ function final_project
 	xpath = factory.newXPath;
 
 	%input_files = dir('texts/*.xml'); % Reads only .xml files in the 'texts' directory
-	input_files = dir('test/*.xml'); % Reads only .xml files in the 'texts' directory
+	input_files = dir('texts/Pindar*.xml'); % Reads only .xml files in the 'texts' directory
 
 	work_freq_map = containers.Map();
 	word_set = {};
@@ -79,27 +79,17 @@ function final_project
 
 	Y = transpose(authors_list);
 	all_y_hat = [];
-	length(Y);
-	X;
-	Y;
 
 	for i = 1:length(Y)
 		if i == 1
-			X([i+1:end],:);
-			Y([i+1:end],:);
 			model = NaiveBayes.fit(X([i+1:end],:),Y([i+1:end],:), 'Distribution', 'mn');
 		elseif i == length(Y)
-			X([1:i-1],:);
-			Y([1:i-1],:);
 			model = NaiveBayes.fit(X([1:i-1],:),Y([1:i-1],:), 'Distribution', 'mn');
 		else
-			X([1:i-1,i+1:end],:);
-			Y([1:i-1,i+1:end],:);
 			model = NaiveBayes.fit(X([1:i-1,i+1:end],:),Y([1:i-1,i+1:end],:), 'Distribution', 'mn');
 		end
 		disp('Finished fitting');
-		X(i,:)
-		y_hat = model.predict(model,X(i,:));
+		y_hat = model.predict(X(i,:));
 		all_y_hat  = [all_y_hat, y_hat];
 		disp('Finished predicting');
 
@@ -108,7 +98,7 @@ function final_project
 
 	mistakes = 0;
 	for i = 1:length(Y)
-		if Y(i) ~= all_y_hat(i)
+		if  ~strcmp(Y(i), all_y_hat(i))
 			mistakes = mistakes + 1;
 		end
 	end
