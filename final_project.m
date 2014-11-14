@@ -6,16 +6,18 @@ function final_project
 	factory = XPathFactory.newInstance;
 	xpath = factory.newXPath;
 
-	input_files = dir('texts/Euripides_A*.xml'); % Reads only .xml files in the 'texts' directory
+	%input_files = dir('texts/*.xml'); % Reads only .xml files in the 'texts' directory
+	input_files = dir('test/*.xml'); % Reads only .xml files in the 'texts' directory
 
 	work_freq_map = containers.Map();
 	word_set = {};
 	authors_list = {};
 
-	for file = input_files'%input_files(1)
+	%for file = input_files(1:3)
+	for file = input_files'
 		authors_list = [authors_list, strtok(file.name,'_')];
 		file_path = strcat('texts/', file.name);
-		disp('Processing ' file.name);
+		% disp('Processing ' file.name);
 		xDoc = xmlread(file_path);
 		xmlwrite(xDoc);
 
@@ -75,35 +77,40 @@ function final_project
 	end
 	disp('Finished populating X');
 
-	Y = authors_list;
-	all_test_y = []; all_y_hat = [];
+	Y = transpose(authors_list);
+	all_y_hat = [];
+	length(Y);
+	X;
+	Y;
 
 	for i = 1:length(Y)
-
-		[train, test] = crossvalind('LeaveMOut', length(Y), 1);
-
-		train_x = X(train,:);
-		train_y = Y(train,:);
-
-		test_x  = X(test,:);
-		test_y  = Y(test,:);
-
-		model = fitcnb(train_x,train_y);
-
-		y_hat = predict(model,test_x);
-
-		all_test_y = [all_test_y, test_y];
+		if i == 1
+			X([i+1:end],:);
+			Y([i+1:end],:);
+			model = NaiveBayes.fit(X([i+1:end],:),Y([i+1:end],:), 'Distribution', 'mn');
+		elseif i == length(Y)
+			X([1:i-1],:);
+			Y([1:i-1],:);
+			model = NaiveBayes.fit(X([1:i-1],:),Y([1:i-1],:), 'Distribution', 'mn');
+		else
+			X([1:i-1,i+1:end],:);
+			Y([1:i-1,i+1:end],:);
+			model = NaiveBayes.fit(X([1:i-1,i+1:end],:),Y([1:i-1,i+1:end],:), 'Distribution', 'mn');
+		end
+		disp('Finished fitting');
+		y_hat = model.predict(model,X(i,:));
 		all_y_hat  = [all_y_hat, y_hat];
+		disp('Finished predicting');
 
 	end
-	disp('Finished training & predicting.')
+	disp('Finished training & predicting.');
 
 	mistakes = 0;
-	for i = 1:length(all_test_y)
-		if all_test_y(i) ~= all_y_hat(i)
+	for i = 1:length(Y)
+		if Y(i) ~= all_y_hat(i)
 			mistakes = mistakes + 1;
 		end
 	end
 
-	test_error = mistakes / length(all_test_y)
+	test_error = mistakes / length(Y)
 end
