@@ -1,13 +1,13 @@
 function final_project
 	clc; clear all;
-
+	tic; % Start stopwatch timer
 	% get the xpath mechanism into the workspace
 	import javax.xml.xpath.*
 	factory = XPathFactory.newInstance;
 	xpath = factory.newXPath;
 
 	%input_files = dir('texts/*.xml'); % Reads only .xml files in the 'texts' directory
-	input_files = dir('texts/Pindar*.xml'); % Reads only .xml files in the 'texts' directory
+	input_files = dir('test/*.xml'); % Reads only .xml files in the 'texts' directory
 
 	work_freq_map = containers.Map();
 	word_set = {};
@@ -16,7 +16,7 @@ function final_project
 	%for file = input_files(1:3)
 	for file = input_files'
 		authors_list = [authors_list, strtok(file.name,'_')];
-		file_path = strcat('texts/', file.name);
+		file_path = strcat('test/', file.name);
 		% disp('Processing ' file.name);
 		xDoc = xmlread(file_path);
 		xmlwrite(xDoc);
@@ -37,6 +37,12 @@ function final_project
 				continue;
 			else
 				for j = 1:length(line) % For every word in the line
+					
+					% Primitive stemmer
+					if (length(line{j}) > 5) 
+						line{j} = line{j}(1:end-3);
+					end
+
 					if isempty(line{j})
 						continue;
 					end
@@ -53,7 +59,7 @@ function final_project
 		disp(['Finished assembling freq map for ' file.name]);
 
 	end
-	disp('Finished assembling all word frequency maps.');
+	disp('Finished assembling all word frequency maps in ' num2str(toc) ' seconds.');
 
 	word_set = unique(word_set);
 	disp(['There are ' num2str(length(word_set)) ' total words in this data!']);
@@ -88,10 +94,8 @@ function final_project
 		else
 			model = NaiveBayes.fit(X([1:i-1,i+1:end],:),Y([1:i-1,i+1:end],:), 'Distribution', 'mn');
 		end
-		disp('Finished fitting');
 		y_hat = model.predict(X(i,:));
 		all_y_hat  = [all_y_hat, y_hat];
-		disp('Finished predicting');
 
 	end
 	disp('Finished training & predicting.');
@@ -104,4 +108,5 @@ function final_project
 	end
 
 	test_error = mistakes / length(Y)
+	disp('In all, this algorithm took ' num2str(toc)/60 ' minutes to run.');
 end
