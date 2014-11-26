@@ -132,11 +132,14 @@ function final_project
 
 	for i = 1:length(Y)														% Implement cross-validation:
 		if i == 1
-			model    = NaiveBayes.fit(X([i+1:end],:),Y([i+1:end],:), 'Distribution', 'mn');
+			model    = NaiveBayes.fit(X([i+1:end],:), ...
+					   Y([i+1:end],:), 'Distribution', 'mn');
 		elseif i == length(Y)
-			model    = NaiveBayes.fit(X([1:i-1],:),Y([1:i-1],:), 'Distribution', 'mn');
+			model    = NaiveBayes.fit(X([1:i-1],:), ...
+					   Y([1:i-1],:), 'Distribution', 'mn');
 		else
-			model    = NaiveBayes.fit(X([1:i-1,i+1:end],:),Y([1:i-1,i+1:end],:), 'Distribution', 'mn');
+			model    = NaiveBayes.fit(X([1:i-1,i+1:end],:), ...
+					   Y([1:i-1,i+1:end],:), 'Distribution', 'mn');
 		end
 		y_hat        = model.predict(X(i,:));
 		all_y_hat    = [all_y_hat, y_hat];
