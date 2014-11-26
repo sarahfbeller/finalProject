@@ -1,79 +1,88 @@
 function final_project
-	clc; clear all;
-	tic; 																	% Start stopwatch timer.
+	clc; clear all;	tic; 													% Clear variables and start stopwatch.
 	
 	import javax.xml.xpath.*												% Get the xPath mechanism into the workspace.
 	factory 		 = XPathFactory.newInstance;
 	xpath 			 = factory.newXPath;
 
 	input_directory  = 'test/';
-	noun_endings     = {'as' 'ou' 'an' 'a' 'ain' 'ai' 'wn' 'ais' 'hs' 'h' 'hn' 'os' 'on' 'e' 'w' 'oin' 'ous' 'oi' 'ws' 'us' 'uos' 'ui' 'un' 'u' 'ues' 'uwn' 'usi' 'is' 'ews' 'ei' 'in' 'i' 'eis' 'ewn' 'esi' 'us'};
-	verb_endings     = {'w' 'eis' 'ei' 'omen' 'ete' 'ousi' 'ousin' 'wmen' 'hte' 'wsi' 'wsin' 'oimi' 'ois' 'oi' 'oimen' 'oite' 'oien' 'etw' 'ontwn' 'wsan' 'ein' 'wn' 'ousa' 'on' 'as' 'asa' 'an'};
-	%s and then verb ending -> cut s
-	%ignored middle and passive for now
-	%figure out - iota subscript with a, h, q, hs, 
+	noun_endings     = {'as' 'ou' 'an' 'a' 'ain' 'ai' 'wn' 'ais' 'hs' ...
+						'h' 'hn' 'os' 'on' 'e' 'w' 'oin' 'ous' 'oi' 'ws' ...
+						'us' 'uos' 'ui' 'un' 'u' 'ues' 'uwn' 'usi' 'is' ...
+						'ews' 'ei' 'in' 'i' 'eis' 'ewn' 'esi' 'us'};
+	verb_endings     = {'w' 'eis' 'ei' 'omen' 'ete' 'ousi' 'ousin' ...
+						'wmen' 'hte' 'wsi' 'wsin' 'oimi' 'ois' 'oi' ...
+						'oimen' 'oite' 'oien' 'etw' 'ontwn' 'wsan' 'ein' ...
+						'wn' 'ousa' 'on' 'as' 'asa' 'an'};
+	% s and then verb ending -> cut s
+	% ignored middle and passive for now
+	% figure out - iota subscript with a, h, q, hs, 
 
-	% Order noun and verb endings by size, largest to smallest.
-	[dummy, index]   = sort(cellfun('size', noun_endings, 2), 'descend');
-  	noun_endings     = noun_endings(index); 
-	[dummy, index]   = sort(cellfun('size', verb_endings, 2), 'descend');
-  	verb_endings     = verb_endings(index);
+	endings 		 = [noun_endings verb_endings];							% Combine noun and verb endings
+	[dummy, index]   = sort(cellfun('size', endings, 2), 'descend');		% Order by size, largest to smallest.
+  	endings     	 = endings(index); 
 
 	% word_freq_map  = containers.Map();
 	% work_freq_map  = containers.Map();
 	% word_set       = {};
 
-	token_list       = {};
-	authors_list     = {};
-	X                = zeros(0,0);
+	token_list       = {};													% Initialize token_list.
+	authors_list     = {};													% Initialize author_list (Y).
+	X                = zeros(0,0);											% Initialize X matrix.
 	input_files      = dir(strcat(input_directory, '*.xml')); 				% Read only .xml files.
 	file_num         = 1;
 
-	for file = input_files'
-		authors_list = [authors_list, strtok(file.name,'_')];
+	for file = input_files'													% For every file in the input directory:
+		authors_list = [authors_list, strtok(file.name,'_')];				% Get this author to author_list.
 		file_path    = strcat(input_directory, file.name);
 		xDoc 	     = xmlread(file_path);
 		xmlwrite(xDoc);
 
-		expression   = xpath.compile('TEI.2/text/body');					% Compile the XPath Expression.
-		bodyNode     = expression.evaluate(xDoc, XPathConstants.NODE);		% Evaluate the XPath Expression.
+		expression   = xpath.compile('TEI.2/text/body');					% Compile the xPath Expression.
+		bodyNode     = expression.evaluate(xDoc, XPathConstants.NODE);		% Evaluate the xPath Expression.
 		text_body    = char(bodyNode.getTextContent); 						% Returns Matlab string.
-		lines 	     = regexp(text_body, '\n', 'split'); 					% Splits into lines.
+		lines 	     = regexp(text_body, '\n', 'split'); 					% Split into lines.
 		lines        = regexprep(lines,'[\/\\=|,.:]','');					% Take out accents.
 
 		[m,n] 		 = size(X);
 		X 			 = [X; zeros(1,n)];
 
-		for i = 1:length(lines) 											% For every line in the work
-			if isempty(lines{i})
+		for i = 1:length(lines) 											% For every line in the work:
+			if isempty(lines{i})											% Skip empty lines.
 				continue;
 			end
-			line = regexp(lines{i}, ' ', 'split');
+			line = regexp(lines{i}, ' ', 'split');							% Split line into words.
 
 			if ((length(line) == 1) && (line{1}(1) == '*'))					% Skip one-word lines (i.e. speakers).
 				continue;
 			else
-				for j = 1:length(line) 										% For every word in the line.
+
+				for j = 1:length(line) 										% For every word in the line:
 
 					if (isempty(line{j}) || (line{j}(1) == '*'))			% Skip empty or capital words.
 						continue;
 					end
-											
-					% Primitive stemmer
-					% if (length(line{j}) > 5) 
-					% 	line{j} = line{j}(1:end-3);
-					% end
 
-					% Not-so-primitive stemmer.
-					% Searches for the longest endings first, i.e. 'ousa' not stemmed prematurely to 'ous'.
-					for k = max(length(noun_endings{1}), length(verb_endings{1})) : -1 : min(length(noun_endings{end}), length(verb_endings{end}))
+					for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
 						if (length(line{j}) > k)
-							if (~isempty(find(strcmp(line{j}(end-k+1:end), verb_endings))) || ~isempty(find(strcmp(line{j}(end-k+1:end), noun_endings))))
+							if ~isempty(find(strcmp(line{j}(end-k+1:end), endings)))
 								line{j} = line{j}(1:end-k);
 								break;
 							end
 						end
 					end
+
+					index = find(strcmp(line{j}, token_list));				% Find word in token_list.
+					if isempty(index)										% If word is a new word:
+						token_list = [token_list, line{j}]; 				% Add word to token list.
+						X(file_num, size(token_list)) = 1;  		 		% Add '1' to X matrix.
+					else
+						X(file_num, index) = X(file_num, index) + 1; 		% Increment training matrix.
+					end
+
+					% if (length(line{j}) > 5) 								% Primitive stemmer
+					% 	line{j} = line{j}(1:end-3);
+					% end
 
 					% noun_index = find(strcmp(line{j}, noun_endings));
 					% verb_index = find(strcmp(line{j}, verb_endings));
@@ -82,16 +91,6 @@ function final_project
 					% elseif(~isempty(verb_index))
 					% 	line{j} = line{j}(1:end-verb_index);
 					% end
-
-					index = find(strcmp(line{j}, token_list));
-					if isempty(index)
-						token_list = [token_list, line{j}]; 				% Add word to token list
-						X(file_num, size(token_list)) = 1;  		 		% Add '1' to X matrix.
-					else
-						X(file_num, index) = X(file_num, index) + 1; 		% Increment training matrix.
-					end
-
-
 
 					% if isKey(word_freq_map, line{j}) % Record in freq map
 					% 	word_freq_map(line{j}) = word_freq_map(line{j}) + 1;
@@ -131,7 +130,7 @@ function final_project
 	Y 				 = transpose(authors_list);
 	all_y_hat        = [];
 
-	for i = 1:length(Y)
+	for i = 1:length(Y)														% Implement cross-validation:
 		if i == 1
 			model    = NaiveBayes.fit(X([i+1:end],:),Y([i+1:end],:), 'Distribution', 'mn');
 		elseif i == length(Y)
@@ -145,7 +144,7 @@ function final_project
 	end
 
 	mistakes = 0;
-	for i = 1:length(Y)
+	for i = 1:length(Y)														% Count # prediction mistakes.
 		if  ~strcmp(Y(i), all_y_hat(i))
 			mistakes = mistakes + 1;
 		end
