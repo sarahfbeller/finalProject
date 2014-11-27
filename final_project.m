@@ -104,7 +104,10 @@ function final_project
 		% work_freq_map(file.name) = word_freq_map;
 		file_num = file_num + 1;
 	end
-	fprintf('Finished populating X in %d minutes and %d seconds.\n',floor(toc/60),round(rem(toc,60)));
+
+	save(strcat(num2str(file_num-1),'training_matrix'), 'X');				% Save X matrix for future use.
+	fprintf('Finished training in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
+	fprintf('Training matrix populated using %d Ancient Greek works.', file_num-1);
 
 	% word_set = unique(word_set);
 	% disp(['There are ' num2str(length(word_set)) ' total words in this data!']);
@@ -128,31 +131,43 @@ function final_project
 	% end
 
 	Y 				 = transpose(authors_list);
-	all_y_hat        = [];
+	bay_results      = [];
+	lda_results      = [];
+	% qda_results      = [];
+	% mnr_results		 = [];
 
 	for i = 1:length(Y)														% Implement cross-validation:
-		if i == 1
-			model    = NaiveBayes.fit(X([i+1:end],:), ...
-					   Y([i+1:end],:), 'Distribution', 'mn');
-		elseif i == length(Y)
-			model    = NaiveBayes.fit(X([1:i-1],:), ...
-					   Y([1:i-1],:), 'Distribution', 'mn');
-		else
-			model    = NaiveBayes.fit(X([1:i-1,i+1:end],:), ...
-					   Y([1:i-1,i+1:end],:), 'Distribution', 'mn');
-		end
-		y_hat        = model.predict(X(i,:));
-		all_y_hat    = [all_y_hat, y_hat];
-		% fprintf('Model predicted %s, Correct label was %s.\n', all_y_hat{i}, Y{i});
+		
+		bay_model    = NaiveBayes.fit(removerows(X,'ind',[i]), ...
+					   removerows(Y,'ind',[i]), 'Distribution','mn');		% Train Naive Bayes model.
+
+		lda_model    = ClassificationDiscriminant.fit(...
+					   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+					   'discrimType','pseudolinear');						% Train Linear Discriminant model.
+
+		% qda_model    = ClassificationDiscriminant.fit(...
+		% 			   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+		% 			   'discrimType','pseudoquadratic');					% Train Quadratic Discriminant model.
+
+		bay_results  = [bay_results bay_model.predict(X(i,:))];				% Predict using Naive Bayes model.
+		lda_results  = [lda_results lda_model.predict(X(i,:))];				% Predict using LDA model.
+		% qda_results  = [qda_results qda_model.predict(X(i,:))];				% Predict using QDA model.
+
+		% mnr_results   = [mnr_results, mnr_model.predict(X(i,:))];
 	end
 
-	mistakes = 0;
-	for i = 1:length(Y)														% Count # prediction mistakes.
-		if  ~strcmp(Y(i), all_y_hat(i))
-			mistakes = mistakes + 1;
-		end
-	end
+	% lda_results  	 = classify(X,X,Y);
 
-	test_error       = mistakes / length(Y)
-    fprintf('Algorithm completed in %d minutes and %d seconds.\n',floor(toc/60),round(rem(toc,60)));
+
+	bay_error 		 = length(setdiff(Y, bay_results)) / length(Y);
+	lda_error 		 = length(setdiff(Y, lda_results)) / length(Y);
+	% qda_error 		 = length(setdiff(Y, qda_results)) / length(Y);
+	% mnr_error = nnz(categorical(Y) == categorical(mnr_results)) / length(Y);
+
+	fprintf('\n\nTest error using Naive Bayes algorithm: %.2f\n', bay_error);
+	fprintf('Test error using Linear Discriminant analysis: %.2f\n', lda_error);
+	% fprintf('Test error using Quadratic Discriminant analysis: %.2f\n', qda_error);
+
+	% fprintf('Test error using Multinomial Regression algorithm: %f', mnr_error);
+    fprintf('\nProgram executed in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
 end
