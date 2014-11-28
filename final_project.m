@@ -14,9 +14,10 @@ function final_project
 						'wmen' 'hte' 'wsi' 'wsin' 'oimi' 'ois' 'oi' ...
 						'oimen' 'oite' 'oien' 'etw' 'ontwn' 'wsan' 'ein' ...
 						'wn' 'ousa' 'on' 'as' 'asa' 'an'};
+	vowels = {'a' 'e' 'i' 'o' 'u' 'h' 'w'};
 	% s and then verb ending -> cut s
 	% ignored middle and passive for now
-	% figure out - iota subscript with a, h, q, hs, 
+	% ignored iota subscripts with a, h, q, hs, 
 
 	endings 		 = [noun_endings verb_endings];							% Combine noun and verb endings
 	[dummy, index]   = sort(cellfun('size', endings, 2), 'descend');		% Order by size, largest to smallest.
@@ -32,6 +33,11 @@ function final_project
 	input_files      = dir(strcat(input_directory, '*.xml')); 				% Read only .xml files.
 	file_num         = 1;
 
+	% sentence features calculated along the way and added at the end so as not to upset token_list indexing
+	avg_words_per_line = [];										
+	avg_syllables_per_word = []; % stemming issue?				% Syllable = count(non-consecutive vowels)
+	%avg_word_length = zeros(1, 10); % maybe not useful cos of stemming
+
 	for file = input_files'													% For every file in the input directory:
 		authors_list = [authors_list, strtok(file.name,'_')];				% Get this author to author_list.
 		file_path    = strcat(input_directory, file.name);
@@ -45,7 +51,10 @@ function final_project
 		lines        = regexprep(lines,'[\/\\=|,.:]','');					% Take out accents.
 
 		[m,n] 		 = size(X);
-		X 			 = [X; zeros(1,n)];
+		X 			 = [X; zeros(1,n)];										% initialize X to count(tokens + extra features)
+
+		total_syllables = 0;
+		total_words = 0;
 
 		for i = 1:length(lines) 											% For every line in the work:
 			if isempty(lines{i})											% Skip empty lines.
@@ -64,10 +73,12 @@ function final_project
 					end
 
 					for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
-						if (length(line{j}) > k)
-							if ~isempty(find(strcmp(line{j}(end-k+1:end), endings)))
-								line{j} = line{j}(1:end-k);
-								break;
+						if length(line{j}) > k
+							if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
+								if(length(line{j}(1:end-k)) > 1)			% To make sure it doesn't truncate particles
+									line{j} = line{j}(1:end-k);
+									break;
+								end
 							end
 						end
 					end
@@ -79,6 +90,19 @@ function final_project
 					else
 						X(file_num, index) = X(file_num, index) + 1; 		% Increment training matrix.
 					end
+
+					prev_vowel = false;										% Calculate number of syllables
+					for m = 1:length(line{j})
+						if ~isempty(find(strcmp(line{j}(m), vowels),1))
+							if ~prev_vowel
+								total_syllables = total_syllables + 1;
+								prev_vowel = true;
+							end
+						else
+							prev_vowel = false;
+						end
+					end
+
 
 					% if (length(line{j}) > 5) 								% Primitive stemmer
 					% 	line{j} = line{j}(1:end-3);
@@ -99,11 +123,18 @@ function final_project
 					% 	word_set = [word_set, line{j}];
 					% end
 				end
+				total_words = total_words + length(line);
 			end
 		end
 		% work_freq_map(file.name) = word_freq_map;
+		avg_words_per_line(file_num) = total_words/length(lines);
+		avg_syllables_per_word(file_num) = total_syllables/total_words;
 		file_num = file_num + 1;
 	end
+
+	X = horzcat(X, avg_words_per_line');										% Add sentence features to X matrix
+	X = horzcat(X, avg_syllables_per_word')
+
 
 	save(strcat(num2str(file_num-1),'training_matrix'), 'X');				% Save X matrix for future use.
 	fprintf('Finished training in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
