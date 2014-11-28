@@ -35,8 +35,8 @@ function final_project
 
 	% sentence features calculated along the way and added at the end so as not to upset token_list indexing
 	avg_words_per_line = [];										
-	avg_syllables_per_word = []; % stemming issue?				% Syllable = count(non-consecutive vowels)
-	%avg_word_length = zeros(1, 10); % maybe not useful cos of stemming
+	avg_syllables_per_word = [];											% Syllable = count(non-consecutive vowels)
+	avg_word_length = [];
 
 	for file = input_files'													% For every file in the input directory:
 		authors_list = [authors_list, strtok(file.name,'_')];				% Get this author to author_list.
@@ -53,6 +53,7 @@ function final_project
 		[m,n] 		 = size(X);
 		X 			 = [X; zeros(1,n)];										% initialize X to count(tokens + extra features)
 
+		total_characters = 0;
 		total_syllables = 0;
 		total_words = 0;
 
@@ -70,6 +71,20 @@ function final_project
 
 					if (isempty(line{j}) || (line{j}(1) == '*'))			% Skip empty or capital words.
 						continue;
+					end
+
+					total_characters = total_characters + length(line{j});
+
+					prev_vowel = false;										% Calculate number of syllables
+					for m = 1:length(line{j})
+						if ~isempty(find(strcmp(line{j}(m), vowels),1))
+							if ~prev_vowel
+								total_syllables = total_syllables + 1;
+								prev_vowel = true;
+							end
+						else
+							prev_vowel = false;
+						end
 					end
 
 					for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
@@ -90,19 +105,6 @@ function final_project
 					else
 						X(file_num, index) = X(file_num, index) + 1; 		% Increment training matrix.
 					end
-
-					prev_vowel = false;										% Calculate number of syllables
-					for m = 1:length(line{j})
-						if ~isempty(find(strcmp(line{j}(m), vowels),1))
-							if ~prev_vowel
-								total_syllables = total_syllables + 1;
-								prev_vowel = true;
-							end
-						else
-							prev_vowel = false;
-						end
-					end
-
 
 					% if (length(line{j}) > 5) 								% Primitive stemmer
 					% 	line{j} = line{j}(1:end-3);
@@ -129,11 +131,13 @@ function final_project
 		% work_freq_map(file.name) = word_freq_map;
 		avg_words_per_line(file_num) = total_words/length(lines);
 		avg_syllables_per_word(file_num) = total_syllables/total_words;
+		avg_word_length(file_num) = total_characters/total_words;
 		file_num = file_num + 1;
 	end
 
 	X = horzcat(X, avg_words_per_line');										% Add sentence features to X matrix
-	X = horzcat(X, avg_syllables_per_word')
+	X = horzcat(X, avg_syllables_per_word');
+	X = horzcat(X, avg_word_length');
 
 
 	save(strcat(num2str(file_num-1),'training_matrix'), 'X');				% Save X matrix for future use.
@@ -182,7 +186,7 @@ function final_project
 
 		bay_results  = [bay_results bay_model.predict(X(i,:))];				% Predict using Naive Bayes model.
 		lda_results  = [lda_results lda_model.predict(X(i,:))];				% Predict using LDA model.
-		% qda_results  = [qda_results qda_model.predict(X(i,:))];				% Predict using QDA model.
+		% qda_results  = [qda_results qda_model.predict(X(i,:))];			% Predict using QDA model.
 
 		% mnr_results   = [mnr_results, mnr_model.predict(X(i,:))];
 	end
