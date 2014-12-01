@@ -5,7 +5,7 @@ function final_project
 	factory 		 = XPathFactory.newInstance;
 	xpath 			 = factory.newXPath;
 
-	input_directory  = 'test/';
+	input_directory  = 'texts/';
 	noun_endings     = {'as' 'ou' 'an' 'a' 'ain' 'ai' 'wn' 'ais' 'hs' ...
 						'h' 'hn' 'os' 'on' 'e' 'w' 'oin' 'ous' 'oi' 'ws' ...
 						'us' 'uos' 'ui' 'un' 'u' 'ues' 'uwn' 'usi' 'is' ...
@@ -46,7 +46,14 @@ function final_project
 
 		expression   = xpath.compile('TEI.2/text/body');					% Compile the xPath Expression.
 		bodyNode     = expression.evaluate(xDoc, XPathConstants.NODE);		% Evaluate the xPath Expression.
-		text_body    = char(bodyNode.getTextContent); 						% Returns Matlab string.
+
+		try
+			text_body = char(bodyNode.getTextContent); 						% Returns Matlab string.
+		catch exception
+			fprintf('Unable to process %s.\n', file.name);
+			file_num = file_num - 1;										% Do not add to number of training files.
+		end
+
 		lines 	     = regexp(text_body, '\n', 'split'); 					% Split into lines.
 		lines        = regexprep(lines,'[\/\\=|,.:]','');					% Take out accents.
 
@@ -75,7 +82,7 @@ function final_project
 
 					total_characters = total_characters + length(line{j});
 
-					prev_vowel = false;										% Calculate number of syllables
+					prev_vowel = false;										% Calculate number of syllables.
 					for m = 1:length(line{j})
 						if ~isempty(find(strcmp(line{j}(m), vowels),1))
 							if ~prev_vowel
@@ -90,7 +97,7 @@ function final_project
 					for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
 						if length(line{j}) > k
 							if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
-								if(length(line{j}(1:end-k)) > 1)			% To make sure it doesn't truncate particles
+								if(length(line{j}(1:end-k)) > 1)			% Don't truncate particles.
 									line{j} = line{j}(1:end-k);
 									break;
 								end
@@ -129,18 +136,16 @@ function final_project
 			end
 		end
 		% work_freq_map(file.name) = word_freq_map;
-		avg_words_per_line(file_num) = total_words/length(lines);
-		avg_syllables_per_word(file_num) = total_syllables/total_words;
-		avg_word_length(file_num) = total_characters/total_words;
+		avg_words_per_line(file_num) = round(total_words/length(lines));		% Round because mn requires integers.
+		avg_syllables_per_word(file_num) = round(total_syllables/total_words);
+		avg_word_length(file_num) = round(total_characters/total_words);
 		file_num = file_num + 1;
 	end
 
-	X = horzcat(X, avg_words_per_line');										% Add sentence features to X matrix
-	X = horzcat(X, avg_syllables_per_word');
-	X = horzcat(X, avg_word_length');
+	X = [X avg_words_per_line' avg_syllables_per_word' avg_word_length'];		% Add sentence features to X matrix.
 
 
-	save(strcat(num2str(file_num-1),'training_matrix'), 'X');				% Save X matrix for future use.
+	save(strcat(num2str(file_num-1),'training_matrix'), 'X');					% Save X matrix for future use.
 	fprintf('Finished training in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
 	fprintf('Training matrix populated using %d Ancient Greek works.', file_num-1);
 
@@ -167,7 +172,7 @@ function final_project
 
 	Y 				 = transpose(authors_list);
 	bay_results      = [];
-	lda_results      = [];
+	% lda_results      = [];
 	% qda_results      = [];
 	% mnr_results		 = [];
 
@@ -176,16 +181,16 @@ function final_project
 		bay_model    = NaiveBayes.fit(removerows(X,'ind',[i]), ...
 					   removerows(Y,'ind',[i]), 'Distribution','mn');		% Train Naive Bayes model.
 
-		lda_model    = ClassificationDiscriminant.fit(...
-					   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
-					   'discrimType','pseudolinear');						% Train Linear Discriminant model.
+		% lda_model    = ClassificationDiscriminant.fit(...
+		% 			   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+		% 			   'discrimType','pseudolinear');						% Train Linear Discriminant model.
 
 		% qda_model    = ClassificationDiscriminant.fit(...
 		% 			   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
 		% 			   'discrimType','pseudoquadratic');					% Train Quadratic Discriminant model.
 
 		bay_results  = [bay_results bay_model.predict(X(i,:))];				% Predict using Naive Bayes model.
-		lda_results  = [lda_results lda_model.predict(X(i,:))];				% Predict using LDA model.
+		% lda_results  = [lda_results lda_model.predict(X(i,:))];				% Predict using LDA model.
 		% qda_results  = [qda_results qda_model.predict(X(i,:))];			% Predict using QDA model.
 
 		% mnr_results   = [mnr_results, mnr_model.predict(X(i,:))];
@@ -195,12 +200,12 @@ function final_project
 
 
 	bay_error 		 = length(setdiff(Y, bay_results)) / length(Y);
-	lda_error 		 = length(setdiff(Y, lda_results)) / length(Y);
+	% lda_error 		 = length(setdiff(Y, lda_results)) / length(Y);
 	% qda_error 		 = length(setdiff(Y, qda_results)) / length(Y);
 	% mnr_error = nnz(categorical(Y) == categorical(mnr_results)) / length(Y);
 
 	fprintf('\n\nTest error using Naive Bayes algorithm: %.2f\n', bay_error);
-	fprintf('Test error using Linear Discriminant analysis: %.2f\n', lda_error);
+	% fprintf('Test error using Linear Discriminant analysis: %.2f\n', lda_error);
 	% fprintf('Test error using Quadratic Discriminant analysis: %.2f\n', qda_error);
 
 	% fprintf('Test error using Multinomial Regression algorithm: %f', mnr_error);
