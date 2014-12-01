@@ -5,7 +5,7 @@ function final_project
 	factory 		 = XPathFactory.newInstance;
 	xpath 			 = factory.newXPath;
 
-	input_directory  = 'texts/';
+	input_directory  = 'test/';
 	noun_endings     = {'as' 'ou' 'an' 'a' 'ain' 'ai' 'wn' 'ais' 'hs' ...
 						'h' 'hn' 'os' 'on' 'e' 'w' 'oin' 'ous' 'oi' 'ws' ...
 						'us' 'uos' 'ui' 'un' 'u' 'ues' 'uwn' 'usi' 'is' ...
@@ -16,8 +16,8 @@ function final_project
 						'wn' 'ousa' 'on' 'as' 'asa' 'an'};
 	vowels = {'a' 'e' 'i' 'o' 'u' 'h' 'w'};
 	% s and then verb ending -> cut s
-	% ignored middle and passive for now
-	% ignored iota subscripts with a, h, q, hs, 
+	% ignored middle and passive
+	% ignored iota subscripts with a, h, w
 
 	endings 		 = [noun_endings verb_endings];							% Combine noun and verb endings
 	[dummy, index]   = sort(cellfun('size', endings, 2), 'descend');		% Order by size, largest to smallest.
@@ -109,7 +109,7 @@ function final_project
 					index = find(strcmp(line{j}, token_list));				% Find word in token_list.
 					if isempty(index)										% If word is a new word:
 						token_list = [token_list, line{j}]; 				% Add word to token list.
-						X(file_num, size(token_list)) = 1;  		 		% Add '1' to X matrix.
+						X(file_num, length(token_list)) = 1;  		 		% Add '1' to X matrix.
 					else
 						X(file_num, index) = X(file_num, index) + 1; 		% Increment training matrix.
 					end
@@ -141,14 +141,28 @@ function final_project
 		avg_syllables_per_word(file_num) = round(total_syllables/total_words);
 		avg_word_length(file_num) = round(total_characters/total_words);
 
-		non_zero_set = find(X(file_num,:));										% Makes array of indices of non-zero elements
+		non_zero_set = find(X(file_num, :));									% Makes array of indices of non-zero elements
 		type_token_ratio(file_num) = round(length(non_zero_set)/total_words);
 		file_num = file_num + 1;
 	end
 
-	% Add sentence features to X matrix.
-	X = [X avg_words_per_line' avg_syllables_per_word' avg_word_length' type_token_ratio'];
+	% 'hapax legomena' = a word that only occurs once in the entire corpus
+	hapax_legomena = [];
+	for column = 1:length(token_list)
+		found = find(X(:, column));
+		if length(found) == 1 													% Word only in 1 work in corpus
+			if X(found(1), column) == 1 										% Only 1 occurrence of the word in the work
+				if length(hapax_legomena) >= found(1)
+					hapax_legomena(found(1)) = hapax_legomena(found(1)) + 1;
+				else
+					hapax_legomena(found(1)) = 1;
+				end
+			end
+		end
+	end
 
+	% Add sentence features to X matrix.
+	X = [X avg_words_per_line' avg_syllables_per_word' avg_word_length' type_token_ratio' hapax_legomena'];
 
 	save(strcat(num2str(file_num-1),'training_matrix'), 'X');					% Save X matrix for future use.
 	fprintf('Finished training in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
