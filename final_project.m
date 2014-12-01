@@ -33,10 +33,10 @@ function final_project
 	input_files      = dir(strcat(input_directory, '*.xml')); 				% Read only .xml files.
 	file_num         = 1;
 
-	% sentence features calculated along the way and added at the end so as not to upset token_list indexing
 	avg_words_per_line = [];										
 	avg_syllables_per_word = [];											% Syllable = count(non-consecutive vowels)
-	avg_word_length = [];
+	avg_word_length = [];													% Before stemming
+	type_token_ratio = [];													% |Vocabulary| / num(tokens)
 
 	for file = input_files'													% For every file in the input directory:
 		authors_list = [authors_list, strtok(file.name,'_')];				% Get this author to author_list.
@@ -63,6 +63,7 @@ function final_project
 		total_characters = 0;
 		total_syllables = 0;
 		total_words = 0;
+		unique_words = 0;
 
 		for i = 1:length(lines) 											% For every line in the work:
 			if isempty(lines{i})											% Skip empty lines.
@@ -139,10 +140,14 @@ function final_project
 		avg_words_per_line(file_num) = round(total_words/length(lines));		% Round because mn requires integers.
 		avg_syllables_per_word(file_num) = round(total_syllables/total_words);
 		avg_word_length(file_num) = round(total_characters/total_words);
+
+		non_zero_set = find(X(file_num,:));										% Makes array of indices of non-zero elements
+		type_token_ratio(file_num) = round(length(non_zero_set)/total_words);
 		file_num = file_num + 1;
 	end
 
-	X = [X avg_words_per_line' avg_syllables_per_word' avg_word_length'];		% Add sentence features to X matrix.
+	% Add sentence features to X matrix.
+	X = [X avg_words_per_line' avg_syllables_per_word' avg_word_length' type_token_ratio'];
 
 
 	save(strcat(num2str(file_num-1),'training_matrix'), 'X');					% Save X matrix for future use.
