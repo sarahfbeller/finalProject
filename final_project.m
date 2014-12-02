@@ -2,21 +2,37 @@ function final_project
 	clc; clear all;	tic; 													% Clear variables and start stopwatch.
 	
 	import javax.xml.xpath.*												% Get the xPath mechanism into the workspace.
-	factory 		 = XPathFactory.newInstance;
-	xpath 			 = factory.newXPath;
+	factory 		= XPathFactory.newInstance;
+	xpath 			= factory.newXPath;
 
-	input_directory  = 'test/';
-	noun_endings     = {'as' 'ou' 'an' 'a' 'ain' 'ai' 'wn' 'ais' 'hs' ...
+	input_directory = 'test/';
+	noun_endings    = {'as' 'ou' 'an' 'a' 'ain' 'ai' 'wn' 'ais' 'hs' ...
 						'h' 'hn' 'os' 'on' 'e' 'w' 'oin' 'ous' 'oi' 'ws' ...
 						'us' 'uos' 'ui' 'un' 'u' 'ues' 'uwn' 'usi' 'is' ...
 						'ews' 'ei' 'in' 'i' 'eis' 'ewn' 'esi' 'us'};
-	verb_endings     = {'w' 'eis' 'ei' 'omen' 'ete' 'ousi' 'ousin' ...
+	verb_endings    = {'w' 'eis' 'ei' 'omen' 'ete' 'ousi' 'ousin' ...
 						'wmen' 'hte' 'wsi' 'wsin' 'oimi' 'ois' 'oi' ...
 						'oimen' 'oite' 'oien' 'etw' 'ontwn' 'wsan' 'ein' ...
 						'wn' 'ousa' 'on' 'as' 'asa' 'an'};
-	vowels = {'a' 'e' 'i' 'o' 'u' 'h' 'w'};
-	% s and then verb ending -> cut s
-	% ignored middle and passive
+	vowels 			= {'a' 'e' 'i' 'o' 'u' 'h' 'w'};
+	articles 		= {'o' 'tou' 'tw' 'ton' 'oi' 'twn' 'tois' 'tous' 'h' ... % h/o just breathing; pronoun has accent too
+						'ths' 'th' 'thn' 'ai' 'tais' 'tas' 'to' 'ta'};
+	prepositions 	= {'amfi' 'amf' 'ana' 'an' 'aneu' 'anti' 'apo' 'ap' ...
+						'af' 'dia' 'di' 'ein' 'eis' 'ek' 'en' 'epi' 'ep' 'ef'...
+						'ec' 'kata' 'kat' 'kaq' 'meta' 'met' 'meq' 'para' 'par' ...
+						'peri' 'porrw' 'pro' 'pros' 'sun' 'xarin' 'uper' 'upo'};
+	pronouns		= {'egw' 'emou' 'mou' 'emoi' 'moi' 'eme' 'me' ...				% personal pronouns
+						'hmeis' 'hmwn' 'hmin' 'hmas' 'su' 'sou' ...	
+						'soi' 'se' 'umeis' 'umwn' 'umin' 'umas' ...
+						'outos' 'toutou' 'toutw' 'touton' 'outoi' 'toutwn' ...		% demonstratives
+						'toutois' 'toutous' 'auth' 'tauths' 'tauth' 'tauthn' ...
+						'autai' 'tautais' 'tautas' 'touto' 'tauta' ...
+						'tis' 'tinos' 'tini' 'tina' 'tines' 'tinwn' ...	% tis/ti w/ accent	% indefinite
+						'tisi' 'tisin' 'tinas' 'ti' 'tina' ...
+						'os' 'ou' 'w' 'on' 'oi' 'ws' 'ois' 'ous' 'h' 'hs' ...		% relative
+						'hn' 'ai' 'ais' 'as' 'o' 'ou' 'w' 'a'};
+
+	% ignored middle, passive, future, dual
 	% ignored iota subscripts with a, h, w
 
 	endings 		 = [noun_endings verb_endings];							% Combine noun and verb endings
@@ -37,6 +53,9 @@ function final_project
 	avg_syllables_per_word = [];											% Syllable = count(non-consecutive vowels)
 	avg_word_length = [];													% Before stemming
 	type_token_ratio = [];													% |Vocabulary| / num(tokens)
+	article_count = [];
+	preposition_count = [];
+	pronoun_count = [];
 
 	for file = input_files'													% For every file in the input directory:
 		authors_list = [authors_list, strtok(file.name,'_')];				% Get this author to author_list.
@@ -95,12 +114,16 @@ function final_project
 						end
 					end
 
-					for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
-						if length(line{j}) > k
-							if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
-								if(length(line{j}(1:end-k)) > 1)			% Don't truncate particles.
-									line{j} = line{j}(1:end-k);
-									break;
+					if ~isempty(find(strcmp(line{j}(end-k+1:end), articles),1)) &&	% Stem if not article/pronoun/preposition
+						~isempty(find(strcmp(line{j}(end-k+1:end), prepositions),1)) && 
+						~isempty(find(strcmp(line{j}(end-k+1:end), pronouns),1))
+						for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
+							if length(line{j}) > k
+								if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
+									if(length(line{j}(1:end-k)) > 1)			% Don't truncate particles.
+										line{j} = line{j}(1:end-k);
+										break;
+									end
 								end
 							end
 						end
@@ -113,10 +136,6 @@ function final_project
 					else
 						X(file_num, index) = X(file_num, index) + 1; 		% Increment training matrix.
 					end
-
-					% if (length(line{j}) > 5) 								% Primitive stemmer
-					% 	line{j} = line{j}(1:end-3);
-					% end
 
 					% noun_index = find(strcmp(line{j}, noun_endings));
 					% verb_index = find(strcmp(line{j}, verb_endings));
@@ -141,8 +160,9 @@ function final_project
 		avg_syllables_per_word(file_num) = round(total_syllables/total_words);
 		avg_word_length(file_num) = round(total_characters/total_words);
 
-		non_zero_set = find(X(file_num, :));									% Makes array of indices of non-zero elements
+		non_zero_set = find(X(file_num, :));									% Finds indices of all non-zero elements
 		type_token_ratio(file_num) = round(length(non_zero_set)/total_words);
+
 		file_num = file_num + 1;
 	end
 
@@ -189,44 +209,58 @@ function final_project
 	% 	end
 	% end
 
-	Y 				 = transpose(authors_list);
-	bay_results      = [];
-	% lda_results      = [];
-	% qda_results      = [];
-	% mnr_results		 = [];
+	Y = transpose(authors_list);
+    bay_results      = [];
+    svm_results              = [];
+    % lda_results      = [];
+    % qda_results      = [];
+    % mnr_results            = [];
 
-	for i = 1:length(Y)														% Implement cross-validation:
-		
-		bay_model    = NaiveBayes.fit(removerows(X,'ind',[i]), ...
-					   removerows(Y,'ind',[i]), 'Distribution','mn');		% Train Naive Bayes model.
+    X = double(X);
+    for i = 1:length(Y)
+        Y_num(i,1) = double(find(strcmp(Y{i}, unique(Y))));
+    end
 
-		% lda_model    = ClassificationDiscriminant.fit(...
-		% 			   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
-		% 			   'discrimType','pseudolinear');						% Train Linear Discriminant model.
+    for i = 1:length(Y)                                                                                                             % Implement cross-validation:
 
-		% qda_model    = ClassificationDiscriminant.fit(...
-		% 			   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
-		% 			   'discrimType','pseudoquadratic');					% Train Quadratic Discriminant model.
+    	bay_model    = NaiveBayes.fit(removerows(X,'ind',[i]), ...
+                                      removerows(Y,'ind',[i]), 'Distribution','mn');               % Train Naive Bayes model.
 
-		bay_results  = [bay_results bay_model.predict(X(i,:))];				% Predict using Naive Bayes model.
-		% lda_results  = [lda_results lda_model.predict(X(i,:))];				% Predict using LDA model.
-		% qda_results  = [qda_results qda_model.predict(X(i,:))];			% Predict using QDA model.
+                % lda_model    = ClassificationDiscriminant.fit(...
+                %                          removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+                %                          'discrimType','pseudolinear');                                               % Train Linear Discriminant model.
 
-		% mnr_results   = [mnr_results, mnr_model.predict(X(i,:))];
-	end
+                % qda_model    = ClassificationDiscriminant.fit(...
+                %                          removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+                %                          'discrimType','pseudoquadratic');                                    % Train Quadratic Discriminant model.
 
-	% lda_results  	 = classify(X,X,Y);
+		svm_model        = svmtrain(removerows(Y_num,'ind',[i]), ...
+                                           removerows(X,'ind',[i]), '-q');                                              % Train SVM model.
+
+                bay_results  = [bay_results; bay_model.predict(X(i,:))];                        % Predict using Naive Bayes model.
+                % lda_results  = [lda_results lda_model.predict(X(i,:))];                       % Predict using LDA model.
+                % qda_results  = [qda_results qda_model.predict(X(i,:))];                       % Predict using QDA model.
+                svm_results  = [svm_results; svmpredict(Y_num(i), X(i,:), ...
+                                                svm_model, '-q')];                                                                      % Predict using SVM model.
+
+                % mnr_results   = [mnr_results, mnr_model.predict(X(i,:))];
+            end
+
+        % lda_results    = classify(X,X,Y);
+
+        bay_error                = length(setdiff(Y, bay_results)) / length(Y);
+        % lda_error              = length(setdiff(Y, lda_results)) / length(Y);
+        % qda_error              = length(setdiff(Y, qda_results)) / length(Y);
+        svm_error                = 1 - (nnz(Y_num == svm_results) / length(Y));
 
 
-	bay_error 		 = length(setdiff(Y, bay_results)) / length(Y);
-	% lda_error 		 = length(setdiff(Y, lda_results)) / length(Y);
-	% qda_error 		 = length(setdiff(Y, qda_results)) / length(Y);
-	% mnr_error = nnz(categorical(Y) == categorical(mnr_results)) / length(Y);
+        % mnr_error = nnz(categorical(Y) == categorical(mnr_results)) / length(Y);
 
-	fprintf('\n\nTest error using Naive Bayes algorithm: %.2f\n', bay_error);
-	% fprintf('Test error using Linear Discriminant analysis: %.2f\n', lda_error);
-	% fprintf('Test error using Quadratic Discriminant analysis: %.2f\n', qda_error);
+        fprintf('\n\nTest error using Naive Bayes algorithm: %.2f\n', bay_error);
+        % fprintf('Test error using Linear Discriminant analysis: %.2f\n', lda_error);
+        % fprintf('Test error using Quadratic Discriminant analysis: %.2f\n', qda_error);
+        fprintf('Test error using SVM Analysis: %.2f\n', svm_error);
 
-	% fprintf('Test error using Multinomial Regression algorithm: %f', mnr_error);
+        % fprintf('Test error using Multinomial Regression algorithm: %f', mnr_error);
     fprintf('\nProgram executed in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
 end
