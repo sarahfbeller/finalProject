@@ -102,6 +102,14 @@ function final_project
 
 					total_characters = total_characters + length(line{j});
 
+					if ~isempty(find(strcmp(line{j}, prepositions),1))		% Check if word is a preposition.
+						if length(preposition_count) >= file_num
+							preposition_count(file_num) = preposition_count(file_num) + 1;
+						else
+							preposition_count(file_num) = 1;
+						end
+					end
+
 					prev_vowel = false;										% Calculate number of syllables.
 					for m = 1:length(line{j})
 						if ~isempty(find(strcmp(line{j}(m), vowels),1))
@@ -114,9 +122,9 @@ function final_project
 						end
 					end
 
-					if ~isempty(find(strcmp(line{j}(end-k+1:end), articles),1)) &&	% Stem if not article/pronoun/preposition
-						~isempty(find(strcmp(line{j}(end-k+1:end), prepositions),1)) && 
-						~isempty(find(strcmp(line{j}(end-k+1:end), pronouns),1))
+					if ~isempty(find(strcmp(line{j}, articles),1)) && ... 		% Stem if not article/pronoun/preposition
+						~isempty(find(strcmp(line{j}, prepositions),1)) && ...
+						~isempty(find(strcmp(line{j}, pronouns),1))
 						for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
 							if length(line{j}) > k
 								if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
@@ -166,8 +174,7 @@ function final_project
 		file_num = file_num + 1;
 	end
 
-	% 'hapax legomena' = a word that only occurs once in the entire corpus
-	hapax_legomena = [];
+	hapax_legomena = [];							% 'hapax legomena' = a word that only occurs once in the entire corpus
 	for column = 1:length(token_list)
 		found = find(X(:, column));
 		if length(found) == 1 													% Word only in 1 work in corpus
@@ -181,8 +188,11 @@ function final_project
 		end
 	end
 
-	% Add sentence features to X matrix.
-	X = [X avg_words_per_line' avg_syllables_per_word' avg_word_length' type_token_ratio' hapax_legomena'];
+	preposition_count
+
+	X = [X avg_words_per_line' avg_syllables_per_word' ...						% Add sentence features to X matrix.
+		avg_word_length' type_token_ratio' hapax_legomena' ...
+		preposition_count'];
 
 	save(strcat(num2str(file_num-1),'training_matrix'), 'X');					% Save X matrix for future use.
 	fprintf('Finished training in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
@@ -210,57 +220,55 @@ function final_project
 	% end
 
 	Y = transpose(authors_list);
-    bay_results      = [];
-    svm_results              = [];
-    % lda_results      = [];
-    % qda_results      = [];
-    % mnr_results            = [];
+    bay_results = [];
+    svm_results = [];
+    % lda_results = [];
+    % qda_results = [];
+    % mnr_results = [];
 
     X = double(X);
     for i = 1:length(Y)
         Y_num(i,1) = double(find(strcmp(Y{i}, unique(Y))));
     end
 
-    for i = 1:length(Y)                                                                                                             % Implement cross-validation:
+    for i = 1:length(Y)																	% Implement cross-validation:
+    	bay_model = NaiveBayes.fit(removerows(X,'ind',[i]), ...
+                                   removerows(Y,'ind',[i]), 'Distribution','mn');    	% Train Naive Bayes model.
 
-    	bay_model    = NaiveBayes.fit(removerows(X,'ind',[i]), ...
-                                      removerows(Y,'ind',[i]), 'Distribution','mn');               % Train Naive Bayes model.
+        % lda_model = ClassificationDiscriminant.fit(...
+        %                  removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+        %                  'discrimType','pseudolinear');                               % Train Linear Discriminant model.
 
-                % lda_model    = ClassificationDiscriminant.fit(...
-                %                          removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
-                %                          'discrimType','pseudolinear');                                               % Train Linear Discriminant model.
+        % qda_model = ClassificationDiscriminant.fit(...
+        %                   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+        %                   'discrimType','pseudoquadratic');                           % Train Quadratic Discriminant model.
 
-                % qda_model    = ClassificationDiscriminant.fit(...
-                %                          removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
-                %                          'discrimType','pseudoquadratic');                                    % Train Quadratic Discriminant model.
+		svm_model = svmtrain(removerows(Y_num,'ind',[i]), ...
+                                        removerows(X,'ind',[i]), '-q');             	% Train SVM model.
 
-		svm_model        = svmtrain(removerows(Y_num,'ind',[i]), ...
-                                           removerows(X,'ind',[i]), '-q');                                              % Train SVM model.
-
-                bay_results  = [bay_results; bay_model.predict(X(i,:))];                        % Predict using Naive Bayes model.
-                % lda_results  = [lda_results lda_model.predict(X(i,:))];                       % Predict using LDA model.
-                % qda_results  = [qda_results qda_model.predict(X(i,:))];                       % Predict using QDA model.
-                svm_results  = [svm_results; svmpredict(Y_num(i), X(i,:), ...
+        bay_results = [bay_results; bay_model.predict(X(i,:))];                       	% Predict using Naive Bayes model.
+        % lda_results = [lda_results lda_model.predict(X(i,:))];                       	% Predict using LDA model.
+        % qda_results = [qda_results qda_model.predict(X(i,:))];                       	% Predict using QDA model.
+        svm_results = [svm_results; svmpredict(Y_num(i), X(i,:), ...
                                                 svm_model, '-q')];                                                                      % Predict using SVM model.
 
-                % mnr_results   = [mnr_results, mnr_model.predict(X(i,:))];
-            end
+        % mnr_results = [mnr_results, mnr_model.predict(X(i,:))];
+    end
 
-        % lda_results    = classify(X,X,Y);
+    % lda_results = classify(X,X,Y);
 
-        bay_error                = length(setdiff(Y, bay_results)) / length(Y);
-        % lda_error              = length(setdiff(Y, lda_results)) / length(Y);
-        % qda_error              = length(setdiff(Y, qda_results)) / length(Y);
-        svm_error                = 1 - (nnz(Y_num == svm_results) / length(Y));
+    bay_error = length(setdiff(Y, bay_results)) / length(Y);
+    % lda_error = length(setdiff(Y, lda_results)) / length(Y);
+    % qda_error = length(setdiff(Y, qda_results)) / length(Y);
+    svm_error = 1 - (nnz(Y_num == svm_results) / length(Y));
 
+    % mnr_error = nnz(categorical(Y) == categorical(mnr_results)) / length(Y);
 
-        % mnr_error = nnz(categorical(Y) == categorical(mnr_results)) / length(Y);
+    fprintf('\n\nTest error using Naive Bayes algorithm: %.2f\n', bay_error);
+    % fprintf('Test error using Linear Discriminant analysis: %.2f\n', lda_error);
+    % fprintf('Test error using Quadratic Discriminant analysis: %.2f\n', qda_error);
+    fprintf('Test error using SVM Analysis: %.2f\n', svm_error);
 
-        fprintf('\n\nTest error using Naive Bayes algorithm: %.2f\n', bay_error);
-        % fprintf('Test error using Linear Discriminant analysis: %.2f\n', lda_error);
-        % fprintf('Test error using Quadratic Discriminant analysis: %.2f\n', qda_error);
-        fprintf('Test error using SVM Analysis: %.2f\n', svm_error);
-
-        % fprintf('Test error using Multinomial Regression algorithm: %f', mnr_error);
+    % fprintf('Test error using Multinomial Regression algorithm: %f', mnr_error);
     fprintf('\nProgram executed in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
 end
