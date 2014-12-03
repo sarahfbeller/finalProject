@@ -20,7 +20,7 @@ function final_project
 	prepositions 	= {'amfi' 'amf' 'ana' 'an' 'aneu' 'anti' 'apo' 'ap' ...
 						'af' 'dia' 'di' 'ein' 'eis' 'ek' 'en' 'epi' 'ep' 'ef'...
 						'ec' 'kata' 'kat' 'kaq' 'meta' 'met' 'meq' 'para' 'par' ...
-						'peri' 'porrw' 'pro' 'pros' 'sun' 'xarin' 'uper' 'upo'};
+						'peri' 'plhn' 'porrw' 'pro' 'pros' 'sun' 'xarin' 'uper' 'upo'};
 	pronouns		= {'egw' 'emou' 'mou' 'emoi' 'moi' 'eme' 'me' ...				% personal pronouns
 						'hmeis' 'hmwn' 'hmin' 'hmas' 'su' 'sou' ...	
 						'soi' 'se' 'umeis' 'umwn' 'umin' 'umas' ...
@@ -31,6 +31,8 @@ function final_project
 						'tisi' 'tisin' 'tinas' 'ti' 'tina' ...
 						'os' 'ou' 'w' 'on' 'oi' 'ws' 'ois' 'ous' 'h' 'hs' ...		% relative
 						'hn' 'ai' 'ais' 'as' 'o' 'ou' 'w' 'a'};
+	particles 		= {'an' 'ara' 'de' 'dh' 'ean' 'ews' 'gar' 'ge' 'men' 'mentoi' ...
+						'mhn' 'mh' 'ou' 'ouk' 'oukoun' 'oun' 'oux' 'te'};
 
 	% ignored middle, passive, future, dual
 	% ignored iota subscripts with a, h, w
@@ -49,13 +51,15 @@ function final_project
 	input_files      = dir(strcat(input_directory, '*.xml')); 				% Read only .xml files.
 	file_num         = 1;
 
+	total_words = [];														% Total number of words in each work.
 	avg_words_per_line = [];										
 	avg_syllables_per_word = [];											% Syllable = count(non-consecutive vowels)
 	avg_word_length = [];													% Before stemming
 	type_token_ratio = [];													% |Vocabulary| / num(tokens)
-	article_count = [];
-	preposition_count = [];
-	pronoun_count = [];
+	article_ratio = [];														% count(articles)/count(words)
+	preposition_ratio = [];
+	pronoun_ratio = [];
+	particle_ratio = [];
 
 	for file = input_files'													% For every file in the input directory:
 		authors_list = [authors_list, strtok(file.name,'_')];				% Get this author to author_list.
@@ -81,7 +85,7 @@ function final_project
 
 		total_characters = 0;
 		total_syllables = 0;
-		total_words = 0;
+		total_words(file_num) = 0;
 		unique_words = 0;
 
 		for i = 1:length(lines) 											% For every line in the work:
@@ -103,10 +107,18 @@ function final_project
 					total_characters = total_characters + length(line{j});
 
 					if ~isempty(find(strcmp(line{j}, prepositions),1))		% Check if word is a preposition.
-						if length(preposition_count) >= file_num
-							preposition_count(file_num) = preposition_count(file_num) + 1;
+						if length(preposition_ratio) >= file_num
+							preposition_ratio(file_num) = preposition_ratio(file_num) + 1;
 						else
-							preposition_count(file_num) = 1;
+							preposition_ratio(file_num) = 1;
+						end
+					end
+
+					if ~isempty(find(strcmp(line{j}, particles),1))		% Check if word is a particle.
+						if length(particle_ratio) >= file_num
+							particle_ratio(file_num) = particle_ratio(file_num) + 1;
+						else
+							particle_ratio(file_num) = 1;
 						end
 					end
 
@@ -122,9 +134,10 @@ function final_project
 						end
 					end
 
-					if ~isempty(find(strcmp(line{j}, articles),1)) && ... 		% Stem if not article/pronoun/preposition
+					if ~isempty(find(strcmp(line{j}, articles),1)) && ... 		% Stem if noun/verb (primitive test)
 						~isempty(find(strcmp(line{j}, prepositions),1)) && ...
-						~isempty(find(strcmp(line{j}, pronouns),1))
+						~isempty(find(strcmp(line{j}, pronouns),1)) && ...
+						~isempty(find(strcmp(line{j}, particles),1))
 						for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
 							if length(line{j}) > k
 								if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
@@ -160,37 +173,41 @@ function final_project
 					% 	word_set = [word_set, line{j}];
 					% end
 				end
-				total_words = total_words + length(line);
+				total_words(file_num) = total_words(file_num) + length(line);
 			end
 		end
 		% work_freq_map(file.name) = word_freq_map;
-		avg_words_per_line(file_num) = round(total_words/length(lines));		% Round because mn requires integers.
-		avg_syllables_per_word(file_num) = round(total_syllables/total_words);
-		avg_word_length(file_num) = round(total_characters/total_words);
+		avg_words_per_line(file_num) = round(total_words(file_num)/length(lines));		% Round because mn requires integers.
+		avg_syllables_per_word(file_num) = round(total_syllables/total_words(file_num));
+		avg_word_length(file_num) = round(total_characters/total_words(file_num));
 
 		non_zero_set = find(X(file_num, :));									% Finds indices of all non-zero elements
-		type_token_ratio(file_num) = round(length(non_zero_set)/total_words);
+		type_token_ratio(file_num) = round(length(non_zero_set)/total_words(file_num));
 
 		file_num = file_num + 1;
 	end
 
-	hapax_legomena = [];							% 'hapax legomena' = a word that only occurs once in the entire corpus
+	hapax_legomena_ratio = [];						% 'hapax legomenon' = a word that only occurs once in the entire corpus
 	for column = 1:length(token_list)
 		found = find(X(:, column));
 		if length(found) == 1 													% Word only in 1 work in corpus
 			if X(found(1), column) == 1 										% Only 1 occurrence of the word in the work
-				if length(hapax_legomena) >= found(1)
-					hapax_legomena(found(1)) = hapax_legomena(found(1)) + 1;
+				if length(hapax_legomena_ratio) >= found(1)
+					hapax_legomena_ratio(found(1)) = hapax_legomena_ratio(found(1)) + 1;
 				else
-					hapax_legomena(found(1)) = 1;
+					hapax_legomena_ratio(found(1)) = 1;
 				end
 			end
 		end
 	end
+	hapax_legomena_ratio = round(hapax_legomena_ratio ./ total_words);
 
-	X = [X avg_words_per_line' avg_syllables_per_word' ...						% Add sentence features to X matrix.
-		avg_word_length' type_token_ratio' hapax_legomena' ...
-		preposition_count'];
+	preposition_ratio = round(preposition_ratio ./ total_words);
+	particle_ratio = round(particle_ratio ./ total_words);
+
+	X = [X avg_words_per_line' avg_syllables_per_word' ...						% Add lexical features to X matrix.
+		avg_word_length' type_token_ratio' hapax_legomena_ratio' ...
+		preposition_ratio' particle_ratio'];
 
 	save(strcat(num2str(file_num-1),'training_matrix'), 'X');					% Save X matrix for future use.
 	fprintf('Finished training in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
