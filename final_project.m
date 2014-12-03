@@ -15,8 +15,6 @@ function final_project
 						'oimen' 'oite' 'oien' 'etw' 'ontwn' 'wsan' 'ein' ...
 						'wn' 'ousa' 'on' 'as' 'asa' 'an'};
 	vowels 			= {'a' 'e' 'i' 'o' 'u' 'h' 'w'};
-	articles 		= {'o' 'tou' 'tw' 'ton' 'oi' 'twn' 'tois' 'tous' 'h' ... % h/o just breathing; pronoun has accent too
-						'ths' 'th' 'thn' 'ai' 'tais' 'tas' 'to' 'ta'};
 	prepositions 	= {'amfi' 'amf' 'ana' 'an' 'aneu' 'anti' 'apo' 'ap' ...
 						'af' 'dia' 'di' 'ein' 'eis' 'ek' 'en' 'epi' 'ep' 'ef'...
 						'ec' 'kata' 'kat' 'kaq' 'meta' 'met' 'meq' 'para' 'par' ...
@@ -31,6 +29,8 @@ function final_project
 						'tisi' 'tisin' 'tinas' 'ti' 'tina' ...
 						'os' 'ou' 'w' 'on' 'oi' 'ws' 'ois' 'ous' 'h' 'hs' ...		% relative
 						'hn' 'ai' 'ais' 'as' 'o' 'ou' 'w' 'a'};
+	articles 		= {'o' 'tou' 'tw' 'ton' 'oi' 'twn' 'tois' 'tous' 'h' ... % h/o just breathing; pronoun has accent too
+						'ths' 'th' 'thn' 'ai' 'tais' 'tas' 'to' 'ta'};
 	particles 		= {'an' 'ara' 'de' 'dh' 'ean' 'ews' 'gar' 'ge' 'men' 'mentoi' ...
 						'mhn' 'mh' 'ou' 'ouk' 'oukoun' 'oun' 'oux' 'te'};
 
@@ -78,7 +78,7 @@ function final_project
 		end
 
 		lines 	     = regexp(text_body, '\n', 'split'); 					% Split into lines.
-		lines        = regexprep(lines,'[\/\\=|,.:]','');					% Take out accents.
+		% lines        = regexprep(lines,'[\/\\=|,.:]','');					% Take out accents.
 
 		[m,n] 		 = size(X);
 		X 			 = [X; zeros(1,n)];										% initialize X to count(tokens + extra features)
@@ -99,10 +99,25 @@ function final_project
 			else
 
 				for j = 1:length(line) 										% For every word in the line:
-
 					if (isempty(line{j}) || (line{j}(1) == '*'))			% Skip empty or capital words.
 						continue;
 					end
+					
+					if strcmp(line{j}(1), 'o(\') || strcmp(line{j}(1), 'h(\') % Pronouns with distinctive accents
+						if length(pronoun_ratio) >= file_num
+							pronoun_ratio(file_num) = pronoun_ratio(file_num) + 1;
+						else
+							pronoun_ratio(file_num) = 1;
+						end
+					else if strcmp(line{j}(1), 'o(') || strcmp(line{j}(1), 'h(') % Articles with distinctive accents
+						if length(article_ratio) >= file_num
+							article_ratio(file_num) = article_ratio(file_num) + 1;
+						else
+							article_ratio(file_num) = 1;
+						end
+					end
+
+					line = regexprep(line,'[\/\\=|,.:]','');				% Take out accents.
 
 					total_characters = total_characters + length(line{j});
 
@@ -114,11 +129,27 @@ function final_project
 						end
 					end
 
-					if ~isempty(find(strcmp(line{j}, particles),1))		% Check if word is a particle.
+					if ~isempty(find(strcmp(line{j}, particles),1))			% Check if word is a particle.
 						if length(particle_ratio) >= file_num
 							particle_ratio(file_num) = particle_ratio(file_num) + 1;
 						else
 							particle_ratio(file_num) = 1;
+						end
+					end
+
+					if ~isempty(find(strcmp(line{j}, pronouns),1))			% Check if word is a pronoun.
+						if length(pronoun_ratio) >= file_num
+							pronoun_ratio(file_num) = pronoun_ratio(file_num) + 1;
+						else
+							pronoun_ratio(file_num) = 1;
+						end
+					end
+
+					if ~isempty(find(strcmp(line{j}, articles),1))			% Check if word is a article.
+						if length(article_ratio) >= file_num
+							article_ratio(file_num) = article_ratio(file_num) + 1;
+						else
+							article_ratio(file_num) = 1;
 						end
 					end
 
@@ -173,7 +204,12 @@ function final_project
 					% 	word_set = [word_set, line{j}];
 					% end
 				end
-				total_words(file_num) = total_words(file_num) + length(line);
+
+				if length(total_words) >= file_num
+					total_words(file_num) = total_words(file_num) + length(line);
+				else
+					total_words(file_num) = length(line);
+				end
 			end
 		end
 		% work_freq_map(file.name) = word_freq_map;
@@ -190,13 +226,12 @@ function final_project
 	hapax_legomena_ratio = [];						% 'hapax legomenon' = a word that only occurs once in the entire corpus
 	for column = 1:length(token_list)
 		found = find(X(:, column));
-		if length(found) == 1 													% Word only in 1 work in corpus
-			if X(found(1), column) == 1 										% Only 1 occurrence of the word in the work
-				if length(hapax_legomena_ratio) >= found(1)
-					hapax_legomena_ratio(found(1)) = hapax_legomena_ratio(found(1)) + 1;
-				else
-					hapax_legomena_ratio(found(1)) = 1;
-				end
+		% Only 1 occurrence of the word in the entire corpus
+		if length(found) == 1 && X(found(1), column) == 1 										
+			if length(hapax_legomena_ratio) >= found(1)
+				hapax_legomena_ratio(found(1)) = hapax_legomena_ratio(found(1)) + 1;
+			else
+				hapax_legomena_ratio(found(1)) = 1;
 			end
 		end
 	end
@@ -204,10 +239,12 @@ function final_project
 
 	preposition_ratio = round(preposition_ratio ./ total_words);
 	particle_ratio = round(particle_ratio ./ total_words);
+	pronoun_ratio = round(pronoun_ratio ./ total_words);
+	article_ratio = round(article_ratio ./ total_words);
 
 	X = [X avg_words_per_line' avg_syllables_per_word' ...						% Add lexical features to X matrix.
 		avg_word_length' type_token_ratio' hapax_legomena_ratio' ...
-		preposition_ratio' particle_ratio'];
+		preposition_ratio' particle_ratio' pronoun_ratio' article_ratio'];
 
 	save(strcat(num2str(file_num-1),'training_matrix'), 'X');					% Save X matrix for future use.
 	fprintf('Finished training in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
