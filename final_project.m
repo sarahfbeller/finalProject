@@ -188,8 +188,6 @@ function final_project
 		end
 	end
 
-	preposition_count
-
 	X = [X avg_words_per_line' avg_syllables_per_word' ...						% Add sentence features to X matrix.
 		avg_word_length' type_token_ratio' hapax_legomena' ...
 		preposition_count'];
@@ -221,7 +219,7 @@ function final_project
 
 	Y = transpose(authors_list);
     bay_results = [];
-    svm_results = [];
+    % svm_results = [];
     % lda_results = [];
     % qda_results = [];
     % mnr_results = [];
@@ -243,14 +241,14 @@ function final_project
         %                   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
         %                   'discrimType','pseudoquadratic');                           % Train Quadratic Discriminant model.
 
-		svm_model = svmtrain(removerows(Y_num,'ind',[i]), ...
-                                        removerows(X,'ind',[i]), '-q');             	% Train SVM model.
+		% svm_model = svmtrain(removerows(Y_num,'ind',[i]), ...
+                                        % removerows(X,'ind',[i]), '-q');             	% Train SVM model.
 
         bay_results = [bay_results; bay_model.predict(X(i,:))];                       	% Predict using Naive Bayes model.
         % lda_results = [lda_results lda_model.predict(X(i,:))];                       	% Predict using LDA model.
         % qda_results = [qda_results qda_model.predict(X(i,:))];                       	% Predict using QDA model.
-        svm_results = [svm_results; svmpredict(Y_num(i), X(i,:), ...
-                                                svm_model, '-q')];                                                                      % Predict using SVM model.
+        % svm_results = [svm_results; svmpredict(Y_num(i), X(i,:), ...
+                                                % svm_model, '-q')];                                                                      % Predict using SVM model.
 
         % mnr_results = [mnr_results, mnr_model.predict(X(i,:))];
     end
@@ -260,14 +258,14 @@ function final_project
     bay_error = length(setdiff(Y, bay_results)) / length(Y);
     % lda_error = length(setdiff(Y, lda_results)) / length(Y);
     % qda_error = length(setdiff(Y, qda_results)) / length(Y);
-    svm_error = 1 - (nnz(Y_num == svm_results) / length(Y));
+    % svm_error = 1 - (nnz(Y_num == svm_results) / length(Y));
 
     % mnr_error = nnz(categorical(Y) == categorical(mnr_results)) / length(Y);
 
     fprintf('\n\nTest error using Naive Bayes algorithm: %.2f\n', bay_error);
     % fprintf('Test error using Linear Discriminant analysis: %.2f\n', lda_error);
     % fprintf('Test error using Quadratic Discriminant analysis: %.2f\n', qda_error);
-    fprintf('Test error using SVM Analysis: %.2f\n', svm_error);
+    % fprintf('Test error using SVM Analysis: %.2f\n', svm_error);
 
     % fprintf('Test error using Multinomial Regression algorithm: %f', mnr_error);
     fprintf('\nProgram executed in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
