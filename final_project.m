@@ -253,6 +253,17 @@ function final_project
 	pronoun_ratio = round((pronoun_ratio ./ total_words)*10000);
 	article_ratio = round((article_ratio ./ total_words)*10000);
 
+	column_sums = zeros(length(X), 2);
+	for col = 1:length(X)														% Find most common words
+		column_sums(col,1) = sum(X(:,col));
+		column_sums(col,2) = col;
+	end
+	column_sums = sort(column_sums, 'descend');
+	for word = 1:25
+		token_list(column_sums(word,2))
+		column_sums(word, 1)
+	end
+
 	X = [X avg_words_per_line' avg_syllables_per_word' ...						% Add lexical features to X matrix.
 		avg_word_length' type_token_ratio' hapax_legomena_ratio' ...
 		preposition_ratio' particle_ratio' pronoun_ratio' article_ratio' ...
