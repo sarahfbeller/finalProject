@@ -109,7 +109,8 @@ function final_project
 						else
 							pronoun_ratio(file_num) = 1;
 						end
-					else if strcmp(line{j}(1), 'o(') || strcmp(line{j}(1), 'h(') % Articles with distinctive accents
+					end
+					if strcmp(line{j}(1), 'o(') || strcmp(line{j}(1), 'h(') % Articles with distinctive accents
 						if length(article_ratio) >= file_num
 							article_ratio(file_num) = article_ratio(file_num) + 1;
 						else
@@ -235,12 +236,13 @@ function final_project
 			end
 		end
 	end
-	hapax_legomena_ratio = round(hapax_legomena_ratio ./ total_words);
 
-	preposition_ratio = round(preposition_ratio ./ total_words);
-	particle_ratio = round(particle_ratio ./ total_words);
-	pronoun_ratio = round(pronoun_ratio ./ total_words);
-	article_ratio = round(article_ratio ./ total_words);
+	% Ratios are between 0 and 1, so instead of rounding multiply to get 3 significant figures
+	hapax_legomena_ratio = round((hapax_legomena_ratio ./ total_words)*1000);
+	preposition_ratio = round((preposition_ratio ./ total_words)*10000);
+	particle_ratio = round((particle_ratio ./ total_words)*10000);
+	pronoun_ratio = round((pronoun_ratio ./ total_words)*10000);
+	article_ratio = round((article_ratio ./ total_words)*10000);
 
 	X = [X avg_words_per_line' avg_syllables_per_word' ...						% Add lexical features to X matrix.
 		avg_word_length' type_token_ratio' hapax_legomena_ratio' ...
