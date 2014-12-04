@@ -33,9 +33,10 @@ function final_project
 						'ths' 'th' 'thn' 'ai' 'tais' 'tas' 'to' 'ta'};
 	particles 		= {'an' 'ara' 'de' 'dh' 'ean' 'ews' 'gar' 'ge' 'men' 'mentoi' ...
 						'mhn' 'mh' 'ou' 'ouk' 'oukoun' 'oun' 'oux' 'te'};
+	punctuation 	= {'.' ',' ';' ':' ''''};
 
 	% ignored middle, passive, future, dual
-	% ignored iota subscripts with a, h, w
+	% ignored iota subscripts
 
 	endings 		 = [noun_endings verb_endings];							% Combine noun and verb endings
 	[dummy, index]   = sort(cellfun('size', endings, 2), 'descend');		% Order by size, largest to smallest.
@@ -55,11 +56,12 @@ function final_project
 	avg_words_per_line = [];										
 	avg_syllables_per_word = [];											% Syllable = count(non-consecutive vowels)
 	avg_word_length = [];													% Before stemming
-	type_token_ratio = [];													% |Vocabulary| / num(tokens)
-	article_ratio = [];														% count(articles)/count(words)
+	type_token_ratio = [];													% |vocabulary| / num(tokens)
+	article_ratio = [];														% count(articles in work)/count(words in work)
 	preposition_ratio = [];
 	pronoun_ratio = [];
 	particle_ratio = [];
+	avg_punctuation_per_line = [];
 
 	for file = input_files'													% For every file in the input directory:
 		authors_list = [authors_list, strtok(file.name,'_')];				% Get this author to author_list.
@@ -73,13 +75,11 @@ function final_project
 		try
 			text_body = char(bodyNode.getTextContent); 						% Returns Matlab string.
 		catch exception
-			fprintf('Unable to process %s.\n', file.name);
+			fprintf('Unable to process %s.\n', file.name);					% If XML cannot be parsed.
 			file_num = file_num - 1;										% Do not add to number of training files.
 		end
 
 		lines 	     = regexp(text_body, '\n', 'split'); 					% Split into lines.
-		% lines        = regexprep(lines,'[\/\\=|,.:]','');					% Take out accents.
-
 		[m,n] 		 = size(X);
 		X 			 = [X; zeros(1,n)];										% initialize X to count(tokens + extra features)
 
@@ -87,138 +87,147 @@ function final_project
 		total_syllables = 0;
 		total_words(file_num) = 0;
 		unique_words = 0;
+		total_punctuation = 0;
 
 		for i = 1:length(lines) 											% For every line in the work:
 			if isempty(lines{i})											% Skip empty lines.
 				continue;
 			end
+
+			for ch = 1:length(lines{i})
+				found = find(strcmp(lines{i}(ch), punctuation),1);
+				if ~isempty(found) 												% Find punctuation.
+					total_punctuation = total_punctuation + length(found);
+				end
+			end
+
+
 			line = regexp(lines{i}, ' ', 'split');							% Split line into words.
 
 			if ((length(line) == 1) && (line{1}(1) == '*'))					% Skip one-word lines (i.e. speakers).
 				continue;
-			else
-
-				for j = 1:length(line) 										% For every word in the line:
-					if (isempty(line{j}) || (line{j}(1) == '*'))			% Skip empty or capital words.
-						continue;
+			end
+			for j = 1:length(line) 											% For every word in the line:
+				if (isempty(line{j}) || (line{j}(1) == '*'))				% Skip empty or capital words.
+					continue;
+				end
+				
+				if strcmp(line{j}(1), 'o(\') || strcmp(line{j}(1), 'h(\') 	% Pronouns with distinctive accents
+					if length(pronoun_ratio) >= file_num
+						pronoun_ratio(file_num) = pronoun_ratio(file_num) + 1;
+					else
+						pronoun_ratio(file_num) = 1;
 					end
-					
-					if strcmp(line{j}(1), 'o(\') || strcmp(line{j}(1), 'h(\') % Pronouns with distinctive accents
-						if length(pronoun_ratio) >= file_num
-							pronoun_ratio(file_num) = pronoun_ratio(file_num) + 1;
-						else
-							pronoun_ratio(file_num) = 1;
+				end
+				if strcmp(line{j}(1), 'o(') || strcmp(line{j}(1), 'h(') 	% Articles with distinctive accents
+					if length(article_ratio) >= file_num
+						article_ratio(file_num) = article_ratio(file_num) + 1;
+					else
+						article_ratio(file_num) = 1;
+					end
+				end
+
+				line = regexprep(line,'[\/\\=|,.:;'']','');					% Take out accents.
+
+				total_characters = total_characters + length(line{j});
+
+				if ~isempty(find(strcmp(line{j}, prepositions),1))			% Check if word is a preposition.
+					if length(preposition_ratio) >= file_num
+						preposition_ratio(file_num) = preposition_ratio(file_num) + 1;
+					else
+						preposition_ratio(file_num) = 1;
+					end
+				end
+
+				if ~isempty(find(strcmp(line{j}, particles),1))				% Check if word is a particle.
+					if length(particle_ratio) >= file_num
+						particle_ratio(file_num) = particle_ratio(file_num) + 1;
+					else
+						particle_ratio(file_num) = 1;
+					end
+				end
+
+				if ~isempty(find(strcmp(line{j}, pronouns),1))				% Check if word is a pronoun.
+					if length(pronoun_ratio) >= file_num
+						pronoun_ratio(file_num) = pronoun_ratio(file_num) + 1;
+					else
+						pronoun_ratio(file_num) = 1;
+					end
+				end
+
+				if ~isempty(find(strcmp(line{j}, articles),1))				% Check if word is a article.
+					if length(article_ratio) >= file_num
+						article_ratio(file_num) = article_ratio(file_num) + 1;
+					else
+						article_ratio(file_num) = 1;
+					end
+				end
+
+				prev_vowel = false;											% Calculate number of syllables.
+				for m = 1:length(line{j})
+					if ~isempty(find(strcmp(line{j}(m), vowels),1))
+						if ~prev_vowel
+							total_syllables = total_syllables + 1;
+							prev_vowel = true;
 						end
+					else
+						prev_vowel = false;
 					end
-					if strcmp(line{j}(1), 'o(') || strcmp(line{j}(1), 'h(') % Articles with distinctive accents
-						if length(article_ratio) >= file_num
-							article_ratio(file_num) = article_ratio(file_num) + 1;
-						else
-							article_ratio(file_num) = 1;
-						end
-					end
+				end
 
-					line = regexprep(line,'[\/\\=|,.:]','');				% Take out accents.
-
-					total_characters = total_characters + length(line{j});
-
-					if ~isempty(find(strcmp(line{j}, prepositions),1))		% Check if word is a preposition.
-						if length(preposition_ratio) >= file_num
-							preposition_ratio(file_num) = preposition_ratio(file_num) + 1;
-						else
-							preposition_ratio(file_num) = 1;
-						end
-					end
-
-					if ~isempty(find(strcmp(line{j}, particles),1))			% Check if word is a particle.
-						if length(particle_ratio) >= file_num
-							particle_ratio(file_num) = particle_ratio(file_num) + 1;
-						else
-							particle_ratio(file_num) = 1;
-						end
-					end
-
-					if ~isempty(find(strcmp(line{j}, pronouns),1))			% Check if word is a pronoun.
-						if length(pronoun_ratio) >= file_num
-							pronoun_ratio(file_num) = pronoun_ratio(file_num) + 1;
-						else
-							pronoun_ratio(file_num) = 1;
-						end
-					end
-
-					if ~isempty(find(strcmp(line{j}, articles),1))			% Check if word is a article.
-						if length(article_ratio) >= file_num
-							article_ratio(file_num) = article_ratio(file_num) + 1;
-						else
-							article_ratio(file_num) = 1;
-						end
-					end
-
-					prev_vowel = false;										% Calculate number of syllables.
-					for m = 1:length(line{j})
-						if ~isempty(find(strcmp(line{j}(m), vowels),1))
-							if ~prev_vowel
-								total_syllables = total_syllables + 1;
-								prev_vowel = true;
-							end
-						else
-							prev_vowel = false;
-						end
-					end
-
-					if ~isempty(find(strcmp(line{j}, articles),1)) && ... 		% Stem if noun/verb (primitive test)
-						~isempty(find(strcmp(line{j}, prepositions),1)) && ...
-						~isempty(find(strcmp(line{j}, pronouns),1)) && ...
-						~isempty(find(strcmp(line{j}, particles),1))
-						for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
-							if length(line{j}) > k
-								if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
-									if(length(line{j}(1:end-k)) > 1)			% Don't truncate particles.
-										line{j} = line{j}(1:end-k);
-										break;
-									end
+				if ~isempty(find(strcmp(line{j}, articles),1)) && ... 		% Stem if noun/verb (primitive test)
+					~isempty(find(strcmp(line{j}, prepositions),1)) && ...
+					~isempty(find(strcmp(line{j}, pronouns),1)) && ...
+					~isempty(find(strcmp(line{j}, particles),1))
+					for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
+						if length(line{j}) > k
+							if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
+								if(length(line{j}(1:end-k)) > 1)			% Don't truncate particles.
+									line{j} = line{j}(1:end-k);
+									break;
 								end
 							end
 						end
 					end
-
-					index = find(strcmp(line{j}, token_list));				% Find word in token_list.
-					if isempty(index)										% If word is a new word:
-						token_list = [token_list, line{j}]; 				% Add word to token list.
-						X(file_num, length(token_list)) = 1;  		 		% Add '1' to X matrix.
-					else
-						X(file_num, index) = X(file_num, index) + 1; 		% Increment training matrix.
-					end
-
-					% noun_index = find(strcmp(line{j}, noun_endings));
-					% verb_index = find(strcmp(line{j}, verb_endings));
-					% if (~isempty(noun_index))
-					% 	line{j} = line{j}(1:end-noun_index);
-					% elseif(~isempty(verb_index))
-					% 	line{j} = line{j}(1:end-verb_index);
-					% end
-
-					% if isKey(word_freq_map, line{j}) % Record in freq map
-					% 	word_freq_map(line{j}) = word_freq_map(line{j}) + 1;
-					% else
-					% 	word_freq_map(line{j}) = 1;
-					% 	word_set = [word_set, line{j}];
-					% end
 				end
 
-				if length(total_words) >= file_num
-					total_words(file_num) = total_words(file_num) + length(line);
+				index = find(strcmp(line{j}, token_list));				% Find word in token_list.
+				if isempty(index)										% If word is a new word:
+					token_list = [token_list, line{j}]; 				% Add word to token list.
+					X(file_num, length(token_list)) = 1;  		 		% Add '1' to X matrix.
 				else
-					total_words(file_num) = length(line);
+					X(file_num, index) = X(file_num, index) + 1; 		% Increment training matrix.
 				end
+
+				% noun_index = find(strcmp(line{j}, noun_endings));
+				% verb_index = find(strcmp(line{j}, verb_endings));
+				% if (~isempty(noun_index))
+				% 	line{j} = line{j}(1:end-noun_index);
+				% elseif(~isempty(verb_index))
+				% 	line{j} = line{j}(1:end-verb_index);
+				% end
+
+				% if isKey(word_freq_map, line{j}) % Record in freq map
+				% 	word_freq_map(line{j}) = word_freq_map(line{j}) + 1;
+				% else
+				% 	word_freq_map(line{j}) = 1;
+				% 	word_set = [word_set, line{j}];
+				% end
+			end
+
+			if length(total_words) >= file_num
+				total_words(file_num) = total_words(file_num) + length(line);
+			else
+				total_words(file_num) = length(line);
 			end
 		end
 		% work_freq_map(file.name) = word_freq_map;
 		avg_words_per_line(file_num) = round(total_words(file_num)/length(lines));		% Round because mn requires integers.
 		avg_syllables_per_word(file_num) = round(total_syllables/total_words(file_num));
 		avg_word_length(file_num) = round(total_characters/total_words(file_num));
+		avg_punctuation_per_line(file_num) = round((total_punctuation/total_words(file_num))*1000);
 
-		non_zero_set = find(X(file_num, :));									% Finds indices of all non-zero elements
+		non_zero_set = find(X(file_num, :));											% Finds indices of non-zero elements.
 		type_token_ratio(file_num) = round(length(non_zero_set)/total_words(file_num));
 
 		file_num = file_num + 1;
@@ -246,7 +255,8 @@ function final_project
 
 	X = [X avg_words_per_line' avg_syllables_per_word' ...						% Add lexical features to X matrix.
 		avg_word_length' type_token_ratio' hapax_legomena_ratio' ...
-		preposition_ratio' particle_ratio' pronoun_ratio' article_ratio'];
+		preposition_ratio' particle_ratio' pronoun_ratio' article_ratio' ...
+		avg_punctuation_per_line'];
 
 	save(strcat(num2str(file_num-1),'training_matrix'), 'X');					% Save X matrix for future use.
 	fprintf('Finished training in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
