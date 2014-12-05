@@ -134,6 +134,16 @@ function final_project(filename)
 
 					line = regexprep(line,'[\/\\=|,.:;'']','');					% Take out accents.
 
+					if length(line{j}) == 1
+						line{j}
+					end
+					if length(line{j}) == 1 && strcmp(line{j}(1), 'd') 			% Fix elided words.
+						line{j} = 'de';
+					end
+					if length(line{j}) == 1 && strcmp(line{j}(1), 't') 			% Fix elided words.
+						line{j} = 'te';
+					end
+
 					total_characters = total_characters + length(line{j});
 
 					if ~isempty(find(strcmp(line{j}, prepositions),1))			% Check if word is a preposition.
@@ -251,6 +261,7 @@ function final_project(filename)
 			end
 		end
 
+<<<<<<< HEAD
 		% Ratios are between 0 and 1, so instead of rounding multiply to get 3 significant figures
 		hapax_legomena_ratio = round((hapax_legomena_ratio ./ total_words)*1000);
 		preposition_ratio = round((preposition_ratio ./ total_words)*10000);
@@ -284,6 +295,24 @@ function final_project(filename)
 	else 
 		load(filename);
 		fprintf('Data loaded from %s.\n', filename);
+=======
+	% Ratios are between 0 and 1, so multiply to get to 3 significant figures
+	hapax_legomena_ratio = round((hapax_legomena_ratio ./ total_words)*1000);
+	preposition_ratio = round((preposition_ratio ./ total_words)*10000);
+	particle_ratio = round((particle_ratio ./ total_words)*10000);
+	pronoun_ratio = round((pronoun_ratio ./ total_words)*10000);
+	article_ratio = round((article_ratio ./ total_words)*10000);
+
+	column_sums = zeros(length(X), 3);
+	for col = 1:length(X)														% Find most common words
+		column_sums(col, 1) = sum(X(:, col));
+		column_sums(col, 2) = col;
+	end
+	column_sums = sortrows(column_sums, -1);
+	for word = 1:25																% Print x most common words
+		token_list(column_sums(word,2));
+		column_sums(word, 1);
+>>>>>>> working on elision
 	end
 
 	% word_set = unique(word_set);
