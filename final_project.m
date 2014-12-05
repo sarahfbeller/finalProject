@@ -268,6 +268,8 @@ function final_project(filename)
 			token_list(column_sums(word,2));
 			column_sums(word, 1);
 		end
+		% if we have the x most common words, then need to remove all other columns from X matrix.
+		% X(:,colToDelete) = []
 
 		Y = transpose(authors_list);
 		X = double([X avg_words_per_line' avg_syllables_per_word' ...						% Add lexical features to X matrix.
