@@ -263,12 +263,14 @@ function final_project(filename)
 			column_sums(col,2) = col;
 		end
 		column_sums = sortrows(column_sums, -1);
-		for word = 1:25																% Print x most common words
+		x_most_common_words = [];													% Stores token_list indices
+		x = 25;																		% Choose word frequency cutoff
+		for word = 1:x																% Print x most common words
 			token_list(column_sums(word,2));
 			column_sums(word, 1);
+			x_most_common_words(word) = column_sums(word,2);
 		end
-		% Remove all words below frequency cutoff from X matrix.
-		% X(:,colToDelete) = []
+		X = X(:,x_most_common_words);												% Remove less common words from X matrix.
 
 		for i = 1:length(authors_list)
         	Y(i,1) = double(find(strcmp(authors_list{i}, unique(authors_list))));
