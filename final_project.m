@@ -115,16 +115,33 @@ function final_project(filename)
 						end
 					end
 
-					line = regexprep(line,'[\/\\=|,.:;'']','');					% Take out accents.
+					line{j} = regexprep(line{j},'[\/\\=|,.:;'']','');					% Take out accents.
 
-					if length(line{j}) == 1
-						line{j};
+					% Fix elided words (words that lose their final vowel before a word starting with a vowel)
+					if strcmp(line{j}, 'q') || strcmp(line{j}, 'meq') ... 		% 't' becomes 'q' before a rough breathing
+						|| strcmp(line{j}, 'kaq')
+						line{j}(end) = 't';
 					end
-					if length(line{j}) == 1 && strcmp(line{j}(1), 'd') 			% Fix elided words.
-						line{j} = 'de';
+					if strcmp(line{j}, 'd') || strcmp(line{j}, 't') || ...		% Words that should end in 'e'
+						strcmp(line{j}, 'od') || strcmp(line{j}, 'g') 
+						line{j} = line{j} + 'e';
 					end
-					if length(line{j}) == 1 && strcmp(line{j}(1), 't') 			% Fix elided words.
-						line{j} = 'te';
+					if strcmp(line{j}, 'kat') || strcmp(line{j}, 'met') || ...	% Words that should end in 'a'
+						strcmp(line{j}, 'par') || strcmp(line{j}, 'all') || ...
+						strcmp(line{j}, 'ar') || strcmp(line{j}, 'di')
+						line{j} = line{j} + 'a';
+					end
+					if strcmp(line{j}, 'ap')									% Words that should end in 'o'
+						line{j} = line{j} + 'o';
+					end
+					if strcmp(line{j}, 'ep')									% Words that should end in 'i'
+						line{j} = line{j} + 'i';
+					end
+					if strcmp(line{j}, 'ef')									% Words that should end in 'o'
+						line{j} = 'epi';
+					end
+					if strcmp(line{j}, 'af')									% Words that should end in 'o'
+						line{j} = 'apo';
 					end
 
 					total_characters = total_characters + length(line{j});
@@ -213,11 +230,12 @@ function final_project(filename)
 				end
 			end
 
-			avg_words_per_line(file_num) 		= round(total_words(file_num) / length(lines));		% Round because mn requires integers.
-			avg_syllables_per_word(file_num) 	= round(total_syllables / total_words(file_num));
-			avg_word_length(file_num) 			= round(total_characters / total_words(file_num));
+			% Multiply to get 3 significant figures for all features.
+			avg_words_per_line(file_num) 		= round((total_words(file_num) / length(lines))*100);		% Round because mn requires integers.
+			avg_syllables_per_word(file_num) 	= round((total_syllables / total_words(file_num))*100);
+			avg_word_length(file_num) 			= round((total_characters / total_words(file_num))*100);
 			avg_punctuation_per_line(file_num) 	= round((total_punctuation / total_words(file_num))*1000);
-			type_token_ratio(file_num) 			= round(length(find(X(file_num, :))) / total_words(file_num)); % Finds indices of non-zero elements.
+			type_token_ratio(file_num) 			= round((length(find(X(file_num, :))) / total_words(file_num))*1000); % Finds indices of non-zero elements.
 
 			file_num = file_num + 1;
 		end
@@ -234,7 +252,7 @@ function final_project(filename)
 			end
 		end
 
-		% Ratios are between 0 and 1, so instead of rounding multiply to get 3 significant figures
+		% Multiply to get 3 significant figures for all features.
 		hapax_legomena_ratio 	= round((hapax_legomena_ratio ./ total_words)*1000);
 		preposition_ratio    	= round((preposition_ratio ./ total_words)*10000);
 		particle_ratio 			= round((particle_ratio ./ total_words)*10000);
@@ -246,8 +264,7 @@ function final_project(filename)
 			column_sums(col,1) = sum(X(:,col));
 			column_sums(col,2) = col;
 		end
-		% column_sums = sortrows(column_sums, -1);
-		column_sums = sort(column_sums, 'descend');
+		column_sums = sortrows(column_sums, -1);
 		for word = 1:25																% Print x most common words
 			token_list(column_sums(word,2));
 			column_sums(word, 1);
