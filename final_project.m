@@ -20,10 +20,9 @@ function final_project(filename)
 							'oimen' 'oite' 'oien' 'etw' 'ontwn' 'wsan' 'ein' ...
 							'wn' 'ousa' 'on' 'as' 'asa' 'an'};
 		vowels 			= {'a' 'e' 'i' 'o' 'u' 'h' 'w'};
-		prepositions 	= {'amfi' 'amf' 'ana' 'an' 'aneu' 'anti' 'apo' 'ap' ...
-							'af' 'dia' 'di' 'ein' 'eis' 'ek' 'en' 'epi' 'ep' 'ef'...
-							'ec' 'kata' 'kat' 'kaq' 'meta' 'met' 'meq' 'para' 'par' ...
-							'peri' 'plhn' 'porrw' 'pro' 'pros' 'sun' 'xarin' 'uper' 'upo'};
+		prepositions 	= {'amfi' 'ana' 'aneu' 'anti' 'apo' 'dia' 'ein' 'eis' 'ek' ...
+							'en' 'epi' 'ec' 'kata' 'meta' 'para' 'peri' 'plhn' ...
+							'porrw' 'pro' 'pros' 'sun' 'xarin' 'uper' 'upo'};
 		pronouns		= {'egw' 'emou' 'mou' 'emoi' 'moi' 'eme' 'me' ...				% personal pronouns
 							'hmeis' 'hmwn' 'hmin' 'hmas' 'su' 'sou' ...	
 							'soi' 'se' 'umeis' 'umwn' 'umin' 'umas' ...
@@ -122,26 +121,25 @@ function final_project(filename)
 						|| strcmp(line{j}, 'kaq')
 						line{j}(end) = 't';
 					end
+					if strcmp(line{j}, 'ef') || strcmp(line{j}, 'af') 			% 'p' becomes 'f' before a rough breathing
+						line{j}(end) = 'p';
+					end
+
 					if strcmp(line{j}, 'd') || strcmp(line{j}, 't') || ...		% Words that should end in 'e'
 						strcmp(line{j}, 'od') || strcmp(line{j}, 'g') 
 						line{j} = line{j} + 'e';
 					end
 					if strcmp(line{j}, 'kat') || strcmp(line{j}, 'met') || ...	% Words that should end in 'a'
 						strcmp(line{j}, 'par') || strcmp(line{j}, 'all') || ...
-						strcmp(line{j}, 'ar') || strcmp(line{j}, 'di')
+						strcmp(line{j}, 'ar') || strcmp(line{j}, 'di') || ...
+						strcmp(line{j}, 'an')
 						line{j} = line{j} + 'a';
 					end
 					if strcmp(line{j}, 'ap')									% Words that should end in 'o'
 						line{j} = line{j} + 'o';
 					end
-					if strcmp(line{j}, 'ep')									% Words that should end in 'i'
+					if strcmp(line{j}, 'ep') || strcmp(line{j}, 'amf')			% Words that should end in 'i'
 						line{j} = line{j} + 'i';
-					end
-					if strcmp(line{j}, 'ef')									% Words that should end in 'o'
-						line{j} = 'epi';
-					end
-					if strcmp(line{j}, 'af')									% Words that should end in 'o'
-						line{j} = 'apo';
 					end
 
 					total_characters = total_characters + length(line{j});
@@ -269,7 +267,7 @@ function final_project(filename)
 			token_list(column_sums(word,2));
 			column_sums(word, 1);
 		end
-		% if we have the x most common words, then need to remove all other columns from X matrix.
+		% Remove all words below frequency cutoff from X matrix.
 		% X(:,colToDelete) = []
 
 		for i = 1:length(authors_list)
