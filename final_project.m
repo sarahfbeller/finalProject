@@ -1,5 +1,5 @@
 function final_project(filename)
-	clc; tic; %clear all;														% Clear variables and start stopwatch.
+	clc; tic;																	% Clear variables and start stopwatch.
 	addpath('libsvm-3.20/matlab');
 
 	if (nargin > 1)	
@@ -47,29 +47,17 @@ function final_project(filename)
 		[dummy, index]   = sort(cellfun('size', endings, 2), 'descend');		% Order by size, largest to smallest.
 	  	endings     	 = endings(index); 
 
-		% word_freq_map  = containers.Map();
-		% work_freq_map  = containers.Map();
-		% word_set       = {};
-
-		token_list       = {};													% Initialize token_list.
-		authors_list     = {};													% Initialize author_list (Y).
+		[token_list, authors_list] = deal({}, {});								% Initialize token & author lists.
 		X                = zeros(0,0);											% Initialize X matrix.
 		input_files      = dir(strcat(input_directory, '*.xml')); 				% Read only .xml files.
 		file_num         = 1;
 
-		total_words = [];														% Total number of words in each work.
-		avg_words_per_line = [];										
-		avg_syllables_per_word = [];											% Syllable = count(non-consecutive vowels)
-		avg_word_length = [];													% Before stemming
-		type_token_ratio = [];													% |vocabulary| / num(tokens)
-		article_ratio = [];														% count(articles in work)/count(words in work)
-		preposition_ratio = [];
-		pronoun_ratio = [];
-		particle_ratio = [];
-		avg_punctuation_per_line = [];
+		[total_words, avg_words_per_line, avg_syllables_per_word, avg_word_length, ...
+		 type_token_ratio, article_ratio, preposition_ratio, pronoun_ratio, ...
+		 particle_ratio, avg_punctuation_per_line] = deal([], [], [], [], [], [], [], [], [], []);
 
 		for file = input_files'													% For every file in the input directory:
-			authors_list = [authors_list, strtok(file.name,'_')];				% Get this author to author_list.
+			authors_list = [authors_list, strtok(file.name,'_')];				% Add this author to authors_list.
 			file_path    = strcat(input_directory, file.name);
 			xDoc 	     = xmlread(file_path);
 			xmlwrite(xDoc);
@@ -88,11 +76,7 @@ function final_project(filename)
 			[m,n] 		 = size(X);
 			X 			 = [X; zeros(1,n)];										% initialize X to count(tokens + extra features)
 
-			total_characters = 0;
-			total_syllables = 0;
-			total_words(file_num) = 0;
-			unique_words = 0;
-			total_punctuation = 0;
+			[total_characters, total_syllables, total_words(file_num), unique_words, total_punctuation] = deal(0, 0, 0, 0, 0);
 
 			for i = 1:length(lines) 											% For every line in the work:
 				if isempty(lines{i})											% Skip empty lines.
@@ -105,7 +89,6 @@ function final_project(filename)
 						total_punctuation = total_punctuation + length(found);
 					end
 				end
-
 
 				line = regexp(lines{i}, ' ', 'split');							% Split line into words.
 
@@ -135,7 +118,7 @@ function final_project(filename)
 					line = regexprep(line,'[\/\\=|,.:;'']','');					% Take out accents.
 
 					if length(line{j}) == 1
-						line{j}
+						line{j};
 					end
 					if length(line{j}) == 1 && strcmp(line{j}(1), 'd') 			% Fix elided words.
 						line{j} = 'de';
@@ -191,9 +174,9 @@ function final_project(filename)
 					end
 
 					if ~isempty(find(strcmp(line{j}, articles),1)) && ... 		% Stem if noun/verb (primitive test)
-						~isempty(find(strcmp(line{j}, prepositions),1)) && ...
-						~isempty(find(strcmp(line{j}, pronouns),1)) && ...
-						~isempty(find(strcmp(line{j}, particles),1))
+					   ~isempty(find(strcmp(line{j}, prepositions),1)) && ...
+					   ~isempty(find(strcmp(line{j}, pronouns),1)) && ...
+					   ~isempty(find(strcmp(line{j}, particles),1))
 						for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
 							if length(line{j}) > k
 								if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
@@ -221,13 +204,6 @@ function final_project(filename)
 					% elseif(~isempty(verb_index))
 					% 	line{j} = line{j}(1:end-verb_index);
 					% end
-
-					% if isKey(word_freq_map, line{j}) % Record in freq map
-					% 	word_freq_map(line{j}) = word_freq_map(line{j}) + 1;
-					% else
-					% 	word_freq_map(line{j}) = 1;
-					% 	word_set = [word_set, line{j}];
-					% end
 				end
 
 				if length(total_words) >= file_num
@@ -236,14 +212,12 @@ function final_project(filename)
 					total_words(file_num) = length(line);
 				end
 			end
-			% work_freq_map(file.name) = word_freq_map;
-			avg_words_per_line(file_num) = round(total_words(file_num)/length(lines));		% Round because mn requires integers.
-			avg_syllables_per_word(file_num) = round(total_syllables/total_words(file_num));
-			avg_word_length(file_num) = round(total_characters/total_words(file_num));
-			avg_punctuation_per_line(file_num) = round((total_punctuation/total_words(file_num))*1000);
 
-			non_zero_set = find(X(file_num, :));											% Finds indices of non-zero elements.
-			type_token_ratio(file_num) = round(length(non_zero_set)/total_words(file_num));
+			avg_words_per_line(file_num) 		= round(total_words(file_num) / length(lines));		% Round because mn requires integers.
+			avg_syllables_per_word(file_num) 	= round(total_syllables / total_words(file_num));
+			avg_word_length(file_num) 			= round(total_characters / total_words(file_num));
+			avg_punctuation_per_line(file_num) 	= round((total_punctuation / total_words(file_num))*1000);
+			type_token_ratio(file_num) 			= round(length(find(X(file_num, :))) / total_words(file_num)); % Finds indices of non-zero elements.
 
 			file_num = file_num + 1;
 		end
@@ -251,8 +225,7 @@ function final_project(filename)
 		hapax_legomena_ratio = [];						% 'hapax legomenon' = a word that only occurs once in the entire corpus
 		for column = 1:length(token_list)
 			found = find(X(:, column));
-			% Only 1 occurrence of the word in the entire corpus
-			if length(found) == 1 && X(found(1), column) == 1 										
+			if (length(found) == 1) && (X(found(1), column) == 1)										
 				if length(hapax_legomena_ratio) >= found(1)
 					hapax_legomena_ratio(found(1)) = hapax_legomena_ratio(found(1)) + 1;
 				else
@@ -261,130 +234,96 @@ function final_project(filename)
 			end
 		end
 
-<<<<<<< HEAD
 		% Ratios are between 0 and 1, so instead of rounding multiply to get 3 significant figures
-		hapax_legomena_ratio = round((hapax_legomena_ratio ./ total_words)*1000);
-		preposition_ratio = round((preposition_ratio ./ total_words)*10000);
-		particle_ratio = round((particle_ratio ./ total_words)*10000);
-		pronoun_ratio = round((pronoun_ratio ./ total_words)*10000);
-		article_ratio = round((article_ratio ./ total_words)*10000);
+		hapax_legomena_ratio 	= round((hapax_legomena_ratio ./ total_words)*1000);
+		preposition_ratio    	= round((preposition_ratio ./ total_words)*10000);
+		particle_ratio 			= round((particle_ratio ./ total_words)*10000);
+		pronoun_ratio 			= round((pronoun_ratio ./ total_words)*10000);
+		article_ratio 			= round((article_ratio ./ total_words)*10000);
 
 		column_sums = zeros(length(X), 2);
 		for col = 1:length(X)														% Find most common words
 			column_sums(col,1) = sum(X(:,col));
 			column_sums(col,2) = col;
 		end
+		% column_sums = sortrows(column_sums, -1);
 		column_sums = sort(column_sums, 'descend');
-		for word = 1:25
+		for word = 1:25																% Print x most common words
 			token_list(column_sums(word,2));
 			column_sums(word, 1);
 		end
 		% if we have the x most common words, then need to remove all other columns from X matrix.
 		% X(:,colToDelete) = []
 
-		Y = transpose(authors_list);
-		X = double([X avg_words_per_line' avg_syllables_per_word' ...						% Add lexical features to X matrix.
+		for i = 1:length(authors_list)
+        	Y(i,1) = double(find(strcmp(authors_list{i}, unique(authors_list))));
+    	end
+
+		X = double([X avg_words_per_line' avg_syllables_per_word' ...				% Add lexical features to X matrix.
 			avg_word_length' type_token_ratio' hapax_legomena_ratio' ...
 			preposition_ratio' particle_ratio' pronoun_ratio' article_ratio' ...
 			avg_punctuation_per_line']);
 
-		save(strcat(num2str(file_num-1),'training_matrices'), 'X', 'Y');					% Save X & Y matrices for future use.
-		fprintf('Finished analyzing %d works in %d minutes and %d seconds.\n', file_num-1, floor(toc/60),round(rem(toc,60)));
-		fprintf('X,Y variables saved as %s.', strcat(num2str(file_num-1),'training_matrix.mat'));
+		save(strcat(num2str(file_num-1),'training_matrices'), 'X', 'Y');			% Save X & Y matrices for future use.
+		if (floor(toc/60) == 0)
+			fprintf('Finished analyzing %d works in %d seconds.\n', file_num-1,round(rem(toc,60)));
+		else
+			fprintf('Finished analyzing %d works in %d minutes and %d seconds.\n', file_num-1, floor(toc/60),round(rem(toc,60)));
+		end
+		fprintf('X,Y variables saved as %s.', strcat(num2str(file_num-1),'training_matrices.mat'));
 
 	else 
 		load(filename);
-		fprintf('Data loaded from %s.\n', filename);
-=======
-	% Ratios are between 0 and 1, so multiply to get to 3 significant figures
-	hapax_legomena_ratio = round((hapax_legomena_ratio ./ total_words)*1000);
-	preposition_ratio = round((preposition_ratio ./ total_words)*10000);
-	particle_ratio = round((particle_ratio ./ total_words)*10000);
-	pronoun_ratio = round((pronoun_ratio ./ total_words)*10000);
-	article_ratio = round((article_ratio ./ total_words)*10000);
-
-	column_sums = zeros(length(X), 3);
-	for col = 1:length(X)														% Find most common words
-		column_sums(col, 1) = sum(X(:, col));
-		column_sums(col, 2) = col;
-	end
-	column_sums = sortrows(column_sums, -1);
-	for word = 1:25																% Print x most common words
-		token_list(column_sums(word,2));
-		column_sums(word, 1);
->>>>>>> working on elision
+		fprintf('Data loaded from %s\n', filename);
 	end
 
-	% word_set = unique(word_set);
-	% disp(['There are ' num2str(length(word_set)) ' total words in this data!']);
+    models  = {'Naive Bayes', 'SVM', 'K Nearest Neighbours', 'Decision Tree'}%, 'TreeBagger'};
+    results = [];
 
-	% X = zeros(length(keys(work_freq_map)),length(word_set));
+    for i = 1:length(Y)															% Implement cross-validation:
+    	[X_train, Y_train] = deal(removerows(X,'ind',[i]), removerows(Y,'ind',[i]));
 
-	% works = keys(work_freq_map);
-	% for i = 1:length(works)
-	% 	current_work  = work_freq_map(works{i});
-	% 	words_in_work = keys(current_work);
-	% 	for j = 1:length(words_in_work)
-	% 		index = 0;
-	% 		for k = 1:length(word_set)
-	% 			if strcmp(char(word_set(k)), words_in_work{j})
-	% 				index = k;
-	% 				break;
-	% 			end
-	% 		end
-	% 		X(i,index) = current_work(words_in_work{j});
-	% 	end
-	% end
+    	bay_model = NaiveBayes.fit(X_train, Y_train, 'Distribution','mn');
+		svm_model = svmtrain(Y_train, X_train, '-q');
+		knn_model = ClassificationKNN.fit(X_train, Y_train);
+		dct_model = ClassificationTree.fit(X_train, Y_train);
+		% tbr_model = TreeBagger(10, X_train, Y_train);
 
-	
-    bay_results = [];
-    svm_results = [];
-    % lda_results = [];
-    % qda_results = [];
-    % mnr_results = [];
+        results = [results; bay_model.predict(X(i,:)) ...
+        					svmpredict(Y(i), X(i,:), svm_model, '-q') ...
+        					knn_model.predict(X(i,:)) ...
+        					dct_model.predict(X(i,:))];% ...
+        					%double(nominal(tbr_model.predict(X(i,:))))];	% Predict on all the models.
 
-    for i = 1:length(Y)
-        Y_num(i,1) = double(find(strcmp(Y{i}, unique(Y))));
-    end
-
-    for i = 1:length(Y)																	% Implement cross-validation:
-    	bay_model = NaiveBayes.fit(removerows(X,'ind',[i]), ...
-                                   removerows(Y,'ind',[i]), 'Distribution','mn');    	% Train Naive Bayes model.
+		% mnr_model = mnrfit(removerows(X,'ind',[i]), ...
+  		%                    removerows(Y,'ind',[i]));             			% Train MNR model.
+        % mnr_result = mnrval(mnr_model, X(i,:));
+        % index = find(mnr_result == max(mnr_result(:)));
+        % Y(index)
+        % Y(i)
+        % mnr_results = [mnr_results; Y(index)];
 
         % lda_model = ClassificationDiscriminant.fit(...
-                         % removerows(X,'ind',[i]), removerows(Y_num,'ind',[i]), ...
-                         % 'discrimType','pseudolinear');                                 % Train Linear Discriminant model.
+                    % removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+                    % 'discrimType','pseudolinear');                            % Train Linear Discriminant model.
 
         % qda_model = ClassificationDiscriminant.fit(...
-        %                   removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
-        %                   'discrimType','pseudoquadratic');                           % Train Quadratic Discriminant model.
+        %             removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+        %             'discrimType','pseudoquadratic');                         % Train Quadratic Discriminant model.
 
-		svm_model = svmtrain(removerows(Y_num,'ind',[i]), ...
-                                        removerows(X,'ind',[i]), '-q');             	% Train SVM model.
-
-        bay_results = [bay_results; bay_model.predict(X(i,:))];                       	% Predict using Naive Bayes model.
-        % lda_results = [lda_results; lda_model.predict(X(i,:))];                       	% Predict using LDA model.
-        % qda_results = [qda_results qda_model.predict(X(i,:))];                       	% Predict using QDA model.
-        svm_results = [svm_results; svmpredict(Y_num(i), X(i,:), ...
-                                                svm_model, '-q')];                                                                      % Predict using SVM model.
-
-        % mnr_results = [mnr_results, mnr_model.predict(X(i,:))];
+        % lda_results = [lda_results; lda_model.predict(X(i,:))];               % Predict using LDA model.
+        % qda_results = [qda_results qda_model.predict(X(i,:))];                % Predict using QDA model.
+    end
+    
+    fprintf('\n');
+    for j = 1:length(models)													% Calculate & print out errors.
+    	model_error = 1 - (nnz(Y == results(:,j))  / length(Y));
+    	fprintf('\nTest error using %s: %.2f', models{j}, model_error);			
     end
 
-    % lda_results = classify(X,X,Y);
-
-    bay_error = length(setdiff(Y, bay_results)) / length(Y);
-    % lda_error = 1 - (nnz(Y_num == lda_results) / length(Y));
-    % qda_error = length(setdiff(Y, qda_results)) / length(Y);
-    svm_error = 1 - (nnz(Y_num == svm_results) / length(Y));
-
-    % mnr_error = nnz(categorical(Y) == categorical(mnr_results)) / length(Y);
-
-    fprintf('\n\nTest error using Naive Bayes algorithm: %.2f\n', bay_error);
-    % fprintf('Test error using Linear Discriminant analysis: %.2f\n', lda_error);
-    % fprintf('Test error using Quadratic Discriminant analysis: %.2f\n', qda_error);
-    fprintf('Test error using SVM Analysis: %.2f\n', svm_error);
-
-    % fprintf('Test error using Multinomial Regression algorithm: %f', mnr_error);
-    fprintf('\nProgram executed in %d minutes and %d seconds.\n', floor(toc/60),round(rem(toc,60)));
+    if (floor(toc/60) == 0)
+    	fprintf('\n\nProgram executed in %d seconds.\n', round(rem(toc,60)));
+    else 
+    	fprintf('\n\nProgram executed in %d minutes and %d seconds.\n', floor(toc/60), round(rem(toc,60)));
+    end
 end
