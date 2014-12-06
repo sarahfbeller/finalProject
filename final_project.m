@@ -270,18 +270,19 @@ function final_project(filename)
 			column_sums(word, 1);
 			x_most_common_words(word) = column_sums(word,2);
 		end
-		X = X(:,x_most_common_words);												% Remove less common words from X matrix.
+		X = X(:, x_most_common_words);												% Remove less common words from X matrix.
 
 		for i = 1:length(authors_list)
         	Y(i,1) = double(find(strcmp(authors_list{i}, unique(authors_list))));
     	end
 
+    	words_in_corpus = length(X);
 		X = double([X avg_words_per_line' avg_syllables_per_word' ...				% Add lexical features to X matrix.
 			avg_word_length' type_token_ratio' hapax_legomena_ratio' ...
 			preposition_ratio' particle_ratio' pronoun_ratio' article_ratio' ...
 			avg_punctuation_per_line']);
 
-		save(strcat(num2str(file_num-1),'training_matrices'), 'X', 'Y');			% Save X & Y matrices for future use.
+		save(strcat(num2str(file_num-1),'training_matrices'), 'X', 'Y', 'words_in_corpus');						% Save variables for future use.
 		if (floor(toc/60) == 0)
 			fprintf('Finished analyzing %d works in %d seconds.\n', file_num-1,round(rem(toc,60)));
 		else
@@ -294,53 +295,100 @@ function final_project(filename)
 		fprintf('Data loaded from %s\n', filename);
 	end
 
-    models  = {'Naive Bayes', 'SVM', 'K Nearest Neighbours', 'Decision Tree'}%, 'TreeBagger'};
+	X;
+	size(X);
+	feature_names = {'All features', 'Word Frequencies', 'Words/Line'};
+	feature_cols = {[1, length(X)],[1, words_in_corpus],[words_in_corpus+1]};
+    models  = {'Naive Bayes', 'SVM', 'K Nearest Neighbours', 'Decision Tree'};%, 'TreeBagger'};
     results = [];
 
-    for i = 1:length(Y)															% Implement cross-validation:
-    	[X_train, Y_train] = deal(removerows(X,'ind',[i]), removerows(Y,'ind',[i]));
+    for i = 1:length(feature_names)
 
-    	bay_model = NaiveBayes.fit(X_train, Y_train, 'Distribution','mn');
-		svm_model = svmtrain(Y_train, X_train, '-q');
-		knn_model = ClassificationKNN.fit(X_train, Y_train);
-		dct_model = ClassificationTree.fit(X_train, Y_train);
-		% tbr_model = TreeBagger(10, X_train, Y_train);
+    	if (length(feature_cols{i}) == 2)
+    		feature_X = X(:,feature_cols{i}(1):feature_cols{i}(2));
+    	else
+    		feature_X = X(:,feature_cols{i}(1));
+    	end
 
-        results = [results; bay_model.predict(X(i,:)) ...
-        					svmpredict(Y(i), X(i,:), svm_model, '-q') ...
-        					knn_model.predict(X(i,:)) ...
-        					dct_model.predict(X(i,:))];% ...
-        					%double(nominal(tbr_model.predict(X(i,:))))];	% Predict on all the models.
+	    for j = 1:length(Y)															% Implement cross-validation:
 
-		% mnr_model = mnrfit(removerows(X,'ind',[i]), ...
-  		%                    removerows(Y,'ind',[i]));             			% Train MNR model.
-        % mnr_result = mnrval(mnr_model, X(i,:));
-        % index = find(mnr_result == max(mnr_result(:)));
-        % Y(index)
-        % Y(i)
-        % mnr_results = [mnr_results; Y(index)];
+	    	% [X_train, Y_train, X_test, Y_test] = deal(removerows(X,'ind',[j]), removerows(Y,'ind',[j]), X(j,:), Y(j));
+	    	[X_train, Y_train, X_test, Y_test] = deal(removerows(feature_X,'ind',[j]), removerows(Y,'ind',[j]), feature_X(j,:), Y(j));
 
-        % lda_model = ClassificationDiscriminant.fit(...
-                    % removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
-                    % 'discrimType','pseudolinear');                            % Train Linear Discriminant model.
+			for k = 1:length(models)
+	        	results(i,j,k) = train_predict(X_train, Y_train, X_test, Y_test, k);
+	        end
 
-        % qda_model = ClassificationDiscriminant.fit(...
-        %             removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
-        %             'discrimType','pseudoquadratic');                         % Train Quadratic Discriminant model.
+	        % bay_model = NaiveBayes.fit(X_train, Y_train, 'Distribution','mn');
+			% svm_model = svmtrain(Y_train, X_train, '-q');
+			% knn_model = ClassificationKNN.fit(X_train, Y_train);
+			% dct_model = ClassificationTree.fit(X_train, Y_train);
+			% tbr_model = TreeBagger(10, X_train, Y_train);
 
-        % lda_results = [lda_results; lda_model.predict(X(i,:))];               % Predict using LDA model.
-        % qda_results = [qda_results qda_model.predict(X(i,:))];                % Predict using QDA model.
-    end
-    
-    fprintf('\n');
-    for j = 1:length(models)													% Calculate & print out errors.
-    	model_error = 1 - (nnz(Y == results(:,j))  / length(Y));
-    	fprintf('\nTest error using %s: %.2f', models{j}, model_error);			
-    end
+	                % results = [results; train_predict(X_train, Y_train, X_test, 1) ...%bay_model.predict(X(i,:)) ...
+	        % 					svmpredict(Y(i), X(i,:), svm_model, '-q') ...
+	        % 					knn_model.predict(X(i,:)) ...
+	        % 					dct_model.predict(X(i,:))];% ...
+	        					%double(nominal(tbr_model.predict(X(i,:))))];	% Predict on all the models.
+			% mnr_model = mnrfit(removerows(X,'ind',[i]), ...
+	  		%                    removerows(Y,'ind',[i]));             			% Train MNR model.
+	        % mnr_result = mnrval(mnr_model, X(i,:));
+	        % index = find(mnr_result == max(mnr_result(:)));
+	        % Y(index)
+	        % Y(i)
+	        % mnr_results = [mnr_results; Y(index)];
+
+	        % lda_model = ClassificationDiscriminant.fit(...
+	                    % removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+	                    % 'discrimType','pseudolinear');                            % Train Linear Discriminant model.
+
+	        % qda_model = ClassificationDiscriminant.fit(...
+	        %             removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
+	        %             'discrimType','pseudoquadratic');                         % Train Quadratic Discriminant model.
+
+	        % lda_results = [lda_results; lda_model.predict(X(i,:))];               % Predict using LDA model.
+	        % qda_results = [qda_results qda_model.predict(X(i,:))];                % Predict using QDA model.
+	    end
+	    
+	    % fprintf('\n\nTest errors training on %s:', feature_names{i});
+	    % for j = 1:length(models)													% Calculate & print out errors.
+	    % 	model_error = 1 - (nnz(Y == results(:,j))  / length(Y));
+	    % 	fprintf('\nModeling using %s: %.2f', models{j}, model_error);			
+	    % end
+	end
+	results
+	for i = 1:length(feature_names)
+		fprintf('\nTest errors training on %s:', feature_names{i});
+		for k = 1:length(models)													% Calculate & print out errors.
+		    model_error = 1 - (nnz(Y == results(i,:,k))  / length(Y));
+		    fprintf('\nModeling using %s: %.2f', models{k}, model_error);			
+		end
+	end
 
     if (floor(toc/60) == 0)
     	fprintf('\n\nProgram executed in %d seconds.\n', round(rem(toc,60)));
     else 
     	fprintf('\n\nProgram executed in %d minutes and %d seconds.\n', floor(toc/60), round(rem(toc,60)));
     end
+
+
+
+    function result = train_predict(X_train,Y_train,X_test,Y_test,m)
+    	switch m
+    		case 1
+    			bay_model 	= NaiveBayes.fit(X_train, Y_train, 'Distribution','mn');
+    			result 		= bay_model.predict(X_test);
+    		case 2
+    			svm_model 	= svmtrain(X_train, Y_train, '-q');
+    			result 		= svmpredict(Y_test, X_test, svm_model, '-q');
+    		case 3
+				knn_model 	= ClassificationKNN.fit(X_train, Y_train);
+				result 		= knn_model.predict(X_test);
+			case 4
+				dct_model 	= ClassificationTree.fit(X_train, Y_train);
+				result 		= dct_model.predict(X_test);
+    	end
+
+    end
+
 end
