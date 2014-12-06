@@ -252,11 +252,12 @@ function final_project(filename)
 
 		% Multiply to get 3 significant figures for all features.
 		hapax_legomena_ratio 	= round((hapax_legomena_ratio ./ total_words)*1000);
-		preposition_ratio    	= round((preposition_ratio ./ total_words)*10000);
+		preposition_ratio    	= round((preposition_ratio 	./ total_words)*10000);
 		particle_ratio 			= round((particle_ratio ./ total_words)*10000);
 		pronoun_ratio 			= round((pronoun_ratio ./ total_words)*10000);
 		article_ratio 			= round((article_ratio ./ total_words)*10000);
 
+		%{
 		column_sums = zeros(length(X), 2);
 		for col = 1:length(X)														% Find most common words
 			column_sums(col,1) = sum(X(:,col));
@@ -271,6 +272,7 @@ function final_project(filename)
 			x_most_common_words(word) = column_sums(word,2);
 		end
 		X = X(:, x_most_common_words);												% Remove less common words from X matrix.
+		%}
 
 		for i = 1:length(authors_list)
         	Y(i,1) = double(find(strcmp(authors_list{i}, unique(authors_list))));
@@ -295,20 +297,29 @@ function final_project(filename)
 		fprintf('Data loaded from %s\n', filename);
 	end
 
-	X;
-	size(X);
-	feature_names = {'All features', 'Word Frequencies', 'Words/Line'};
-	feature_cols = {[1, length(X)],[1, words_in_corpus],[words_in_corpus+1]};
-    models  = {'Naive Bayes', 'SVM', 'K Nearest Neighbours', 'Decision Tree'};%, 'TreeBagger'};
+
+% Training & predicting part
+
+	% Find indices of most common words:
+	A = sum(X(:,1:words_in_corpus));
+	[sortedValues, sortIndex] = sort(A(:),'descend');
+	maxIndex25 = sortIndex(1:25);
+	maxIndex50 = sortIndex(1:50);
+	maxIndex100 = sortIndex(1:100);
+
+	feature_names = {'All features', 'All Words', '25 Most Common Words', '50 Most Common Words', '100 Most Common Words', ...
+					 'Words/Line', 'Syllables/Word', 'Word Length', 'Type Token Ratio', 'Hapax Legomena', 'Preposition Ratio', ...
+					 'Particle Ratio', 'Pronoun Ratio', 'Article Ratio', 'Punctuation/Line'};
+	feature_cols = {[1:length(X)],[1:words_in_corpus], maxIndex25, maxIndex50, maxIndex100, [words_in_corpus+1], ...
+					[words_in_corpus+2], [words_in_corpus+3], [words_in_corpus+4], [words_in_corpus+5], [words_in_corpus+6], ...
+					[words_in_corpus+7], [words_in_corpus+8], [words_in_corpus+9], [words_in_corpus+10]};
+    models  = {'Naive Bayes', 'SVM', 'KNN', 'Decision Tree'};%, 'TreeBagger'};
     results = [];
+    model_error = [];
 
     for i = 1:length(feature_names)
 
-    	if (length(feature_cols{i}) == 2)
-    		feature_X = X(:,feature_cols{i}(1):feature_cols{i}(2));
-    	else
-    		feature_X = X(:,feature_cols{i}(1));
-    	end
+    	feature_X = X(:,feature_cols{i});
 
 	    for j = 1:length(Y)															% Implement cross-validation:
 
@@ -316,7 +327,7 @@ function final_project(filename)
 	    	[X_train, Y_train, X_test, Y_test] = deal(removerows(feature_X,'ind',[j]), removerows(Y,'ind',[j]), feature_X(j,:), Y(j));
 
 			for k = 1:length(models)
-	        	results(i,j,k) = train_predict(X_train, Y_train, X_test, Y_test, k);
+	        	results(j,i,k) = train_predict(X_train, Y_train, X_test, Y_test, k);
 	        end
 
 	        % bay_model = NaiveBayes.fit(X_train, Y_train, 'Distribution','mn');
@@ -356,14 +367,61 @@ function final_project(filename)
 	    % 	fprintf('\nModeling using %s: %.2f', models{j}, model_error);			
 	    % end
 	end
-	results
+
 	for i = 1:length(feature_names)
-		fprintf('\nTest errors training on %s:', feature_names{i});
+		% fprintf('\n\nTest errors training on %s:', feature_names{i});
 		for k = 1:length(models)													% Calculate & print out errors.
-		    model_error = 1 - (nnz(Y == results(i,:,k))  / length(Y));
-		    fprintf('\nModeling using %s: %.2f', models{k}, model_error);			
+		    model_error(k,i) = 1 - (nnz(Y == results(:,i,k))  / length(Y));
+		    % fprintf('\nModeling using %s: %.2f', models{k}, model_error(k,i));			
 		end
 	end
+
+	% Plots
+
+	h1 = figure(1);
+    set(h1, 'Visible', 'off');
+    bar(1-model_error(:,1));
+    set(gca,'XTickLabel', models);
+    ylim([0 1.2]);
+    ylabel('% Accuracy');
+    title('Plot of Overall Accuracy');
+    plotfixer;
+    print(h1,'-dpng','-r300','plots/01OverallAccuracy');
+
+    h2 = figure(2);
+    set(h2, 'Visible', 'off');
+    bar(1+bsxfun(@minus,model_error(:,1),model_error(:,2:end))');
+    set(gca,'XTickLabel', feature_names(2:end));
+    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 4*length(feature_names) 6]);
+    ylim([0 1.4]);
+    legend(gca,models);
+    title('Plot of Feature Importance');
+    plotfixer;
+    print(h2,'-dpng','-r300','plots/02FeatureImportance');
+
+    h3 = figure(3);
+    set(h3, 'Visible', 'off');
+    bar(1-model_error(:,2:5)');
+    set(gca,'XTickLabel', feature_names(2:5));
+    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 18 6]);
+    ylim([0 1.4]);
+    ylabel('% Accuracy');
+    legend(gca,models);
+    title('Plot of Word Frequency Accuracy');
+    plotfixer;
+    print(h3,'-dpng','-r300','plots/03CommonWordAccuracies');
+
+    h4 = figure(4);
+    set(h4, 'Visible', 'off');
+    bar(1-model_error(:,6:end)');
+    set(gca,'XTickLabel', feature_names(6:end));
+    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 4*length(feature_names(6:end)) 6]);
+    ylim([0 1.4]);
+    ylabel('% Accuracy');
+    legend(gca,models);
+    title('Plot of Lexographical Feature Accuracy');
+    plotfixer;
+    print(h4,'-dpng','-r300','plots/04LexFeatAcc');
 
     if (floor(toc/60) == 0)
     	fprintf('\n\nProgram executed in %d seconds.\n', round(rem(toc,60)));
@@ -371,9 +429,7 @@ function final_project(filename)
     	fprintf('\n\nProgram executed in %d minutes and %d seconds.\n', floor(toc/60), round(rem(toc,60)));
     end
 
-
-
-    function result = train_predict(X_train,Y_train,X_test,Y_test,m)
+    function result = train_predict(X_train, Y_train, X_test, Y_test, m)
     	switch m
     		case 1
     			bay_model 	= NaiveBayes.fit(X_train, Y_train, 'Distribution','mn');
@@ -388,6 +444,90 @@ function final_project(filename)
 				dct_model 	= ClassificationTree.fit(X_train, Y_train);
 				result 		= dct_model.predict(X_test);
     	end
+
+    end
+
+    function plotfixer;
+        %Plot Fixer
+        %Written by: Matt Svrcek  12/05/2001
+
+        %Run this script after generating the raw plots.  It will find
+        %all open figures and adjust line sizes and text properties.
+
+        %Change the following values to suit your preferences.  The variable
+        %names and comments that follow explain what each does and their options.
+
+        plotlsize = 2; %thickness of plotted lines, in points
+        axislsize = 1.5; %thickness of tick marks and borders, in points
+        markersize = 8;  %size of line markers, default is 6
+
+        %font names below must exactly match your system's font names
+        %check the list in the figure pull down menu under Tools->Text Properties
+        %note, the script editor does not have all the fonts, so use the figure menu
+
+        axisfont = 'Helvetica'; %changes appearance of axis numbers
+        axisfontsize = 16;            %in points
+        axisfontweight = 'normal';    %options are 'light' 'normal' 'demi' 'bold' 
+        axisfontitalics = 'normal';   %options are 'normal' 'italic' 'oblique'
+
+        legendfont = 'Helvetica'; %changes text in the legend
+        legendfontsize = 14;
+        legendfontweight = 'normal';
+        legendfontitalics = 'normal';
+
+        labelfont = 'Helvetica';  %changes x, y, and z axis labels
+        labelfontsize = 16;  
+        labelfontweight = 'normal'; 
+        labelfontitalics = 'normal';
+
+        titlefont = 'Helvetica';  %changes title
+        titlefontsize = 18;
+        titlefontweight = 'normal';
+        titlefontitalics = 'normal';
+
+        textfont = 'Helvetica';   %changes text
+        textfontsize = 14;
+        textfontweight = 'normal';
+        textfontitalics = 'normal';
+
+
+        %stop changing things below this line
+        %----------------------------------------------------
+        axesh = findobj('Type', 'axes');
+        legendh = findobj('Tag', 'legend');
+        lineh = findobj(axesh, 'Type', 'line');
+        axestexth = findobj(axesh, 'Type', 'text');
+
+        set(lineh, 'LineWidth', plotlsize)
+        set(lineh, 'MarkerSize', markersize)
+        set(axesh, 'LineWidth', axislsize)
+        set(axesh, 'FontName', axisfont)
+        set(axesh, 'FontSize', axisfontsize)
+        set(axesh, 'FontWeight', axisfontweight)
+        set(axesh, 'FontAngle', axisfontitalics)
+        set(axestexth, 'FontName', textfont)
+        set(axestexth, 'FontSize', textfontsize)
+        set(axestexth, 'FontWeight', textfontweight)
+        set(axesh, 'Box','on')
+        for(i = 1:1:size(axesh))
+           legend(axesh(i))
+           set(get(gca,'XLabel'), 'FontName', labelfont)
+           set(get(gca,'XLabel'), 'FontSize', labelfontsize)
+           set(get(gca,'XLabel'), 'FontWeight', labelfontweight)
+           set(get(gca,'XLabel'), 'FontAngle', labelfontitalics)
+           set(get(gca,'YLabel'), 'FontName', labelfont)
+           set(get(gca,'YLabel'), 'FontSize', labelfontsize)
+           set(get(gca,'YLabel'), 'FontWeight', labelfontweight)
+           set(get(gca,'YLabel'), 'FontAngle', labelfontitalics)
+           set(get(gca,'ZLabel'), 'FontName', labelfont)
+           set(get(gca,'ZLabel'), 'FontSize', labelfontsize)
+           set(get(gca,'ZLabel'), 'FontWeight', labelfontweight)
+           set(get(gca,'ZLabel'), 'FontAngle', labelfontitalics)
+           set(get(gca,'Title'), 'FontName', titlefont)
+           set(get(gca,'Title'), 'FontSize', titlefontsize)
+           set(get(gca,'Title'), 'FontWeight', titlefontweight)
+           set(get(gca,'Title'), 'FontAngle', titlefontitalics)
+        end
 
     end
 
