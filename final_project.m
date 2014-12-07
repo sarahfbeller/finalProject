@@ -36,7 +36,7 @@ function final_project(filename)
 		articles 		= {'o' 'tou' 'tw' 'ton' 'oi' 'twn' 'tois' 'tous' 'h' ... 		% h/o just breathing; pronoun has accent too
 							'ths' 'th' 'thn' 'ai' 'tais' 'tas' 'to' 'ta'};
 		particles 		= {'an' 'ara' 'de' 'dh' 'ean' 'ews' 'gar' 'ge' 'men' 'mentoi' ...
-							'mhn' 'mh' 'ou' 'ouk' 'oukoun' 'oun' 'oux' 'te'};
+							'mhn' 'mh' 'nh' 'ou' 'ouk' 'oukoun' 'oun' 'oux' 'te'};
 		punctuation 	= {'.' ',' ';' ':' ''''};
 
 		% ignored middle, passive, future, dual
@@ -76,7 +76,7 @@ function final_project(filename)
 			X 			 = [X; zeros(1,n)];										% initialize X to count(tokens + extra features)
 
 			[total_characters, total_syllables, total_words(file_num), unique_words, total_punctuation] = deal(0, 0, 0, 0, 0);
-			count1 = 0;
+
 			for i = 1:length(lines) 											% For every line in the work:
 				if isempty(lines{i})											% Skip empty lines.
 					continue;
@@ -124,7 +124,7 @@ function final_project(filename)
 						line{j}(end) = 'p';
 					end
 
-					if (nnz(strcmp(line{j}, {'d', 't', 'od', 'g'})) ~= 0)							% Words that should end in 'e'
+					if (nnz(strcmp(line{j}, {'d', 't', 'od', 'g', 'm', 's'})) ~= 0)					% Words that should end in 'e'
 						line{j} = line{j} + 'e';
 					end
 
@@ -132,7 +132,7 @@ function final_project(filename)
 						line{j} = line{j} + 'a';
 					end
 
-					if (nnz(strcmp(line{j}, {'ap'})) ~= 0) 											% Words that should end in 'o'
+					if (nnz(strcmp(line{j}, {'ap', 'up'})) ~= 0) 									% Words that should end in 'o'
 						line{j} = line{j} + 'o';
 					end
 
@@ -186,16 +186,11 @@ function final_project(filename)
 						end
 					end
 
-					if ~isempty(find(strcmp(line{j}, articles),1)) && ... 		% Stem if noun/verb (primitive test)
-					   ~isempty(find(strcmp(line{j}, prepositions),1)) && ...
-					   ~isempty(find(strcmp(line{j}, pronouns),1)) && ...
-					   ~isempty(find(strcmp(line{j}, particles),1))
-					   count1 = count1 + 1;
-					   fprintf('Hello');
+					if isempty(find(strcmp(line{j}, [articles prepositions pronouns particles]),1)) 		% Stem if noun/verb (primitive test)
 						for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
 							if length(line{j}) > k
 								if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
-									if(length(line{j}(1:end-k)) > 1)			% Don't truncate particles.
+									if(length(line{j}(1:end-k)) > 3)			% Don't truncate particles.
 										line{j} = line{j}(1:end-k);
 										break;
 									end
@@ -219,7 +214,7 @@ function final_project(filename)
 					total_words(file_num) = length(line);
 				end
 			end
-			count1
+
 			% Multiply to get 3 significant figures for all features.
 			avg_words_per_line(file_num) 		= round((total_words(file_num) / length(lines))*100);		% Round because mn requires integers.
 			avg_syllables_per_word(file_num) 	= round((total_syllables / total_words(file_num))*100);
@@ -248,23 +243,6 @@ function final_project(filename)
 		particle_ratio 			= round((particle_ratio ./ total_words)*10000);
 		pronoun_ratio 			= round((pronoun_ratio ./ total_words)*10000);
 		article_ratio 			= round((article_ratio ./ total_words)*10000);
-
-		%{
-		column_sums = zeros(length(X), 2);
-		for col = 1:length(X)														% Find most common words
-			column_sums(col,1) = sum(X(:,col));
-			column_sums(col,2) = col;
-		end
-		column_sums = sortrows(column_sums, -1);
-		x_most_common_words = [];													% Stores token_list indices
-		x = 25;																		% Choose word frequency cutoff
-		for word = 1:x																% Print x most common words
-			token_list(column_sums(word,2));
-			column_sums(word, 1);
-			x_most_common_words(word) = column_sums(word,2);
-		end
-		X = X(:, x_most_common_words);												% Remove less common words from X matrix.
-		%}
 
 		for i = 1:length(authors_list)
         	Y(i,1) = double(find(strcmp(authors_list{i}, unique(authors_list))));
@@ -295,20 +273,27 @@ function final_project(filename)
 	% Find indices of most common words:
 	A = sum(X(:,1:words_in_corpus));
 	[sortedValues, sortIndex] = sort(A(:),'descend');
-	maxIndex25 = sortIndex(1:25);
-	maxIndex50 = sortIndex(1:50);
-	maxIndex100 = sortIndex(1:100);
-	% token_list(maxIndex25)
+	maxIndex25 = sortIndex(1:25)';
+	maxIndex50 = sortIndex(1:50)';
+	maxIndex100 = sortIndex(1:100)';
+	maxIndex200 = sortIndex(1:200)';
+	maxIndex500 = sortIndex(1:500)';
+	% token_list(maxIndex100)
 
-	feature_names = {'All features', 'All Words', '25 Most Common Words', '50 Most Common Words', '100 Most Common Words', ...
-					 'Words/Line', 'Syllables/Word', 'Word Length', 'Type Token Ratio', 'Hapax Legomena', 'Preposition Ratio', ...
-					 'Particle Ratio', 'Pronoun Ratio', 'Article Ratio', 'Punctuation/Line'};
-	feature_cols = {[1:length(X)],[1:words_in_corpus], maxIndex25, maxIndex50, maxIndex100, [words_in_corpus+1], ...
-					[words_in_corpus+2], [words_in_corpus+3], [words_in_corpus+4], [words_in_corpus+5], [words_in_corpus+6], ...
-					[words_in_corpus+7], [words_in_corpus+8], [words_in_corpus+9], [words_in_corpus+10]};
-    models  = {'Naive Bayes', 'SVM', 'KNN', 'Decision Tree'};%, 'TreeBagger'};
-    results = [];
-    model_error = [];
+	feature_names 	= {'All features', 'All Words', '25 Most Common Words', '50 Most Common Words', '100 Most Common Words', ...
+					 	'200 Most Common Words', '500 Most Common Words', 'Words/Line', 'Syllables/Word', 'Word Length', ...
+					 	'Type Token Ratio', 'Hapax Legomena', 'Preposition Ratio', 'Particle Ratio', 'Pronoun Ratio', ...
+					 	'Article Ratio', 'Punctuation/Line', '25&Lex', '50&Lex', '100&Lex', '200&Lex', '500&Lex', 'lex_features'};
+	word_features 	= [2:7];
+	lex_features 	= [8:17];
+	feature_cols 	= {[1:length(X)],[1:words_in_corpus], maxIndex25, maxIndex50, maxIndex100, maxIndex200, maxIndex500, ...
+						[words_in_corpus+1], [words_in_corpus+2], [words_in_corpus+3], [words_in_corpus+4], [words_in_corpus+5], ...
+						[words_in_corpus+6], [words_in_corpus+7], [words_in_corpus+8], [words_in_corpus+9], [words_in_corpus+10],...
+						[maxIndex25 lex_features], [maxIndex50 lex_features], [maxIndex100 lex_features], [maxIndex200 lex_features], ...
+						[maxIndex500 lex_features], [words_in_corpus:words_in_corpus+length(lex_features)]};
+    models  		= {'Naive Bayes', 'SVM', 'KNN', 'Decision Tree'};%, 'TreeBagger'};
+    results 		= [];
+    model_error 	= [];
 
     for i = 1:length(feature_names)
 
@@ -361,17 +346,20 @@ function final_project(filename)
 	end
 
 	for i = 1:length(feature_names)
-		fprintf('\n\nTest errors training on %s:', feature_names{i});
+		% fprintf('\n\nTest errors training on %s:', feature_names{i});
 		for k = 1:length(models)													% Calculate & print out errors.
 		    model_error(k,i) = 1 - (nnz(Y == results(:,i,k))  / length(Y));
-		    fprintf('\nModeling using %s: %.2f', models{k}, model_error(k,i));			
+		    % fprintf('\nModeling using %s: %.2f', models{k}, model_error(k,i));			
 		end
 	end
 
-	% importance = 1-abs(bsxfun(@minus,model_error(:,1),model_error(:,2:end)))';
-	importance = abs(bsxfun(@ldivide,model_error(:,1),model_error(:,2:end)))'
+	importance = 1-abs(bsxfun(@minus,model_error(:,1),model_error(:,2:end)))';
+	%importance = abs(bsxfun(@ldivide,model_error(:,1),model_error(:,2:end)))'
 
 	% Plots
+
+	% Plot no. works of author vs. total words of author or avg. words in author's work.
+	% Train all lexgraphical features.
 
 	h1 = figure(1);
     set(h1, 'Visible', 'off');
@@ -388,22 +376,22 @@ function final_project(filename)
     suptitle('Plot of Feature Importance');    
     ax1 = subplot(2,1,1);
     ax2 = subplot(2,1,2);
-    bar(ax1, importance(2:(length(feature_names)-1)/2,:));
-    bar(ax2, importance(1+((length(feature_names)-1)/2):end,:));
-    set(ax1,'XTickLabel', feature_names(2:(length(feature_names)-1)/2));
-    set(ax2,'XTickLabel', feature_names(1+((length(feature_names)-1)/2):end));
+    bar(ax1, importance(2:round((length([word_features lex_features])-1)/2),:));
+    bar(ax2, importance(1+round((length([word_features lex_features])-1)/2):17,:));
+    set(ax1,'XTickLabel', feature_names(2:round((length(feature_names)-1)/2)));
+    set(ax2,'XTickLabel', feature_names(1+round((length(feature_names)-1)/2):17));
     set(ax1, 'YLim', [0 1.4]);
     set(ax2, 'YLim', [0 1.4]);
-    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 1.8*length(feature_names) 8]);
+    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 1.8*length(feature_names(2:17)) 8]);
     legend(ax1,models); legend(ax2,models);
     plotfixer;
     print(h2,'-dpng','-r300','plots/02FeatureImportance');
 
     h3 = figure(3);
     set(h3, 'Visible', 'off');
-    bar(1-model_error(:,2:5)');
-    set(gca,'XTickLabel', feature_names(2:5));
-    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 18 6]);
+    bar(1-model_error(:,word_features)');
+    set(gca,'XTickLabel', feature_names(word_features));
+    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 4.5*length(word_features) 6]);
     ylim([0 1.4]);
     ylabel('% Accuracy');
     legend(gca,models);
@@ -411,24 +399,83 @@ function final_project(filename)
     plotfixer;
     print(h3,'-dpng','-r300','plots/03CommonWordAccuracies');
 
-    1+6+round((length(feature_names)-6)/2)
     h4 = figure(4);
     set(h4, 'Visible', 'off');
     suptitle('Plot of Lexographical Feature Accuracy');    
     ax1 = subplot(2,1,1);
     ax2 = subplot(2,1,2);
-    bar(ax1, 1-model_error(:,6:5+round((length(feature_names)-6)/2))');
-    bar(ax2, 1-model_error(:,6+round((length(feature_names)-6)/2):end)');
-    set(ax1,'XTickLabel', feature_names(6:5+round((length(feature_names)-6)/2)));
-    set(ax2,'XTickLabel', feature_names(6+round((length(feature_names)-6)/2):end));
+    bar(ax1, 1-model_error(:,lex_features(1:end/2))');
+    bar(ax2, 1-model_error(:,lex_features(end/2+1:end))');
+    set(ax1,'XTickLabel', feature_names(lex_features(1:end/2)));
+    set(ax2,'XTickLabel', feature_names(lex_features(end/2+1:end)));
     set(ax1, 'YLim', [0 1.4]);
     set(ax2, 'YLim', [0 1.4]);
     ylabel(ax1, '% Accuracy');
     ylabel(ax2, '% Accuracy');
-    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 1.8*length(feature_names(6:end)) 8]);
+    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 1.8*length(lex_features) 8]);
     legend(ax1,models); legend(ax2,models);
     plotfixer;
     print(h4,'-dpng','-r300','plots/04LexFeatAcc');
+
+    h5 = figure(5);
+    set(h5, 'Visible', 'off');
+    bar(1-model_error(:,18));
+    set(gca,'XTickLabel', models);
+    ylim([0 1.2]);
+    ylabel('% Accuracy');
+    title('Accuracy of Top 25 Words and Lexographical Features');
+    plotfixer;
+    print(h5,'-dpng','-r300','plots/05Top25&Lex');
+
+    h6 = figure(6);
+    set(h6, 'Visible', 'off');
+    bar(1-model_error(:,19));
+    set(gca,'XTickLabel', models);
+    ylim([0 1.2]);
+    ylabel('% Accuracy');
+    title('Accuracy of Top 50 Words and Lexographical Features');
+    plotfixer;
+    print(h6,'-dpng','-r300','plots/06Top50&Lex');
+
+    h7 = figure(7);
+    set(h7, 'Visible', 'off');
+    bar(1-model_error(:,20));
+    set(gca,'XTickLabel', models);
+    ylim([0 1.2]);
+    ylabel('% Accuracy');
+    title('Accuracy of Top 100 Words and Lexographical Features');
+    plotfixer;
+    print(h7,'-dpng','-r300','plots/07Top100&Lex');
+
+    h8 = figure(8);
+    set(h8, 'Visible', 'off');
+    bar(1-model_error(:,21));
+    set(gca,'XTickLabel', models);
+    ylim([0 1.2]);
+    ylabel('% Accuracy');
+    title('Accuracy of Top 200 Words and Lexographical Features');
+    plotfixer;
+    print(h8,'-dpng','-r300','plots/08Top200&Lex');
+
+    h9 = figure(9);
+    set(h9, 'Visible', 'off');
+    bar(1-model_error(:,22));
+    set(gca,'XTickLabel', models);
+    ylim([0 1.2]);
+    ylabel('% Accuracy');
+    title('Accuracy of Top 500 Words and Lexographical Features');
+    plotfixer;
+    print(h9,'-dpng','-r300','plots/09Top500&Lex');
+
+    h10 = figure(10);
+    set(h10, 'Visible', 'off');
+    bar(1-model_error(:,23));
+    set(gca,'XTickLabel', models);
+    ylim([0 1.2]);
+    ylabel('% Accuracy');
+    title('Accuracy of Lexographical Features');
+    plotfixer;
+    print(h10,'-dpng','-r300','plots/10Lex');
 
     if (floor(toc/60) == 0)
     	fprintf('\n\nProgram executed in %d seconds.\n', round(rem(toc,60)));
