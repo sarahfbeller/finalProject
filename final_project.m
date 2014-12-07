@@ -29,11 +29,11 @@ function final_project(filename)
 							'outos' 'toutou' 'toutw' 'touton' 'outoi' 'toutwn' ...		% demonstratives
 							'toutois' 'toutous' 'auth' 'tauths' 'tauth' 'tauthn' ...
 							'autai' 'tautais' 'tautas' 'touto' 'tauta' ...
-							'tis' 'tinos' 'tini' 'tina' 'tines' 'tinwn' ...	% tis/ti w/ accent	% indefinite
+							'tis' 'tinos' 'tini' 'tina' 'tines' 'tinwn' ...				% tis/ti w/ accent	% indefinite
 							'tisi' 'tisin' 'tinas' 'ti' 'tina' ...
 							'os' 'ou' 'w' 'on' 'oi' 'ws' 'ois' 'ous' 'h' 'hs' ...		% relative
 							'hn' 'ai' 'ais' 'as' 'o' 'ou' 'w' 'a'};
-		articles 		= {'o' 'tou' 'tw' 'ton' 'oi' 'twn' 'tois' 'tous' 'h' ... % h/o just breathing; pronoun has accent too
+		articles 		= {'o' 'tou' 'tw' 'ton' 'oi' 'twn' 'tois' 'tous' 'h' ... 		% h/o just breathing; pronoun has accent too
 							'ths' 'th' 'thn' 'ai' 'tais' 'tas' 'to' 'ta'};
 		particles 		= {'an' 'ara' 'de' 'dh' 'ean' 'ews' 'gar' 'ge' 'men' 'mentoi' ...
 							'mhn' 'mh' 'ou' 'ouk' 'oukoun' 'oun' 'oux' 'te'};
@@ -76,7 +76,7 @@ function final_project(filename)
 			X 			 = [X; zeros(1,n)];										% initialize X to count(tokens + extra features)
 
 			[total_characters, total_syllables, total_words(file_num), unique_words, total_punctuation] = deal(0, 0, 0, 0, 0);
-
+			count1 = 0;
 			for i = 1:length(lines) 											% For every line in the work:
 				if isempty(lines{i})											% Skip empty lines.
 					continue;
@@ -99,14 +99,14 @@ function final_project(filename)
 						continue;
 					end
 					
-					if strcmp(line{j}(1), 'o(\') || strcmp(line{j}(1), 'h(\') 	% Pronouns with distinctive accents
+					if (nnz(strcmp(line{j}(1), {'o(\', 'h(\'})) ~= 0) 			% Pronouns with distinctive accents
 						if length(pronoun_ratio) >= file_num
 							pronoun_ratio(file_num) = pronoun_ratio(file_num) + 1;
 						else
 							pronoun_ratio(file_num) = 1;
 						end
 					end
-					if strcmp(line{j}(1), 'o(') || strcmp(line{j}(1), 'h(') 	% Articles with distinctive accents
+					if (nnz(strcmp(line{j}(1), {'o(', 'h('})) ~= 0) 			% Articles with distinctive accents
 						if length(article_ratio) >= file_num
 							article_ratio(file_num) = article_ratio(file_num) + 1;
 						else
@@ -117,28 +117,26 @@ function final_project(filename)
 					line{j} = regexprep(line{j},'[\/\\=|,.:;'']','');					% Take out accents.
 
 					% Fix elided words (words that lose their final vowel before a word starting with a vowel)
-					if strcmp(line{j}, 'q') || strcmp(line{j}, 'meq') ... 		% 't' becomes 'q' before a rough breathing
-						|| strcmp(line{j}, 'kaq')
+					if (nnz(strcmp(line{j}, {'q', 'meq', 'kaq'})) ~= 0) 							% 't' becomes 'q' before a rough breathing
 						line{j}(end) = 't';
 					end
-					if strcmp(line{j}, 'ef') || strcmp(line{j}, 'af') 			% 'p' becomes 'f' before a rough breathing
+					if (nnz(strcmp(line{j}, {'ef', 'af'})) ~= 0) 									% 'p' becomes 'f' before a rough breathing
 						line{j}(end) = 'p';
 					end
 
-					if strcmp(line{j}, 'd') || strcmp(line{j}, 't') || ...		% Words that should end in 'e'
-						strcmp(line{j}, 'od') || strcmp(line{j}, 'g') 
+					if (nnz(strcmp(line{j}, {'d', 't', 'od', 'g'})) ~= 0)							% Words that should end in 'e'
 						line{j} = line{j} + 'e';
 					end
-					if strcmp(line{j}, 'kat') || strcmp(line{j}, 'met') || ...	% Words that should end in 'a'
-						strcmp(line{j}, 'par') || strcmp(line{j}, 'all') || ...
-						strcmp(line{j}, 'ar') || strcmp(line{j}, 'di') || ...
-						strcmp(line{j}, 'an')
+
+					if (nnz(strcmp(line{j}, {'kat', 'met', 'par', 'all', 'ar', 'di', 'an'})) ~= 0) % Words that should end in 'a'
 						line{j} = line{j} + 'a';
 					end
-					if strcmp(line{j}, 'ap')									% Words that should end in 'o'
+
+					if (nnz(strcmp(line{j}, {'ap'})) ~= 0) 											% Words that should end in 'o'
 						line{j} = line{j} + 'o';
 					end
-					if strcmp(line{j}, 'ep') || strcmp(line{j}, 'amf')			% Words that should end in 'i'
+
+					if (nnz(strcmp(line{j}, {'ep', 'amf'})) ~= 0) 									% Words that should end in 'i'
 						line{j} = line{j} + 'i';
 					end
 
@@ -192,6 +190,8 @@ function final_project(filename)
 					   ~isempty(find(strcmp(line{j}, prepositions),1)) && ...
 					   ~isempty(find(strcmp(line{j}, pronouns),1)) && ...
 					   ~isempty(find(strcmp(line{j}, particles),1))
+					   count1 = count1 + 1;
+					   fprintf('Hello');
 						for k = length(endings{1}) : -1 : length(endings{end})  % Stem word.
 							if length(line{j}) > k
 								if ~isempty(find(strcmp(line{j}(end-k+1:end), endings),1))
@@ -206,19 +206,11 @@ function final_project(filename)
 
 					index = find(strcmp(line{j}, token_list));				% Find word in token_list.
 					if isempty(index)										% If word is a new word:
-						token_list = [token_list, line{j}]; 				% Add word to token list.
+						token_list = [token_list, line{j}]; 				% Add word to token_list.
 						X(file_num, length(token_list)) = 1;  		 		% Add '1' to X matrix.
 					else
 						X(file_num, index) = X(file_num, index) + 1; 		% Increment training matrix.
 					end
-
-					% noun_index = find(strcmp(line{j}, noun_endings));
-					% verb_index = find(strcmp(line{j}, verb_endings));
-					% if (~isempty(noun_index))
-					% 	line{j} = line{j}(1:end-noun_index);
-					% elseif(~isempty(verb_index))
-					% 	line{j} = line{j}(1:end-verb_index);
-					% end
 				end
 
 				if length(total_words) >= file_num
@@ -227,7 +219,7 @@ function final_project(filename)
 					total_words(file_num) = length(line);
 				end
 			end
-
+			count1
 			% Multiply to get 3 significant figures for all features.
 			avg_words_per_line(file_num) 		= round((total_words(file_num) / length(lines))*100);		% Round because mn requires integers.
 			avg_syllables_per_word(file_num) 	= round((total_syllables / total_words(file_num))*100);
@@ -306,6 +298,7 @@ function final_project(filename)
 	maxIndex25 = sortIndex(1:25);
 	maxIndex50 = sortIndex(1:50);
 	maxIndex100 = sortIndex(1:100);
+	% token_list(maxIndex25)
 
 	feature_names = {'All features', 'All Words', '25 Most Common Words', '50 Most Common Words', '100 Most Common Words', ...
 					 'Words/Line', 'Syllables/Word', 'Word Length', 'Type Token Ratio', 'Hapax Legomena', 'Preposition Ratio', ...
@@ -323,20 +316,20 @@ function final_project(filename)
 
 	    for j = 1:length(Y)															% Implement cross-validation:
 
-	    	% [X_train, Y_train, X_test, Y_test] = deal(removerows(X,'ind',[j]), removerows(Y,'ind',[j]), X(j,:), Y(j));
 	    	[X_train, Y_train, X_test, Y_test] = deal(removerows(feature_X,'ind',[j]), removerows(Y,'ind',[j]), feature_X(j,:), Y(j));
 
 			for k = 1:length(models)
 	        	results(j,i,k) = train_predict(X_train, Y_train, X_test, Y_test, k);
 	        end
 
+	    	% [X_train, Y_train, X_test, Y_test] = deal(removerows(X,'ind',[j]), removerows(Y,'ind',[j]), X(j,:), Y(j));
 	        % bay_model = NaiveBayes.fit(X_train, Y_train, 'Distribution','mn');
 			% svm_model = svmtrain(Y_train, X_train, '-q');
 			% knn_model = ClassificationKNN.fit(X_train, Y_train);
 			% dct_model = ClassificationTree.fit(X_train, Y_train);
 			% tbr_model = TreeBagger(10, X_train, Y_train);
 
-	                % results = [results; train_predict(X_train, Y_train, X_test, 1) ...%bay_model.predict(X(i,:)) ...
+	        % results = [results; train_predict(X_train, Y_train, X_test, 1) ...%bay_model.predict(X(i,:)) ...
 	        % 					svmpredict(Y(i), X(i,:), svm_model, '-q') ...
 	        % 					knn_model.predict(X(i,:)) ...
 	        % 					dct_model.predict(X(i,:))];% ...
@@ -352,7 +345,6 @@ function final_project(filename)
 	        % lda_model = ClassificationDiscriminant.fit(...
 	                    % removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
 	                    % 'discrimType','pseudolinear');                            % Train Linear Discriminant model.
-
 	        % qda_model = ClassificationDiscriminant.fit(...
 	        %             removerows(X,'ind',[i]), removerows(Y,'ind',[i]), ...
 	        %             'discrimType','pseudoquadratic');                         % Train Quadratic Discriminant model.
@@ -369,12 +361,15 @@ function final_project(filename)
 	end
 
 	for i = 1:length(feature_names)
-		% fprintf('\n\nTest errors training on %s:', feature_names{i});
+		fprintf('\n\nTest errors training on %s:', feature_names{i});
 		for k = 1:length(models)													% Calculate & print out errors.
 		    model_error(k,i) = 1 - (nnz(Y == results(:,i,k))  / length(Y));
-		    % fprintf('\nModeling using %s: %.2f', models{k}, model_error(k,i));			
+		    fprintf('\nModeling using %s: %.2f', models{k}, model_error(k,i));			
 		end
 	end
+
+	% importance = 1-abs(bsxfun(@minus,model_error(:,1),model_error(:,2:end)))';
+	importance = abs(bsxfun(@ldivide,model_error(:,1),model_error(:,2:end)))'
 
 	% Plots
 
@@ -390,12 +385,17 @@ function final_project(filename)
 
     h2 = figure(2);
     set(h2, 'Visible', 'off');
-    bar(1+bsxfun(@minus,model_error(:,1),model_error(:,2:end))');
-    set(gca,'XTickLabel', feature_names(2:end));
-    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 4*length(feature_names) 6]);
-    ylim([0 1.4]);
-    legend(gca,models);
-    title('Plot of Feature Importance');
+    suptitle('Plot of Feature Importance');    
+    ax1 = subplot(2,1,1);
+    ax2 = subplot(2,1,2);
+    bar(ax1, importance(2:(length(feature_names)-1)/2,:));
+    bar(ax2, importance(1+((length(feature_names)-1)/2):end,:));
+    set(ax1,'XTickLabel', feature_names(2:(length(feature_names)-1)/2));
+    set(ax2,'XTickLabel', feature_names(1+((length(feature_names)-1)/2):end));
+    set(ax1, 'YLim', [0 1.4]);
+    set(ax2, 'YLim', [0 1.4]);
+    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 1.8*length(feature_names) 8]);
+    legend(ax1,models); legend(ax2,models);
     plotfixer;
     print(h2,'-dpng','-r300','plots/02FeatureImportance');
 
@@ -411,15 +411,22 @@ function final_project(filename)
     plotfixer;
     print(h3,'-dpng','-r300','plots/03CommonWordAccuracies');
 
+    1+6+round((length(feature_names)-6)/2)
     h4 = figure(4);
     set(h4, 'Visible', 'off');
-    bar(1-model_error(:,6:end)');
-    set(gca,'XTickLabel', feature_names(6:end));
-    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 4*length(feature_names(6:end)) 6]);
-    ylim([0 1.4]);
-    ylabel('% Accuracy');
-    legend(gca,models);
-    title('Plot of Lexographical Feature Accuracy');
+    suptitle('Plot of Lexographical Feature Accuracy');    
+    ax1 = subplot(2,1,1);
+    ax2 = subplot(2,1,2);
+    bar(ax1, 1-model_error(:,6:5+round((length(feature_names)-6)/2))');
+    bar(ax2, 1-model_error(:,6+round((length(feature_names)-6)/2):end)');
+    set(ax1,'XTickLabel', feature_names(6:5+round((length(feature_names)-6)/2)));
+    set(ax2,'XTickLabel', feature_names(6+round((length(feature_names)-6)/2):end));
+    set(ax1, 'YLim', [0 1.4]);
+    set(ax2, 'YLim', [0 1.4]);
+    ylabel(ax1, '% Accuracy');
+    ylabel(ax2, '% Accuracy');
+    set(gcf,'PaperUnits','inches','PaperPosition',[0 0 1.8*length(feature_names(6:end)) 8]);
+    legend(ax1,models); legend(ax2,models);
     plotfixer;
     print(h4,'-dpng','-r300','plots/04LexFeatAcc');
 
@@ -444,7 +451,6 @@ function final_project(filename)
 				dct_model 	= ClassificationTree.fit(X_train, Y_train);
 				result 		= dct_model.predict(X_test);
     	end
-
     end
 
     function plotfixer;
@@ -490,7 +496,6 @@ function final_project(filename)
         textfontweight = 'normal';
         textfontitalics = 'normal';
 
-
         %stop changing things below this line
         %----------------------------------------------------
         axesh = findobj('Type', 'axes');
@@ -528,7 +533,6 @@ function final_project(filename)
            set(get(gca,'Title'), 'FontWeight', titlefontweight)
            set(get(gca,'Title'), 'FontAngle', titlefontitalics)
         end
-
     end
 
 end
